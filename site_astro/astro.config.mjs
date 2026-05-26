@@ -26,16 +26,35 @@ export default defineConfig({
 			social: [{ icon: 'github', label: 'OPT on GitHub', href: 'https://github.com/open-pioneer' }],
 			sidebar: [
 				{
-					label: 'Guides',
+					label: 'Technical documentation (en)',
 					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', slug: 'guides/example' },
+						{label: 'Table of contents', link: '/trails-docs/'},
+						{label: 'Introduction', link: '/trails-docs/Introduction'},
+						{label: 'Getting started', link: '/trails-docs/GettingStarted'},
+						{label: 'Repository guide', link: '/trails-docs/RepositoryGuide'},
+						{label: 'Contribution guide', link: '/trails-docs/Contributing'},
+						{
+							label: 'Tutorials',
+							collapsed: true,
+							items:[{autogenerate: { directory: 'trails-docs/tutorials' }}],
+						},
+						{label: 'Best practices', link: '/trails-docs/BestPractices'},
+						{label: 'Ways to patch a package', link: '/trails-docs/WaysToPatchAPackage'},
+						{
+							label: 'Reference',
+							collapsed: true,
+							items:[{autogenerate: { directory: 'trails-docs/reference' }}],
+						},
+						{
+							label: 'Internal documentation',
+							collapsed: true,
+							items:[
+								{autogenerate: { directory: 'trails-docs/internals' }},
+								{autogenerate: { directory: 'trails-docs/research' }}],
+						},
 					],
 				},
-				{
-					label: 'Reference',
-					items: [{ autogenerate: { directory: 'reference' } }],
-				},
+
 			],
 		}),
 	],
