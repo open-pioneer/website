@@ -1,17 +1,18 @@
 ---
 title: HowToCreateAService
+slug: trails-docs/tutorials/HowToCreateAService
 ---
 
 # How to create a service
 
 This tutorial will demonstrate some more advanced topics related to the creation of services.
-We recommend reading the simpler [How to use a service](./HowToUseAService.md) tutorial first.
+We recommend reading the simpler [How to use a service](./HowToUseAService) tutorial first.
 
 ## Creating the service class
 
 In this section, we will create a `MathService` in a new package.
 
-First, create the directory `src/packages/math` with the following required package files (see also [Package reference](../reference/Package.md)):
+First, create the directory `src/packages/math` with the following required package files (see also [Package reference](../reference/Package)):
 
 ```js
 // src/packages/math/build.config.mjs
@@ -68,13 +69,13 @@ export default defineBuildConfig({
 
 > **Note**  
 > A service can provide many interfaces at the same time.
-> See [Service reference](../reference/Services.md) and [Package reference](../reference/Package.md).
+> See [Service reference](../reference/Services) and [Package reference](../reference/Package).
 
 ## Testing the service
 
 We will create a simple unit test that calls the `multiply` method.
 The test framework [Vitest](https://vitest.dev/) is preconfigured in this repository.
-It will automatically pick up all `*.test.*` files in all packages and execute their tests (see also [How to write tests](./HowToWriteTests.md)).
+It will automatically pick up all `*.test.*` files in all packages and execute their tests (see also [How to write tests](./HowToWriteTests)).
 
 Before creating the test, add `@open-pioneer/test-utils` to your package's `devDependencies`.
 The test-utils package contains helpers for testing service classes:
@@ -558,4 +559,4 @@ It just has an implicit dependency on all services implementing `runtime.AutoSta
 
 Some service features have not been touched in this tutorial.
 For example, you can translate messages within a service by using the `intl` object in the constructor's `ServiceOptions` object.
-All details are documented in the [Services reference](../reference/Services.md) and in the [Package reference](../reference/Package.md).
+All details are documented in the [Services reference](../reference/Services) and in the [Package reference](../reference/Package).

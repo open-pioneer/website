@@ -1,5 +1,6 @@
 ---
 title: i18n_overview
+slug: trails-docs/research/i18n_overview
 ---
 
 # I18N Comparsion

@@ -1,12 +1,13 @@
 ---
 title: HowToSupportDynamicConfig
+slug: trails-docs/tutorials/HowToSupportDynamicConfig
 ---
 
 # How to support dynamic configuration
 
 This tutorial describes how to support dynamic configuration in your app.
 
-Usually, configuration is done in the `build.config.mjs` file of a package (see [How to use properties](./HowToUseProperties.md)).
+Usually, configuration is done in the `build.config.mjs` file of a package (see [How to use properties](./HowToUseProperties)).
 However, this configuration can not be easily changed after building an app.
 This tutorial describes how you can move configuration to a separate file that can easily be accessed and changed after building an app.
 This is useful if you want to change the behavior of your app based on the environment or user preferences.
@@ -196,6 +197,6 @@ Changes to the content of `dist/www/config.json` will be reflected after a reloa
 
 ## Further reading
 
-- [How to use properties](./HowToUseProperties.md)
+- [How to use properties](./HowToUseProperties)
 - Vite documentation: [Static Assert Handling](https://vite.dev/guide/assets)
 - Vite documentation: [publicDir option](https://vite.dev/config/shared-options.html#publicdir)

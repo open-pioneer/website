@@ -1,5 +1,6 @@
 ---
 title: HowToWriteTests
+slug: trails-docs/tutorials/HowToWriteTests
 ---
 
 # How to write tests

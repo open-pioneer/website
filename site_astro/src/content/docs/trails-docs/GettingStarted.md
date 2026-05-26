@@ -1,5 +1,6 @@
 ---
 title: GettingStarted
+slug: trails-docs/GettingStarted
 ---
 
 # Getting started
@@ -115,6 +116,6 @@ If you start the development server and open the app in your browser, changes to
 
 Recommended further reading:
 
-- [Guide to the repository](./RepositoryGuide.md)
-- [How to create an app](./tutorials/HowToCreateAnApp.md)
-- [How to deploy an app](./tutorials/HowToDeployAnApp.md)
+- [Guide to the repository](./RepositoryGuide)
+- [How to create an app](./tutorials/HowToCreateAnApp)
+- [How to deploy an app](./tutorials/HowToDeployAnApp)

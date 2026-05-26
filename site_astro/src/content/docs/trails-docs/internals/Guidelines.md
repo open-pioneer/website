@@ -1,5 +1,6 @@
 ---
 title: Guidelines
+slug: trails-docs/internals/Guidelines
 ---
 
 # Development Guidelines

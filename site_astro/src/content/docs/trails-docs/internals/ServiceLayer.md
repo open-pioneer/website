@@ -1,5 +1,6 @@
 ---
 title: ServiceLayer
+slug: trails-docs/internals/ServiceLayer
 ---
 
 # Service Layer
@@ -10,7 +11,7 @@ It should aid developers to gain an understanding of the implementation in order
 The service layer provides a generic dependency injection mechanism in which services can be defined.
 Services may reference each other through references, forming a graph of services.
 
-See [Design](./Design.md) for some background information.
+See [Design](./Design) for some background information.
 
 ## Overview
 

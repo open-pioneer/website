@@ -1,5 +1,6 @@
 ---
 title: RepositoryGuide
+slug: trails-docs/RepositoryGuide
 ---
 
 # Guide to the repository
@@ -226,7 +227,7 @@ For example, if package `a` requires `"react": "^18.0.0` and package `b` needs `
 
 However, if the version ranges are incompatible, pnpm will resort to installing _both_ versions of the package (or generating an error for peer dependencies).
 Sometimes duplicate packages are not a problem, but for certain "central" packages (like `react`), there may only be a single version present in your application.
-Although one typically uses peer dependencies to solve this issue, that has proved to be impractical at the moment (see [dependencies vs peerDependencies](./BestPractices.md#dependencies-vs-peerdependencies)).
+Although one typically uses peer dependencies to solve this issue, that has proved to be impractical at the moment (see [dependencies vs peerDependencies](./BestPractices#dependencies-vs-peerdependencies)).
 We have configured a custom CLI tool to check for duplicate packages after `pnpm install`, so this error case cannot remain unnoticed (see [`pnpm check-duplicates`](#pnpm-check-duplicates)).
 
 When encountering a duplicate package, consider taking the following steps:

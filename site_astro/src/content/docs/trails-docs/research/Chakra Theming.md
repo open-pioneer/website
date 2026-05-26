@@ -1,5 +1,6 @@
 ---
 title: Chakra Theming
+slug: trails-docs/research/Chakra Theming
 ---
 
 # Hints Chakra Theming

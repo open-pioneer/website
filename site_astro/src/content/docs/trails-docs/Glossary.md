@@ -1,5 +1,6 @@
 ---
 title: Glossary
+slug: trails-docs/Glossary
 ---
 
 # Glossary

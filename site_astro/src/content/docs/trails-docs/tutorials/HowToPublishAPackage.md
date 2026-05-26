@@ -1,5 +1,6 @@
 ---
 title: HowToPublishAPackage
+slug: trails-docs/tutorials/HowToPublishAPackage
 ---
 
 # How to publish a package
@@ -50,7 +51,7 @@ It can be installed by adding [`@open-pioneer/build-package-cli`](https://www.np
 $ pnpm add -w -D @open-pioneer/build-package-cli
 ```
 
-It is designed to be invoked from the source directory of a Trails package and reads its configuration from that package's `package.json` and `build.config.mjs` (see [Reference](../reference/Package.md#publishconfig)).
+It is designed to be invoked from the source directory of a Trails package and reads its configuration from that package's `package.json` and `build.config.mjs` (see [Reference](../reference/Package#publishconfig)).
 After successful execution, it will have assembled a compiled version of that package in the `dist` directory (in that package's source directory).
 
 `build-pioneer-package` also performs some validation to enforce best practices and to catch common errors.
@@ -515,12 +516,12 @@ See also [Contributing packages to the registry](https://docs.npmjs.com/packages
     - [ ] Set a `version`
     - [ ] Set a `license`
     - [ ] Set `publishConfig.directory` to `dist`
-    - [ ] Maintain your `dependencies` / `peerDependencies`, see [best practices](../BestPractices.md#dependency-management)
+    - [ ] Maintain your `dependencies` / `peerDependencies`, see [best practices](../BestPractices#dependency-management)
     - [ ] Optional: Maintain package metadata such as `keywords`, `repository`, `bugs`, `author`, `homepage` etc.
 
 - [ ] build.config.mjs
     - [ ] Configure your package's entry points
-    - [ ] Customize options if needed, see [`publishConfig`](../reference/Package.md#publishconfig)
+    - [ ] Customize options if needed, see [`publishConfig`](../reference/Package#publishconfig)
     - [ ] Set `strict` to `true` (or remove the property to apply default)
 
 - [ ] Include/Update README.md

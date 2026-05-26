@@ -1,5 +1,6 @@
 ---
 title: HowToDeployAnApp
+slug: trails-docs/tutorials/HowToDeployAnApp
 ---
 
 # How to deploy an app

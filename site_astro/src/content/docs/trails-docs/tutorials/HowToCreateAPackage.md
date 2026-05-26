@@ -1,5 +1,6 @@
 ---
 title: HowToCreateAPackage
+slug: trails-docs/tutorials/HowToCreateAPackage
 ---
 
 # How to create a package
@@ -156,6 +157,6 @@ Open your browser's console to see the result:
 
 ## Further reading
 
-- [How to create UI components](./HowToCreateUiComponents.md)
-- [How to create a service](./HowToCreateAService.md)
-- [Package Reference](../reference/Package.md)
+- [How to create UI components](./HowToCreateUiComponents)
+- [How to create a service](./HowToCreateAService)
+- [Package Reference](../reference/Package)

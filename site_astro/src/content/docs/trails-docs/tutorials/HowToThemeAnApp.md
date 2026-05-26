@@ -1,11 +1,12 @@
 ---
 title: HowToThemeAnApp
+slug: trails-docs/tutorials/HowToThemeAnApp
 ---
 
 # How to theme an app
 
 This "how to" shows how to create a custom theme for an app. To learn more about the theming
-mechanism in Open Pioneer Trails apps, refer to [Theming](../reference/Theming.md).
+mechanism in Open Pioneer Trails apps, refer to [Theming](../reference/Theming).
 
 To show how a custom theme for an app can be created, we will extend the empty app
 (at `src/apps/empty`).

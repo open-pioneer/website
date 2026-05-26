@@ -1,5 +1,6 @@
 ---
 title: HowToProvideAnAPI
+slug: trails-docs/tutorials/HowToProvideAnAPI
 ---
 
 # How to provide an API

@@ -1,5 +1,6 @@
 ---
 title: ChakraV3Migration
+slug: trails-docs/internals/ChakraV3Migration
 ---
 
 # Migration to Chakra V3

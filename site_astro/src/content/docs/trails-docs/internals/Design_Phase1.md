@@ -1,5 +1,6 @@
 ---
 title: Design_Phase1
+slug: trails-docs/internals/Design_Phase1
 ---
 
 # Design

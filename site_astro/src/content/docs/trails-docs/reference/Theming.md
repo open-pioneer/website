@@ -1,5 +1,6 @@
 ---
 title: Theming
+slug: trails-docs/reference/Theming
 ---
 
 # Theming
@@ -8,7 +9,7 @@ When developing Open Pioneer Trails applications, arbitrary [React](https://reac
 However, we mostly use pre-defined components from the Chakra UI framework.
 Chakra UI comes with a theming mechanism that is re-used in Open Pioneer Trails and briefly explained here.
 
-To get an example of how to create a theme for your app, refer to [How To Theme An App](../tutorials/HowToThemeAnApp.md).
+To get an example of how to create a theme for your app, refer to [How To Theme An App](../tutorials/HowToThemeAnApp).
 
 The basic principles, functionalities, parameters and configuration of Chakra UI's theming
 capabilities are described in the [official documentation](https://chakra-ui.com/docs/theming/overview).

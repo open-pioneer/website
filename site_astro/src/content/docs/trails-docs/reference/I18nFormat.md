@@ -1,5 +1,6 @@
 ---
 title: I18nFormat
+slug: trails-docs/reference/I18nFormat
 ---
 
 # I18N Files

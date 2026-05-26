@@ -1,5 +1,6 @@
 ---
 title: Package
+slug: trails-docs/reference/Package
 ---
 
 # Package Reference
@@ -117,7 +118,7 @@ export default defineBuildConfig({
 
 An array of locales supported by the package or application.
 When a package declares support for a given locale `<LOC>`, then a file named `./i18n/<LOC>.yaml` must exist.
-See [I18N-Format](./I18nFormat.md) for more details about the format of i18n files.
+See [I18N-Format](./I18nFormat) for more details about the format of i18n files.
 
 Example:
 
@@ -163,7 +164,7 @@ Services and UI components will automatically receive appropriate `intl` objects
 
 - The react hook `useIntl()` (see below) provides the same `intl` object.
 
-See [I18N Format](./I18nFormat.md) for more details.
+See [I18N Format](./I18nFormat) for more details.
 
 > NOTE: The `i18n` value has an additional meaning in application packages:
 > The defined languages will be the languages supported by the application, and they must either be defined
@@ -494,7 +495,7 @@ export interface ValidationOptions {
 
 ## Service definition
 
-Read [Services](./Services.md) to see how services can be defined.
+Read [Services](./Services) to see how services can be defined.
 
 ## React Integration
 
@@ -570,7 +571,7 @@ function ExampleComponent() {
 }
 ```
 
-See [I18N Format](./I18nFormat.md) for more details.
+See [I18N Format](./I18nFormat) for more details.
 
 ## Advanced service references
 

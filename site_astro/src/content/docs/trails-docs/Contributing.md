@@ -1,5 +1,6 @@
 ---
 title: Contributing
+slug: trails-docs/Contributing
 ---
 
 # Contribution guide
@@ -51,7 +52,7 @@ To obtain a copy of the CLA, please email to [contact@openpioneer.dev](mailto:co
 
 ## Set up the project
 
-To start with local development, take a look at [getting started](./GettingStarted.md).
+To start with local development, take a look at [getting started](./GettingStarted).
 Most repositories in our organization have a uniform layout, so the guide applies to them as well.
 For local differences, take a look at a repository's `README`.
 

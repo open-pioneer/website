@@ -1,5 +1,6 @@
 ---
 title: HowToUseAService
+slug: trails-docs/tutorials/HowToUseAService
 ---
 
 # How to use a service
@@ -269,7 +270,7 @@ export function AppUI() {
 
     The return value from `useService` has to be casted manually to the expected type in this case, otherwise we would receive `unknown`.
     This is because we have not registered the interface type with the framework (which can be okay for internal services and simple examples).
-    The document [How to create a service](./HowToCreateAService.md) goes into more detail.
+    The document [How to create a service](./HowToCreateAService) goes into more detail.
 
     Note that this is only needed if you're using TypeScript.
 
@@ -280,10 +281,10 @@ After following these steps, your application's external behavior will be unchan
 
 ## TypeScript integration
 
-See [TypeScript Integration](../reference/Services.md#typescript-integration) for how a package supporting TypeScript can associate service types with their interface names.
+See [TypeScript Integration](../reference/Services#typescript-integration) for how a package supporting TypeScript can associate service types with their interface names.
 
 ## Further reading
 
-- [How to create a service](./HowToCreateAService.md)
-- [Package reference](../reference/Package.md)
-- [Services Reference](../reference/Services.md)
+- [How to create a service](./HowToCreateAService)
+- [Package reference](../reference/Package)
+- [Services Reference](../reference/Services)

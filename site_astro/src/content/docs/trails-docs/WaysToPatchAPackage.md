@@ -1,5 +1,6 @@
 ---
 title: WaysToPatchAPackage
+slug: trails-docs/WaysToPatchAPackage
 ---
 
 # Ways to patch a package
@@ -56,26 +57,10 @@ const Element = createCustomElement({
 
 For more details, see
 
-- [How to use properties](./tutorials/HowToUseProperties.md)
-- [Package reference](./reference/Package.md)
+- [How to use properties](./tutorials/HowToUseProperties)
+- [Package reference](./reference/Package)
 
-### I18n messages
-
-Just like properties, an app can also overwrite the i18n messages used by other packages.
-For example:
-
-```yaml
-# src/apps/your-app/i18n/en.yaml
-messages:
-    # ...
-
-overrides:
-    # Overrides `message.id` in "some-package-name"
-    some-package-name:
-        message.id: "Replacement message"
-```
-
-For more details, see the [I18N format reference](./reference/I18nFormat.md).
+For more details, see the [I18N format reference](./reference/I18nFormat).
 
 ### Services
 
@@ -160,7 +145,7 @@ export class CustomNotificationService {
 Besides implementing a complete new service, it is also possible to reuse the original service in your new code. For example, the original service can be wrapped or extended to adjust its functionality.
 The original implementation can be retrieved by importing it from the patched package's service entry point.
 
-See also the [Service reference](./reference/Services.md) for more details.
+See also the [Service reference](./reference/Services) for more details.
 
 ## Copying/forking a package
 
