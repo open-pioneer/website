@@ -23,6 +23,9 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Open Pioneer Trails',
+			logo: {
+				src: './src/assets/OPT-Logo.png'
+			},
 			social: [{ icon: 'github', label: 'OPT on GitHub', href: 'https://github.com/open-pioneer' }],
 			sidebar: [
 				{

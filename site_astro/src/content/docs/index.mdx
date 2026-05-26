@@ -1,18 +1,18 @@
 ---
 title: Welcome to Open Pioneer Trails
 description: Open Pioneer Trails - Open source web map framework
-template: splash # Remove or comment out this line to display the site sidebar on this page.
+template: splash
 hero:
   tagline: Open Pioneer Trails
   image:
     file: ../../assets/OPT-Logo.png
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: OPT Projekt umsetzen
+      link: https://github.com/open-pioneer/trails-starter
+      icon: rocket
+    - text: Getting started
+      link: /trails-docs/GettingStarted
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
       variant: minimal
 ---
 
@@ -21,23 +21,32 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 ## Next steps
 
 <CardGrid stagger>
+    <Card title="Übersicht" icon="github">
+        ToDo
+    </Card>
+    <Card title="Case Studies" icon="github">
+        ToDo
+    </Card>
+    <Card title="Community" icon="github">
+        ToDo
+    </Card>
+    <Card title="OPT und KI" icon="github">
+        ToDo
+    </Card>
     <Card title="Dokumentation" icon="pencil">
         [Technical documentation for Open Pioneer Trails (en)](/trails-docs/)
     </Card>
-    <Card title="Update content" icon="pencil">
-    Edit `src/content/docs/index.mdx` to see this page change.
+    <Card title="Quellcode" icon="github">
+        [Starter Project](https://github.com/open-pioneer/trails-starter)
+
+        [Core Packages](https://github.com/open-pioneer/trails-core-packages)
+
+        [OpenLayers Base Packages](https://github.com/open-pioneer/trails-openlayers-base-packages)
     </Card>
-	<Card title="Change page layout" icon="document">
-		Delete `template: splash` in `src/content/docs/index.mdx` to display a
-		sidebar on this page.
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+    <Card title="Sample App" icon="github">
+        [Showcase app](https://open-pioneer.github.io/trails-demo/openlayers-base-packages/latest/samples/showcase/?demo=tocLegend)
+        ToDo einbetten?
+    </Card>
 </CardGrid>
+
+##Impressum
