@@ -219,7 +219,7 @@ The result can be observed in the `map-sample` application:
 
 pnpm computes the changes made by your edits and saves them as a patch:
 
-```patch
+```diff
 # patches/@open-pioneer__basemap-switcher@0.4.2.patch
 diff --git a/BasemapSwitcher.js b/BasemapSwitcher.js
 index e1b45ef281a5a670a9137b85b0f0ea81c916776f..869e78329fcbf863199669508f1c7ab23a822dd8 100644
