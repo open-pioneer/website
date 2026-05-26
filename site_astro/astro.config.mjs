@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import rehypeExternalLinks from 'rehype-external-links';
+import starlightThemeRapide from 'starlight-theme-rapide'
 
 // https://astro.build/config
 export default defineConfig({
@@ -22,6 +23,7 @@ export default defineConfig({
 	},
 	integrations: [
 		starlight({
+			plugins: [starlightThemeRapide()],
 			title: 'Open Pioneer Trails',
 			logo: {
 				src: './src/assets/OPT-Logo.png'
