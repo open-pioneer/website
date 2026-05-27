@@ -1,0 +1,78 @@
+- astro starlight Projekt angelegt nach Anleitung 
+	https://starlight.astro.build/de/getting-started/
+	pnpm create astro --template starlight
+	
+- Doku aus starter-repo kopiert
+	\trails-starter\docs -> \website\site_astro\src\content\docs\trails-docs
+	
+- title-Frontmatter in alle .md files eingefügt
+	https://starlight.astro.build/de/reference/frontmatter/
+	---
+	title: $DATEINAME$
+	---
+	
+	-> per KI machen lassen
+	
+- lastUpdated sollte auch mit rein -> passend zur Git-Version
+
+
+-Routing in der Doku aufbauen:
+	- README.md umbenennen in index.md
+		kein slug in index.md)
+	- alle anderen Seiten müssen den slug in der Frontmatter definieren, z.B.:
+		---
+		title: Introduction
+		slug: trails-docs/Introduction
+		---
+		Dabei den Pfad mit Ordnern beachten
+	- aus allen Links das .md entfernen 
+		[Introduction](./Introduction.md)
+			wird zu 
+		[Introduction](./Introduction)
+		
+	-> per KI machen lassen
+	
+- Links zu Bildern funktionieren ohne Anpassung
+
+- externe Links sauber einbetten:
+	https://docs.astro.build/de/recipes/external-links/
+	- mit Pfeil
+	- und öffnet in neuem Tab
+	
+		markdown: {
+			rehypePlugins: [
+				[
+					rehypeExternalLinks,
+					{
+						target: '_blank',
+						rel: ['noopener', 'noreferrer'],
+						content: {
+							type: 'text',
+							value: ' ↗',
+						},
+					},
+				],
+			],
+		},
+	
+	
+- build scripts freigegeben:
+		onlyBuiltDependencies:
+		  - esbuild
+		  - sharp
+		  
+- code languages
+	```patch
+		durch
+		```diff
+		ersetzen
+		
+		-> nur ein Treffer
+		
+		
+- sidebar definiert
+	in astro.config.mjs
+	
+- Hauptseite befüllt
+
+- Theme rapide installiert
