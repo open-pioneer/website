@@ -13,7 +13,7 @@
 	
 	-> per KI machen lassen
 	
-- lastUpdated sollte auch mit rein -> passend zur Git-Version
+
 
 
 -Routing in der Doku aufbauen:
@@ -76,3 +76,22 @@
 - Hauptseite befüllt
 
 - Theme rapide installiert
+
+
+- Einbettung von Apps
+	Sample App
+		die Demo-App mit dem gehashten Asset von github.io als .astro Datei eingebettet und in index.mdx eingebunden
+		tut
+		
+		ToDos:
+			geht das mit echten URLs / CORS?
+			Einbindung über das assset mit hash-Dateiname -> muss stabiler gebaut werden
+			
+	Grundsteuer NRW
+		als iFrame
+		funktioniert nicht, Server akzeptiert die Anfragen nicht (vmtl. wegen Referer-Header)
+
+
+
+ToDos / zukünftig:
+- lastUpdated sollte auch mit in Frontmatter der md files rein -> passend zur Git-Version

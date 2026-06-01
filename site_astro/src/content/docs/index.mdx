@@ -17,6 +17,9 @@ hero:
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
+import OptSampleApp from '../../components/opt-sample-app.astro';
+import GrundsteuerApp from '../../components/opt-demo-grundsteuer.astro';
+import DabPlusApp from '../../components/opt-demo-dabplus.astro';
 
 ## Next steps
 
@@ -50,4 +53,14 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
     </Card>
 </CardGrid>
 
-##Impressum
+## Sample App - Einbettung als WebComponent
+<OptSampleApp />
+
+## Grundsteuerportal NRW - Einbettung als iFrame
+<GrundsteuerApp />
+
+## DAB+ Empfangsprognose - Einbettung als iFrame
+<DabPlusApp />
+
+
+## Impressum
