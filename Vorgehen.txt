@@ -90,6 +90,14 @@
 	Grundsteuer NRW
 		als iFrame
 		funktioniert nicht, Server akzeptiert die Anfragen nicht (vmtl. wegen Referer-Header)
+		
+		als WebComponent
+		funktionierrt nicht, wegen CORS
+		
+	Digitalradio 
+		als iFrame
+			funktioniert nicht, Server akzeptiert die Anfragen nicht
+			Content-Security-Policy: frame-ancestors... am IIS eingestellt -> keine Änderung
 
 
 
