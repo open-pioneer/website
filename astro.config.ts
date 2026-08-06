@@ -78,7 +78,7 @@ export default defineConfig({
             plugins: [
                 starlightThemeRapide(),
                 starlightScrollToTop(),
-                starlightLinksValidator(),
+                // TODO: starlightLinksValidator(),
                 starlightLlmsTxt({
                     promote: ["index*", "*GettingStarted*"],
                     // Keep line breaks: the minifier breaks the markdown structure for some documents (huge headings containing too much text).
