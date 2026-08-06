@@ -13,7 +13,8 @@ import starlightThemeRapide from "starlight-theme-rapide";
 // https://astro.build/config
 export default defineConfig({
     // TODO
-    site: "https://example.com",
+    site: "https://open-pioneer.github.io",
+    base: "/website",
     markdown: {
         processor: satteri({
             hastPlugins: [externalLinksPlugin()]
