@@ -1,0 +1,14 @@
+/*
+ * Widen the content column on large screens.
+ */
+@media (min-width: 90rem) {
+    :root {
+        --sl-content-width: 56rem;
+    }
+}
+
+@media (min-width: 112.5rem) {
+    :root {
+        --sl-content-width: 68rem;
+    }
+}
