@@ -38,7 +38,9 @@ export default defineConfig({
                 // Adds the "Docs" link to the header, next to the social icons.
                 SocialIcons: "./src/components/social-icons.astro",
                 // Adds an invisible link to llms.txt at the top of every page, for AI agents.
-                Banner: "./src/components/banner.astro"
+                Banner: "./src/components/banner.astro",
+                // Adds the "work in progress" notice above the header on every page.
+                PageFrame: "./src/components/page-frame.astro"
             },
             sidebar: [
                 {

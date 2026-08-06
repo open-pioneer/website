@@ -1,0 +1,129 @@
+---
+// SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
+// SPDX-License-Identifier: Apache-2.0
+
+// Starlight override: puts the site wide "work in progress" notice above the header on every page.
+// NOTE: AI generated; just remove it when no longer needed.
+import Default from "@astrojs/starlight/components/PageFrame.astro";
+---
+
+<div class="wip-banner print:hidden" data-pagefind-ignore>
+    <span aria-hidden="true">🚧</span>
+    <p>
+        <strong>Work in progress:</strong> this website is still under construction.
+        <span class="wip-banner-details"> Content may be incomplete or change at any time.</span>
+    </p>
+</div>
+<Default>
+    <slot name="header" slot="header" />
+    <slot name="sidebar" slot="sidebar" />
+    <slot />
+</Default>
+
+<style>
+    .wip-banner {
+        --__wip-banner-text: var(--sl-color-orange-high);
+
+        position: fixed;
+        z-index: calc(var(--sl-z-index-navbar) + 1);
+        inset-block-start: 0;
+        inset-inline: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        height: var(--wip-banner-height);
+        padding-block: 0.375rem;
+        padding-inline: var(--sl-nav-pad-x);
+        border-block-end: 1px solid var(--sl-color-orange);
+        background-color: var(--sl-color-orange-low);
+        color: var(--__wip-banner-text);
+        font-size: var(--sl-text-xs);
+        text-align: center;
+    }
+
+    /* The strip has a fixed height, so its text must never wrap. */
+    .wip-banner p {
+        min-width: 0;
+        /* Room for descenders, which `overflow: hidden` would otherwise clip. */
+        padding-block: 0.125rem;
+        overflow: hidden;
+        line-height: 1.4;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    /* Not enough room for the full message next to the mobile menu button. */
+    @media (max-width: 50rem) {
+        .wip-banner-details {
+            display: none;
+        }
+    }
+</style>
+
+<style is:global>
+    :root {
+        --wip-banner-height: 2.5rem;
+    }
+
+    /* Shift everything that is positioned against the top of the viewport below the notice. */
+    .header {
+        inset-block-start: var(--wip-banner-height);
+    }
+
+    .sidebar-pane {
+        inset-block-start: calc(var(--sl-nav-height) + var(--wip-banner-height));
+    }
+
+    .main-frame {
+        padding-top: calc(
+            var(--sl-nav-height) + var(--sl-mobile-toc-height) + var(--wip-banner-height)
+        );
+    }
+
+    starlight-menu-button button {
+        top: calc(
+            (var(--sl-nav-height) - var(--sl-menu-button-size)) / 2 + var(--wip-banner-height)
+        );
+    }
+
+    mobile-starlight-toc nav {
+        top: calc(var(--sl-nav-height) - 1px + var(--wip-banner-height));
+    }
+
+    mobile-starlight-toc .dropdown {
+        max-height: calc(
+            85vh - var(--sl-nav-height) - var(--sl-mobile-toc-height) - var(--wip-banner-height)
+        );
+    }
+
+    .sl-skip-link {
+        top: calc(0.75rem + var(--wip-banner-height));
+    }
+
+    /* Keep anchor targets clear of the notice and the header. */
+    html {
+        scroll-padding-top: calc(
+            1.5rem + var(--sl-nav-height) + var(--sl-mobile-toc-height) + var(--wip-banner-height)
+        );
+    }
+
+    @media (min-width: 72rem) {
+        html {
+            scroll-padding-top: calc(1.5rem + var(--sl-nav-height) + var(--wip-banner-height));
+        }
+
+        /* Higher specificity than the theme's own `.right-sidebar` rules. */
+        .right-sidebar-container .right-sidebar {
+            top: var(--wip-banner-height);
+            height: calc(100vh - var(--wip-banner-height));
+        }
+    }
+
+    /* The notice is hidden when printing, so nothing needs to be shifted. */
+    @media print {
+        :root {
+            --wip-banner-height: 0rem;
+        }
+    }
+</style>
