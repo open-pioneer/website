@@ -30,7 +30,10 @@ using the file path as the route. The sidebar is configured in `astro.config.ts`
 `src/content/docs/trails-docs/` mirrors the technical documentation maintained in the
 Trails repositories. Do not edit those files here; change them upstream instead.
 
-TODO: Move from trails-starter to this website.
+TODO:
+
+- Move from trails-starter to this website.
+- Create llms.txt to link to the markdown files (for humans! there is already an invisible link on every site)
 
 ## Commands
 

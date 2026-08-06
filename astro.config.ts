@@ -5,6 +5,7 @@ import { satteri, type SatteriProcessorOptions } from "@astrojs/markdown-satteri
 import starlight from "@astrojs/starlight";
 import type { AstroUserConfig } from "astro";
 import { defineConfig } from "astro/config";
+import starlightLinksValidator from "starlight-links-validator";
 import starlightLlmsTxt from "starlight-llms-txt";
 import starlightScrollToTop from "starlight-scroll-to-top";
 import starlightThemeRapide from "starlight-theme-rapide";
@@ -20,13 +21,6 @@ export default defineConfig({
     },
     integrations: [
         starlight({
-            plugins: [
-                starlightThemeRapide(),
-                starlightLlmsTxt({
-                    promote: ["index*", "*GettingStarted*"]
-                }),
-                starlightScrollToTop()
-            ],
             title: "Open Pioneer Trails",
             // The browser favicon is served separately from `public/favicon.svg`
             // (Starlight emits it as a plain href, so it cannot be a bundled asset).
@@ -42,7 +36,9 @@ export default defineConfig({
             ],
             components: {
                 // Adds the "Docs" link to the header, next to the social icons.
-                SocialIcons: "./src/components/social-icons.astro"
+                SocialIcons: "./src/components/social-icons.astro",
+                // Adds an invisible link to llms.txt at the top of every page, for AI agents.
+                Banner: "./src/components/banner.astro"
             },
             sidebar: [
                 {
@@ -78,6 +74,20 @@ export default defineConfig({
                         }
                     ]
                 }
+            ],
+            plugins: [
+                starlightThemeRapide(),
+                starlightScrollToTop(),
+                starlightLinksValidator(),
+                starlightLlmsTxt({
+                    promote: ["index*", "*GettingStarted*"],
+                    // Keep line breaks: the minifier breaks the markdown structure for some documents (huge headings containing too much text).
+                    minify: { whitespace: false },
+                    // Starlight's heading anchors would otherwise appear as "[Section titled ...](#...)" links throughout the output.
+                    customSelectors: { all: ["a.sl-anchor-link"] },
+                    // Note: only removes from llms-small.txt
+                    exclude: ["trails-docs/internals/**", "trails-docs/research/**"]
+                })
             ]
         })
     ]

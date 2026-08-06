@@ -1,0 +1,15 @@
+---
+// SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
+// SPDX-License-Identifier: Apache-2.0
+
+// Starlight override: points AI agents and crawlers at the generated llms.txt.
+import Default from "@astrojs/starlight/components/Banner.astro";
+---
+
+<Default><slot /></Default>
+<div class="sr-only" aria-hidden="true" data-pagefind-ignore>
+    <p>
+        Machine-readable documentation for this site is available at{" "}
+        <a href="/llms.txt" tabindex="-1">/llms.txt</a>.
+    </p>
+</div>
