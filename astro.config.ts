@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
 
-import { satteri, type SatteriProcessorOptions } from "@astrojs/markdown-satteri";
+import { satteri } from "@astrojs/markdown-satteri";
 import starlight from "@astrojs/starlight";
 import type { AstroUserConfig } from "astro";
 import { defineConfig } from "astro/config";
@@ -9,15 +9,19 @@ import starlightLinksValidator from "starlight-links-validator";
 import starlightLlmsTxt from "starlight-llms-txt";
 import starlightScrollToTop from "starlight-scroll-to-top";
 import starlightThemeRapide from "starlight-theme-rapide";
+import { externalLinksPlugin } from "./support/astro/external-links";
+import { relativeLinksPlugin } from "./support/astro/relative-links";
+
+const BASE = "/website";
 
 // https://astro.build/config
 export default defineConfig({
-    // TODO
+    // TODO: use openpioneer.dev without base path.
     site: "https://open-pioneer.github.io",
-    base: "/website",
+    base: BASE,
     markdown: {
         processor: satteri({
-            hastPlugins: [externalLinksPlugin()]
+            hastPlugins: [relativeLinksPlugin(BASE), externalLinksPlugin()]
         })
     },
     integrations: [
@@ -81,7 +85,11 @@ export default defineConfig({
             plugins: [
                 starlightThemeRapide(),
                 starlightScrollToTop(),
-                // TODO: starlightLinksValidator(),
+                starlightLinksValidator({
+                    // The tutorials document the URLs of the local dev server, they are content
+                    // rather than navigation.
+                    errorOnLocalLinks: false
+                }),
                 starlightLlmsTxt({
                     promote: ["index*", "*GettingStarted*"],
                     // Keep line breaks: the minifier breaks the markdown structure for some documents (huge headings containing too much text).
@@ -95,45 +103,3 @@ export default defineConfig({
         })
     ]
 } satisfies AstroUserConfig);
-
-type HastPlugin = NonNullable<SatteriProcessorOptions["hastPlugins"]>[number];
-
-/** Absolute or protocol relative http(s) URLs, i.e. links that leave this site. */
-const EXTERNAL_HREF = /^(?:https?:)?\/\//i;
-
-/**
- * Opens external links in a new tab and marks them with a trailing "↗".
- */
-function externalLinksPlugin(): HastPlugin {
-    return {
-        name: "external-links",
-        element: {
-            filter: ["a"],
-            visit(node, ctx) {
-                const href = node.properties?.href;
-                if (typeof href !== "string" || !EXTERNAL_HREF.test(href)) {
-                    return;
-                }
-
-                ctx.setProperty(node, "target", "_blank");
-                ctx.setProperty(node, "rel", ["noopener", "noreferrer"]);
-                ctx.appendChild(node, [
-                    {
-                        type: "element",
-                        tagName: "span",
-                        properties: { ariaHidden: "true" },
-                        children: [{ type: "text", value: " ↗" }]
-                    },
-                    {
-                        type: "element",
-                        tagName: "span",
-                        // Reuse screen-reader-only class from astro.
-                        // Keep the warning out of the Pagefind search index, as Starlight does.
-                        properties: { className: ["sr-only"], dataPagefindIgnore: "" },
-                        children: [{ type: "text", value: " (opens in a new tab)" }]
-                    }
-                ]);
-            }
-        }
-    };
-}

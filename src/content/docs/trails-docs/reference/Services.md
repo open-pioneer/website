@@ -101,7 +101,7 @@ This keeps the configuration identical to a normal service, so that the use of a
 ## Configuring a service
 
 Services accept configuration options such as the interfaces they provide and the references they require.
-These options are provided by editing the `build.config.mjs` of the containing package, see [Package Reference](./Package).
+These options are provided by editing the `build.config.mjs` of the containing package, see [Package Reference](./Package.md).
 
 ### Using a service from another service
 
@@ -138,7 +138,7 @@ export class HelloWorldConsumer {
 
 References are either injected as an object (direct reference, the service that provides the interface)
 or as an array (when multiple services are requested).
-See documentation and examples in [Package Reference](./Package) for more details.
+See documentation and examples in [Package Reference](./Package.md) for more details.
 
 If a reference cannot be satisfied, the application will refuse to start with a detailed error message.
 
@@ -180,9 +180,9 @@ function ExampleComponent() {
 It is possible to gather all services that provide a certain interface name by specifying `all: true` in the `build.config.mjs`.
 The services are gathered and available as an array in the referencing service or UI.
 
-An example is shown in [How To Create a Service Tutorial](../tutorials/HowToCreateAService).
+An example is shown in [How To Create a Service Tutorial](../tutorials/HowToCreateAService.md).
 
-See documentation and examples in [Package Reference](./Package) for more details.
+See documentation and examples in [Package Reference](./Package.md) for more details.
 
 ## Service Options
 
@@ -205,7 +205,7 @@ The following values are available as properties of `serviceOptions`:
 - `references`: An object containing references to other services (as defined in the `build.config.mjs`).
 - `referencesMeta`: Metadata about references, uses the same names as `references`.
 - `properties`: An object containing the current package's properties (default values from `build.config.mjs`, possibly modified/overwritten by the application).
-- `intl`: The current package's `intl` object to support translations and formatting in the user's locale (see [I18N Format](./I18nFormat)).
+- `intl`: The current package's `intl` object to support translations and formatting in the user's locale (see [I18N Format](./I18nFormat.md)).
 
 <!-- TODO: Link to hosted api documentation ?? -->
 
@@ -244,11 +244,11 @@ Dependencies are destroyed after their dependents to ensure that their instances
 > NOTE:
 > Reference cycles between services are forbidden: the app will refuse to launch.
 > This can often be worked around by fixing the design: common functionality needs to move to a shared service.
-> In the future, we could consider implementing lazy references (see [Internal Documentation](../internals/ServiceLayer)).
+> In the future, we could consider implementing lazy references (see [Internal Documentation](../internals/ServiceLayer.md)).
 
 ## Overriding services
 
-Applications can override services from other packages, see [Reference](./Package#overrides).
+Applications can override services from other packages, see [Reference](./Package.md#overrides).
 
 ## TypeScript Integration
 

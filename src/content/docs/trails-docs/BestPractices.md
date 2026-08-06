@@ -88,7 +88,7 @@ Although `peerDependencies` look like the correct solution on paper, they have s
 For example, transitive dependencies (peer dependencies of peer dependencies) are sometimes not updated correctly, even though all users of those packages request newer versions.
 **For this reason, we currently prefer to use `dependencies`.**
 
-To enforce that only a single version of a package is present (a builtin feature of peer dependencies), we use a custom CLI tool instead (see [`pnpm check-duplicates`](./RepositoryGuide#pnpm-check-duplicates)).
+To enforce that only a single version of a package is present (a builtin feature of peer dependencies), we use a custom CLI tool instead (see [`pnpm check-duplicates`](./RepositoryGuide.md#pnpm-check-duplicates)).
 
 #### Useful helpers
 
@@ -151,7 +151,7 @@ Note: the link references the newest version of vitest
 Only referenced services will be constructed.
 If a service does not provide any interfaces, or if the service is never referenced (either by the UI or by another service), the service will not be started.
 
-If absolutely necessary, you can force a service to start even if it's not referenced by anyone by providing the `runtime.AutoStart` interface, see [how to create a service](./tutorials/HowToCreateAService#service-autostart).
+If absolutely necessary, you can force a service to start even if it's not referenced by anyone by providing the `runtime.AutoStart` interface, see [how to create a service](./tutorials/HowToCreateAService.md#service-autostart).
 
 ### Hot reloading with \[jt\]sx-Files and side effects
 

@@ -180,7 +180,7 @@ export function AppUI() {
 ```
 
 Additionally, Chakra provides extensive theming support ([Documentation](https://chakra-ui.com/docs/theming/overview)).
-It is possible to create a custom theme for an app. For details see [How To Theme An App](./HowToThemeAnApp).
+It is possible to create a custom theme for an app. For details see [How To Theme An App](./HowToThemeAnApp.md).
 
 #### React classes
 

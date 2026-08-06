@@ -57,10 +57,10 @@ const Element = createCustomElement({
 
 For more details, see
 
-- [How to use properties](./tutorials/HowToUseProperties)
-- [Package reference](./reference/Package)
+- [How to use properties](./tutorials/HowToUseProperties.md)
+- [Package reference](./reference/Package.md)
 
-For more details, see the [I18N format reference](./reference/I18nFormat).
+For more details, see the [I18N format reference](./reference/I18nFormat.md).
 
 ### Services
 
@@ -145,7 +145,7 @@ export class CustomNotificationService {
 Besides implementing a complete new service, it is also possible to reuse the original service in your new code. For example, the original service can be wrapped or extended to adjust its functionality.
 The original implementation can be retrieved by importing it from the patched package's service entry point.
 
-See also the [Service reference](./reference/Services) for more details.
+See also the [Service reference](./reference/Services.md) for more details.
 
 ## Copying/forking a package
 

@@ -11,7 +11,7 @@ By default, the empty app is prepared to support I18n with locale `en`.
 We will add support for another language (locale `de`) and demonstrate advanced features of [FormatJS](https://formatjs.io/) Intl.
 
 > **Note**  
-> For more details to I18n file format please check [I18nFormat](../reference/I18nFormat).
+> For more details to I18n file format please check [I18nFormat](../reference/I18nFormat.md).
 
 ## Preparing i18n support for our app
 
@@ -47,7 +47,7 @@ messages:
 By default, the app uses the browser settings or system default for determining the locale.
 If your browser locale is set to `de` you should see the values from `de.yaml` (maybe you will need to restart the dev server).
 
-<img src="./HowToTranslateAnApp_App.png" alt="i18n howto app" style="border: 1px solid black;" />
+![i18n howto app](./HowToTranslateAnApp_App.png)
 
 To demonstrate the multi-language support and force a language of our choice, we need to modify the `app.ts`:
 
@@ -81,7 +81,7 @@ Now we are able to force the locale with `lang` parameter:
 
 > **Note**
 > The integration of I18n works the same way for Trails packages. We have to add the `i18n` configuration in `build.config.mjs` and matching yaml files for each language in the `i18n` folder. For each app/language combination, the build tool collects the YAML files of the app and the used packages and merges them into a flattened JSON structure.
-> As mentioned in [I18nFormat](../reference/I18nFormat) we can override yaml entries from packages in our app yaml. Please check the [`i18n-sample`](https://github.com/open-pioneer/trails-core-packages/tree/main/src/samples/i18n-sample) app as a practical example for this topic.
+> As mentioned in [I18nFormat](../reference/I18nFormat.md) we can override yaml entries from packages in our app yaml. Please check the [`i18n-sample`](https://github.com/open-pioneer/trails-core-packages/tree/main/src/samples/i18n-sample) app as a practical example for this topic.
 
 ## Using advanced features of FormatJS Intl
 

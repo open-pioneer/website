@@ -10,7 +10,7 @@ It offers a simple architecture where an application can be assembled from a set
 Packages are reusable components that can be used in multiple applications and with different configuration.
 When an application is built, it can be deployed either as a single (or multi-) page application or as an easily embeddable Web Component.
 
-To get started developing an application, head over to [Getting Started](./GettingStarted).
+To get started developing an application, head over to [Getting Started](./GettingStarted.md).
 
 ## Technology Stack
 

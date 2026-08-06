@@ -5,8 +5,8 @@ slug: trails-docs/tutorials/HowToUseProperties
 
 # How to use properties
 
-Properties are configurable values associated with a [Package](../reference/Package).
-Packages can use their [build.config.mjs](../reference/Package#properties) to define which properties they support and assign some optional default values.
+Properties are configurable values associated with a [Package](../reference/Package.md).
+Packages can use their [build.config.mjs](../reference/Package.md#properties) to define which properties they support and assign some optional default values.
 Properties are often documented as part of a package's public API.
 
 An app that uses a package can assign custom values to those properties, which may alter the behavior of the package at runtime.
@@ -336,7 +336,7 @@ It should not be overused: a long-running `resolveConfig` call will block the st
 
 ## Further reading
 
-- [How to create a service](./HowToCreateAService)
-- [How to support dynamic configuration](./HowToSupportDynamicConfig)
-- [Package reference](../reference/Package)
-- [Services Reference](../reference/Services)
+- [How to create a service](./HowToCreateAService.md)
+- [How to support dynamic configuration](./HowToSupportDynamicConfig.md)
+- [Package reference](../reference/Package.md)
+- [Services Reference](../reference/Services.md)

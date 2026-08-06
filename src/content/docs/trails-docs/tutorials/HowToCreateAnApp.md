@@ -221,7 +221,7 @@ Vite has out of the box support for two ways to include static assets:
 - Use public assets if the file is meant to be edited to change the behavior of the application without rebuilding it.
 
 > NOTE: Static assets work everywhere, even as part of a published package.
-> Note that you may have to configure `assets` in your package's `build.config.mjs`, see [`publishConfig.assets](../reference/Package#publishconfigassets).
+> Note that you may have to configure `assets` in your package's `build.config.mjs`, see [`publishConfig.assets](../reference/Package.md#publishconfigassets).
 
 > NOTE: A published package cannot provide public assets at this time (Vite's mechanism only works for _apps_).
 > This requirement is tracked [here](https://github.com/open-pioneer/trails-build-tools/issues/60), let us know if you need that feature.
@@ -352,5 +352,5 @@ To achieve this, simply swap the corresponding `.html` files:
 
 ## Next steps
 
-- [How to deploy an app](./HowToDeployAnApp)
-- [How to create UI components](./HowToCreateUiComponents)
+- [How to deploy an app](./HowToDeployAnApp.md)
+- [How to create UI components](./HowToCreateUiComponents.md)

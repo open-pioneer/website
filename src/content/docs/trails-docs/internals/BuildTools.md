@@ -110,7 +110,7 @@ As you can see, the plugin only outputs 4 different exports:
 This is a simple JSON-like structure containing metadata for every relevant package in the application.
 
 Data points included are any service definitions, their classes (resolved via import) and their declared dependencies,
-which will eventually be used by [Service Layer](./ServiceLayer) to start all required services.
+which will eventually be used by [Service Layer](./ServiceLayer.md) to start all required services.
 
 A simplified packages structure looks like this:
 

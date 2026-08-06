@@ -5,9 +5,13 @@
 // Starlight override: renders extra header links in front of the default social icons.
 // See https://starlight.astro.build/guides/overriding-components/
 import Default from "@astrojs/starlight/components/SocialIcons.astro";
+
+// Starlight only prepends the site's base path to the links it generates itself.
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const docs = `${base}/trails-docs/`;
 ---
 
-<a href="/trails-docs/" class="header-link">Docs</a>
+<a href={docs} class="header-link">Docs</a>
 <Default><slot /></Default>
 
 <style>

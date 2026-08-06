@@ -4,12 +4,16 @@
 
 // Starlight override: points AI agents and crawlers at the generated llms.txt.
 import Default from "@astrojs/starlight/components/Banner.astro";
+
+// Starlight only prepends the site's base path to the links it generates itself.
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const llmsTxt = `${base}/llms.txt`;
 ---
 
 <Default><slot /></Default>
 <div class="sr-only" aria-hidden="true" data-pagefind-ignore>
     <p>
         Machine-readable documentation for this site is available at{" "}
-        <a href="/llms.txt" tabindex="-1">/llms.txt</a>.
+        <a href={llmsTxt} tabindex="-1">{llmsTxt}</a>.
     </p>
 </div>

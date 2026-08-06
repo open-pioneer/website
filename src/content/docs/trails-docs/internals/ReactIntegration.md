@@ -126,4 +126,4 @@ export const useIntl = /*@__PURE__*/ useIntlInternal.bind(undefined, PACKAGE_NAM
 ### Getting services from the service layer
 
 The `useService` and `useServices` hooks are implemented very similar to the `useIntlInternal` hook above.
-They use a shared reference to the [`ServiceLayer`](./ServiceLayer) (which has been started before the UI is being rendered) to find services in the application (methods `getService` / `getServices`).
+They use a shared reference to the [`ServiceLayer`](./ServiceLayer.md) (which has been started before the UI is being rendered) to find services in the application (methods `getService` / `getServices`).
