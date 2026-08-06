@@ -32,22 +32,27 @@ Trails repositories. Do not edit those files here; change them upstream instead.
 
 TODO:
 
-- Move from trails-starter to this website.
+- Move docs from trails-starter to this website.
 - Create llms.txt to link to the markdown files (for humans! there is already an invisible link on every site)
+- Move to openpioneer.dev
 
 ## Commands
 
 Run all commands from the root of the project:
 
-| Command          | Action                                                     |
-| :--------------- | :--------------------------------------------------------- |
-| `pnpm install`   | Install dependencies                                       |
-| `pnpm dev`       | Start the development server at `localhost:4321`           |
-| `pnpm build`     | Build the production site to `./dist/`                     |
-| `pnpm preview`   | Preview the production build locally                       |
-| `pnpm lint`      | Lint the sources (`pnpm lint:fix` applies automatic fixes) |
-| `pnpm fmt`       | Format the sources (`pnpm fmt:check` only reports)         |
-| `pnpm astro ...` | Run Astro CLI commands, for example `astro check`          |
+| Command            | Action                                                     |
+| :----------------- | :--------------------------------------------------------- |
+| `pnpm install`     | Install dependencies                                       |
+| `pnpm dev`         | Start the development server at `localhost:4321`           |
+| `pnpm build`       | Build the production site to `./dist/`                     |
+| `pnpm preview`     | Preview the production build locally                       |
+| `pnpm check-types` | Run typescript check (once)                                |
+| `pnpm watch-types` | Run typescript check (continuously, in watch mode)         |
+| `pnpm lint`        | Lint the sources (`pnpm lint:fix` applies automatic fixes) |
+| `pnpm fmt`         | Format the sources (`pnpm fmt:check` only reports)         |
+| `pnpm astro ...`   | Run Astro CLI commands, for example `astro check`          |
+
+NOTE: TypeScript checks require a previous build or dev mode start (or an explicit `astro sync`), because they depend on generated files in the `.astro` directory.
 
 ## Learn more
 

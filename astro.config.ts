@@ -3,6 +3,7 @@
 
 import { satteri } from "@astrojs/markdown-satteri";
 import starlight from "@astrojs/starlight";
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import type { AstroUserConfig } from "astro";
 import { defineConfig } from "astro/config";
 import starlightLinksValidator from "starlight-links-validator";
@@ -16,7 +17,6 @@ const BASE = "/website";
 
 // https://astro.build/config
 export default defineConfig({
-    // TODO: use openpioneer.dev without base path.
     site: "https://open-pioneer.github.io",
     base: BASE,
     markdown: {
@@ -99,7 +99,10 @@ export default defineConfig({
                     // Note: only removes from llms-small.txt
                     exclude: ["trails-docs/internals/**", "trails-docs/research/**"]
                 })
-            ]
+            ],
+            expressiveCode: {
+                plugins: [pluginLineNumbers()]
+            }
         })
     ]
 } satisfies AstroUserConfig);

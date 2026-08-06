@@ -67,7 +67,8 @@ import Default from "@astrojs/starlight/components/PageFrame.astro";
     }
 
     /* Shift everything that is positioned against the top of the viewport below the notice. */
-    .header {
+    header,
+    header .header {
         inset-block-start: var(--wip-banner-height);
     }
 
