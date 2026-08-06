@@ -38,7 +38,7 @@ jobs:
     name: "Deploy to GitHub Pages"
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 30 # TODO: very long queue..
+    timeout-minutes: 10
     permissions:
       pages: write
       id-token: write

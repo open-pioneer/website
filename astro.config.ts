@@ -82,6 +82,9 @@ export default defineConfig({
                     ]
                 }
             ],
+            editLink: {
+                baseUrl: "https://github.com/open-pioneer/website/edit/main/"
+            },
             plugins: [
                 starlightThemeRapide(),
                 starlightScrollToTop(),
