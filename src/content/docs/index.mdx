@@ -1,0 +1,54 @@
+---
+title: Welcome to Open Pioneer Trails
+description: Open Pioneer Trails is an open source framework for building client-side web map applications.
+template: splash
+hero:
+    tagline: An open source framework for building client-side web map applications.
+    image:
+        file: ../../assets/logo.svg
+    actions:
+        - text: Get the starter template
+          link: https://github.com/open-pioneer/trails-starter
+          icon: rocket
+        - text: Getting started
+          link: /trails-docs/GettingStarted
+          icon: right-arrow
+          variant: minimal
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+import ShowcaseApp from "../../components/showcase-app.astro";
+
+## Explore
+
+<CardGrid stagger>
+    <Card title="Overview" icon="information">
+        Coming soon.
+    </Card>
+    <Card title="Case studies" icon="laptop">
+        Coming soon.
+    </Card>
+    <Card title="Community" icon="puzzle">
+        Coming soon.
+    </Card>
+    <Card title="Trails and AI" icon="server">
+        Coming soon.
+    </Card>
+    <Card title="Documentation" icon="document">
+        [Technical documentation](/trails-docs/)
+    </Card>
+    <Card title="Source code" icon="github">
+
+        - [Starter project](https://github.com/open-pioneer/trails-starter)
+        - [Core packages](https://github.com/open-pioneer/trails-core-packages)
+        - [OpenLayers base packages](https://github.com/open-pioneer/trails-openlayers-base-packages)
+
+    </Card>
+
+</CardGrid>
+
+## Sample app: embedded as a Web Component
+
+<ShowcaseApp />
+
+## Impressum

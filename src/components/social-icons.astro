@@ -1,0 +1,25 @@
+---
+// SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
+// SPDX-License-Identifier: Apache-2.0
+
+// Starlight override: renders extra header links in front of the default social icons.
+// See https://starlight.astro.build/guides/overriding-components/
+import Default from "@astrojs/starlight/components/SocialIcons.astro";
+---
+
+<a href="/trails-docs/" class="header-link">Docs</a>
+<Default><slot /></Default>
+
+<style>
+    .header-link {
+        color: var(--sl-color-white);
+        font-size: var(--sl-text-sm);
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .header-link:hover {
+        color: var(--sl-color-text-accent);
+    }
+</style>
