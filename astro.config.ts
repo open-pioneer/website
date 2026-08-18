@@ -13,15 +13,12 @@ import starlightThemeRapide from "starlight-theme-rapide";
 import { externalLinksPlugin } from "./support/astro/external-links";
 import { relativeLinksPlugin } from "./support/astro/relative-links";
 
-const BASE = "/website";
-
 // https://astro.build/config
 export default defineConfig({
-    site: "https://open-pioneer.github.io",
-    base: BASE,
+    site: "https://open-pioneer.dev",
     markdown: {
         processor: satteri({
-            hastPlugins: [relativeLinksPlugin(BASE), externalLinksPlugin()]
+            hastPlugins: [relativeLinksPlugin(""), externalLinksPlugin()]
         })
     },
     integrations: [
