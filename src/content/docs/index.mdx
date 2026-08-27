@@ -3,7 +3,7 @@ title: Welcome to Open Pioneer Trails
 description: Open Pioneer Trails is an open source framework for building client-side web map applications.
 template: splash
 hero:
-    tagline: An open source framework for building client-side web map applications.
+    tagline: An open source framework for building tailored, high-performance GeoIT web applications — modular, future-ready, and designed for an outstanding developer experience.
     image:
         file: ../../assets/logo.svg
     actions:
@@ -18,16 +18,17 @@ hero:
 
 import { Card, CardGrid } from "@astrojs/starlight/components";
 import BusradarApp from "../../components/busradar-app.astro";
-import ShowcaseApp from "../../components/showcase-app.astro";
 
 ## Live bus tracking application
+
 <BusradarApp/>
 
 ## Explore
 
 <CardGrid stagger>
-    <Card title="Overview" icon="information">
-        Coming soon.
+    <Card title="What is Open Pioneer Trails?" icon="information">
+        {/* TODO: Should be included in sidebar */}
+        [What is Open Pioneer Trails?](/about)
     </Card>
     <Card title="Case studies" icon="laptop">
         Coming soon.
@@ -51,4 +52,6 @@ import ShowcaseApp from "../../components/showcase-app.astro";
 
 </CardGrid>
 
-## Impressum
+[Impressum und Datenschutz](/legal/)
+
+[Sicherheitsrichtlinie](/security/) · [Security Policy](/security/policy-en/)
