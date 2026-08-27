@@ -5,13 +5,16 @@ on:
   push:
     branches:
       - main
+  pull_request:
 
 permissions:
   contents: read
 
 concurrency:
-  group: github-pages
-  cancel-in-progress: false
+  # Deployments (push to main / manual) share one group so they never run in parallel.
+  # Pull request builds get their own group per ref and may cancel outdated runs.
+  group: github-pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   # Builds the site and uploads ./dist/ as a GitHub Pages artifact
@@ -37,6 +40,7 @@ jobs:
   deploy:
     name: "Deploy to GitHub Pages"
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
