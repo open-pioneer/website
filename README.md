@@ -36,6 +36,7 @@ TODO:
 - Fix generation of llms.txt: line numbers from code block cause weird formatting.
 - Create a global footer for the security policy, imprint, etc.
 - Should we use `template: splash` for legal sites etc, or should they get a normal sidebar entry instead (and show the sidebar, too)?
+- Use stable link for busradar sample -- not the pr preview.
 
 ## Commands
 
