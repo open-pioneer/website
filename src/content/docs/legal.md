@@ -1,5 +1,6 @@
 ---
 title: Impressum & Datenschutz
+template: splash
 ---
 
 ## Impressum

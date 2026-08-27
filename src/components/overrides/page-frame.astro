@@ -5,13 +5,6 @@
 // Starlight override: puts the site wide "work in progress" notice above the header on every page.
 // NOTE: AI generated; just remove it when no longer needed.
 import Default from "@astrojs/starlight/components/PageFrame.astro";
-
-// The sidebar only contains the technical documentation's table of contents, so it
-// is hidden on pages outside that section (e.g. the legal notice page).
-const { starlightRoute } = Astro.locals;
-if (!starlightRoute.id.startsWith("trails-docs")) {
-    starlightRoute.hasSidebar = false;
-}
 ---
 
 <div class="wip-banner print:hidden" data-pagefind-ignore>

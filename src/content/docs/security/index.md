@@ -1,8 +1,9 @@
 ---
 title: Sicherheitsrichtlinie
+template: splash
 ---
 
-[English version](/security/en/)
+[English version](/security/policy-en/)
 
 Open Pioneer Trails ist ein Open-Source-Framework zur Entwicklung clientseitiger Web-GIS-Anwendungen. Diese Seite beschreibt, wie Sicherheitslücken in Open Pioneer Trails gemeldet werden können und wie wir mit solchen Meldungen umgehen.
 

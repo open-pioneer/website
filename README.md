@@ -33,8 +33,9 @@ Trails repositories. Do not edit those files here; change them upstream instead.
 TODO:
 
 - Move docs from trails-starter to this website.
-- Create llms.txt to link to the markdown files (for humans! there is already an invisible link on every site)
-- Move to openpioneer.dev
+- Fix generation of llms.txt: line numbers from code block cause weird formatting.
+- Create a global footer for the security policy, imprint, etc.
+- Should we use `template: splash` for legal sites etc, or should they get a normal sidebar entry instead (and show the sidebar, too)?
 
 ## Commands
 

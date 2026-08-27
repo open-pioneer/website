@@ -1,5 +1,9 @@
 ---
 title: Security Policy
+template: splash
+
+# NOTE: this file uses "policy-en" instead of "en" because the latter gets interpreted by
+# starlight's i18n mechanism -- which we have not yet configured properly (results in 404s).
 ---
 
 [Deutsche Version](/security/)
