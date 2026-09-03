@@ -2,9 +2,18 @@
 // SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)
 // SPDX-License-Identifier: Apache-2.0
 
-// Starlight override: puts the site wide "work in progress" notice above the header on every page.
-// NOTE: AI generated; just remove it when no longer needed.
+// Starlight override: puts the site wide "work in progress" notice above the header on every page,
+// and adds the site wide footer with legal links below it.
+// NOTE: AI generated; just remove the work in progress notice when no longer needed.
 import Default from "@astrojs/starlight/components/PageFrame.astro";
+
+// Starlight only prepends the site's base path to the links it generates itself.
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const legalLinks = [
+    { label: "Impressum und Datenschutz / legal notice", href: `${base}/legal/` },
+    { label: "Sicherheitsrichtlinie", href: `${base}/security/` },
+    { label: "Security policy (English)", href: `${base}/security/policy-en/` }
+];
 ---
 
 <div class="wip-banner print:hidden" data-pagefind-ignore>
@@ -19,6 +28,46 @@ import Default from "@astrojs/starlight/components/PageFrame.astro";
     <slot name="sidebar" slot="sidebar" />
     <slot />
 </Default>
+<footer class="site-footer">
+    <nav class="legal-links" aria-label="Legal">
+        <ul>
+            {
+                legalLinks.map((link) => (
+                    <li>
+                        <a href={link.href}>{link.label}</a>
+                    </li>
+                ))
+            }
+        </ul>
+    </nav>
+</footer>
+
+<style>
+    .site-footer {
+        padding: 1rem var(--sl-nav-pad-x);
+        border-top: 1px solid var(--sl-color-hairline);
+    }
+
+    .legal-links ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.5rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: var(--sl-text-xs);
+    }
+
+    .legal-links a {
+        color: var(--sl-color-gray-3);
+        text-decoration: none;
+    }
+
+    .legal-links a:hover {
+        color: var(--sl-color-white);
+        text-decoration: underline;
+    }
+</style>
 
 <style>
     .wip-banner {
@@ -64,6 +113,9 @@ import Default from "@astrojs/starlight/components/PageFrame.astro";
 <style is:global>
     :root {
         --wip-banner-height: 2.5rem;
+        /* Approximate rendered height of `.site-footer` below, so fixed-position
+           sidebars can stop above it instead of covering it. */
+        --site-footer-height: 3.5rem;
     }
 
     /* Shift everything that is positioned against the top of the viewport below the notice. */
@@ -72,8 +124,10 @@ import Default from "@astrojs/starlight/components/PageFrame.astro";
         inset-block-start: var(--wip-banner-height);
     }
 
+    /* Stop above the site footer instead of covering it. */
     .sidebar-pane {
         inset-block-start: calc(var(--sl-nav-height) + var(--wip-banner-height));
+        inset-block-end: var(--site-footer-height);
     }
 
     .main-frame {
@@ -114,10 +168,11 @@ import Default from "@astrojs/starlight/components/PageFrame.astro";
             scroll-padding-top: calc(1.5rem + var(--sl-nav-height) + var(--wip-banner-height));
         }
 
-        /* Higher specificity than the theme's own `.right-sidebar` rules. */
+        /* Higher specificity than the theme's own `.right-sidebar` rules.
+           Stops above the site footer instead of covering it. */
         .right-sidebar-container .right-sidebar {
             top: var(--wip-banner-height);
-            height: calc(100vh - var(--wip-banner-height));
+            height: calc(100vh - var(--wip-banner-height) - var(--site-footer-height));
         }
     }
 

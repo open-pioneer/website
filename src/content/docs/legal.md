@@ -15,7 +15,7 @@ Deutschland
 Telefon: +49 251 59689 300
 Telefax: +49 251 590 697 05
 E-Mail: info@conterra.de
-Internet: [www.openpioneer.dev](https://www.openpioneer.dev)
+Internet: [www.open-pioneer.dev](https://www.open-pioneer.dev)
 
 Vertreten durch die alleinvertretungsberechtigten Geschäftsführer: Christian Elfers, Christian Heisig, Christian Sehlleier
 
@@ -34,7 +34,7 @@ Informationen zum Datenschutz finden Sie im Abschnitt [Datenschutzhinweise](#dat
 
 ## Datenschutzhinweise
 
-Diese Datenschutzerklärung gilt für die Nutzung der Webseite(n) www.openpioneer.dev, openpioneer.dev und open-pioneer.github.io/website/.
+Diese Datenschutzerklärung gilt für die Nutzung der Webseite(n) www.open-pioneer.dev, open-pioneer.dev und [open-pioneer.github.io/website/](https://open-pioneer.github.io/website/).
 
 ### 1 Name und Anschrift des Verantwortlichen
 
@@ -163,7 +163,7 @@ Die Erfassung der Daten zur Bereitstellung der Webseite und die Speicherung der 
 
 #### 6.1 Beschreibung und Umfang der Datenverarbeitung
 
-Auf unserer Internetseite ist eine Kontaktaufnahme über die bereitgestellte E-Mail-Adresse (contact@openpioneer.dev) möglich. In diesem Fall werden die mit der E-Mail übermittelten personenbezogenen Daten des Nutzers gespeichert.
+Auf unserer Internetseite ist eine Kontaktaufnahme über die bereitgestellte E-Mail-Adresse (contact@open-pioneer.dev) möglich. In diesem Fall werden die mit der E-Mail übermittelten personenbezogenen Daten des Nutzers gespeichert.
 
 #### 6.2 Zweck der Datenverarbeitung
 

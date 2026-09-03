@@ -42,7 +42,8 @@ export default defineConfig({
                 SocialIcons: "./src/components/overrides/social-icons.astro",
                 // Adds an invisible link to llms.txt at the top of every page, for AI agents.
                 Banner: "./src/components/overrides/banner.astro",
-                // Adds the "work in progress" notice above the header on every page.
+                // Adds the "work in progress" notice above the header, and the site footer
+                // with legal/security policy links below it, on every page.
                 PageFrame: "./src/components/overrides/page-frame.astro"
             },
             sidebar: [

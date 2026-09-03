@@ -18,14 +18,14 @@ Gemeldet werden sollten nur Schwachstellen, die tatsächlich ausnutzbar sind und
 Diese Richtlinie gilt für:
 
 - die von der Open-Pioneer-Trails-Community entwickelten und veröffentlichten Software-Pakete (u. a. unter [github.com/open-pioneer](https://github.com/open-pioneer))
-- die Projekt-Webseite(n) unter den Domains openpioneer.dev, www.openpioneer.dev und open-pioneer.github.io/website/
+- die Projekt-Webseite(n) unter den Domains open-pioneer.dev, www.open-pioneer.dev und [open-pioneer.github.io/website/](https://open-pioneer.github.io/website/)
 - die zur Bereitstellung dieser Angebote genutzte Infrastruktur (Repository-Hosting, Versionskontrolle, Build- und Release-Pipeline), soweit sie den Steward-Organisationen des Projekts zuzurechnen ist
 
 Anwendungen, die auf Basis von Open Pioneer Trails von Dritten entwickelt und betrieben werden, fallen nicht in den Geltungsbereich dieser Richtlinie. Schwachstellen in solchen Anwendungen sollten direkt an deren jeweiligen Betreiber gemeldet werden.
 
 ## Meldung einer Schwachstelle
 
-Bitte melden Sie vermutete Sicherheitslücken per E-Mail an [security@openpioneer.dev](mailto:security@openpioneer.dev).
+Bitte melden Sie vermutete Sicherheitslücken per E-Mail an [security@open-pioneer.dev](mailto:security@open-pioneer.dev).
 
 Ihre Meldung sollte idealerweise enthalten:
 
