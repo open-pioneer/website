@@ -48,7 +48,7 @@ Then, follow the instructions in [Creating a pull request](#creating-a-pull-requ
 Contributing to the Open Pioneer project requires signing a Contributor License Agreement (CLA) before source code can be merged.
 This can be done by your employer or by yourself.
 
-To obtain a copy of the CLA, please email to [contact@openpioneer.dev](mailto:contact@openpioneer.dev) (We do not have an automated process in place at this time).
+To obtain a copy of the CLA, please email to [contact@open-pioneer.dev](mailto:contact@open-pioneer.dev) (We do not have an automated process in place at this time).
 
 ## Set up the project
 

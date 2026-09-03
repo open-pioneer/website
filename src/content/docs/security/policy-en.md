@@ -21,14 +21,14 @@ Only vulnerabilities that are actually exploitable and pose a recognizable secur
 This policy applies to:
 
 - the software packages developed and published by the Open Pioneer Trails community (among others under [github.com/open-pioneer](https://github.com/open-pioneer))
-- the project website(s) under the domains openpioneer.dev, www.openpioneer.dev, and open-pioneer.github.io/website/
+- the project website(s) under the domains open-pioneer.dev, www.open-pioneer.dev, and [open-pioneer.github.io/website/](https://open-pioneer.github.io/website/)
 - the infrastructure used to provide these offerings (repository hosting, version control, build and release pipeline), insofar as it is attributable to the project's steward organizations
 
 Applications that are developed and operated by third parties on the basis of Open Pioneer Trails are not within the scope of this policy. Vulnerabilities in such applications should be reported directly to their respective operator.
 
 ## Reporting a vulnerability
 
-Please report suspected security vulnerabilities by email to [security@openpioneer.dev](mailto:security@openpioneer.dev).
+Please report suspected security vulnerabilities by email to [security@open-pioneer.dev](mailto:security@open-pioneer.dev).
 
 Your report should ideally include:
 

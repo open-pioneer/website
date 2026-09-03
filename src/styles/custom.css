@@ -12,3 +12,22 @@
         --sl-content-width: 68rem;
     }
 }
+
+/*
+ * Sticky footer: keep the site footer (legal links) pinned to the bottom of
+ * the viewport instead of letting it ride up on pages with little content
+ * (e.g. /about). The site footer is rendered as a sibling of `.page` (see
+ * the PageFrame override), so `body` only needs a single flex relationship:
+ * `.page` grows to fill the viewport, and the footer keeps its natural
+ * height at the end.
+ */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.page {
+    flex: 1;
+    min-height: 0;
+}
