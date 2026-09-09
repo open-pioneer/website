@@ -27,6 +27,14 @@ Anwendungen, die auf Basis von Open Pioneer Trails von Dritten entwickelt und be
 
 Bitte melden Sie vermutete Sicherheitslücken per E-Mail an [security@open-pioneer.dev](mailto:security@open-pioneer.dev).
 
+Alternativ können Schwachstellen über GitHub mitgeteilt werden. Dies geschieht pro Repository im Abschnitt Security and quality -> Private vulnerability reporting. Die folgende Liste ist nicht vollständig:
+
+- für die Webseite: [github.com/open-pioneer/website/security](https://github.com/open-pioneer/website/security)
+- für das Starter-Repository: [github.com/open-pioneer/trails-starter/security](https://github.com/open-pioneer/trails-starter/security)
+- für die Open Pioneer Trails core-packages: [github.com/open-pioneer/trails-core-packages/security](https://github.com/open-pioneer/trails-core-packages/security)
+- für die Open Pioneer Trails open-layers-base-packages: [github.com/open-pioneer/trails-openlayers-base-packages/security](https://github.com/open-pioneer/trails-openlayers-base-packages/security)
+- für die Build-Tools: [github.com/open-pioneer/trails-build-tools/security](https://github.com/open-pioneer/trails-build-tools/security)
+
 Ihre Meldung sollte idealerweise enthalten:
 
 - eine Beschreibung der Schwachstelle und der möglichen Auswirkungen

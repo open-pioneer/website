@@ -30,6 +30,14 @@ Applications that are developed and operated by third parties on the basis of Op
 
 Please report suspected security vulnerabilities by email to [security@open-pioneer.dev](mailto:security@open-pioneer.dev).
 
+Alternatively, vulnerabilities can be reported via GitHub. This is done per repository under Security and quality -> Private vulnerability reporting. The following list is not exhaustive:
+
+- for the website: [github.com/open-pioneer/website/security](https://github.com/open-pioneer/website/security)
+- for the starter repository: [github.com/open-pioneer/trails-starter/security](https://github.com/open-pioneer/trails-starter/security)
+- for the Open Pioneer Trails core packages: [github.com/open-pioneer/trails-core-packages/security](https://github.com/open-pioneer/trails-core-packages/security)
+- for the Open Pioneer Trails open-layers-base-packages: [github.com/open-pioneer/trails-openlayers-base-packages/security](https://github.com/open-pioneer/trails-openlayers-base-packages/security)
+- for the build tools: [github.com/open-pioneer/trails-build-tools/security](https://github.com/open-pioneer/trails-build-tools/security)
+
 Your report should ideally include:
 
 - a description of the vulnerability and its potential impact
