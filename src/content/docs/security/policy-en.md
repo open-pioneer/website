@@ -21,7 +21,7 @@ Only vulnerabilities that are actually exploitable and pose a recognizable secur
 This policy applies to:
 
 - the software packages developed and published by the Open Pioneer Trails community (among others under [github.com/open-pioneer](https://github.com/open-pioneer))
-- the project website(s) under the domains open-pioneer.dev, www.open-pioneer.dev, and [open-pioneer.github.io/website/](https://open-pioneer.github.io/website/)
+- the project website(s) under the domains [open-pioneer.dev](https://open-pioneer.dev), [www.open-pioneer.dev](https://www.open-pioneer.dev), and [open-pioneer.github.io/website/](https://open-pioneer.github.io/website/)
 - the infrastructure used to provide these offerings (repository hosting, version control, build and release pipeline), insofar as it is attributable to the project's steward organizations
 
 Applications that are developed and operated by third parties on the basis of Open Pioneer Trails are not within the scope of this policy. Vulnerabilities in such applications should be reported directly to their respective operator.

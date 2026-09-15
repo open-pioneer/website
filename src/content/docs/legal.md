@@ -15,7 +15,7 @@ Deutschland
 Telefon: +49 251 59689 300
 Telefax: +49 251 590 697 05
 E-Mail: info@conterra.de
-Internet: [www.open-pioneer.dev](https://www.open-pioneer.dev)
+Internet: [www.conterra.de](https://www.conterra.de)
 
 Vertreten durch die alleinvertretungsberechtigten Geschäftsführer: Christian Elfers, Christian Heisig, Christian Sehlleier
 
@@ -34,7 +34,7 @@ Informationen zum Datenschutz finden Sie im Abschnitt [Datenschutzhinweise](#dat
 
 ## Datenschutzhinweise
 
-Diese Datenschutzerklärung gilt für die Nutzung der Webseite(n) www.open-pioneer.dev, open-pioneer.dev und [open-pioneer.github.io/website/](https://open-pioneer.github.io/website/).
+Diese Datenschutzerklärung gilt für die Nutzung der Webseite(n) [www.open-pioneer.dev](https://www.open-pioneer.dev), [open-pioneer.dev](https://open-pioneer.dev) und [open-pioneer.github.io/website/](https://open-pioneer.github.io/website/).
 
 ### 1 Name und Anschrift des Verantwortlichen
 
@@ -129,35 +129,7 @@ Unbeschadet eines anderweitigen verwaltungsrechtlichen oder gerichtlichen Rechts
 
 ### 5 Bereitstellung der Webseite und Erstellung von Logfiles
 
-#### 5.1 Beschreibung und Umfang der Datenverarbeitung
-
-Bei jedem Aufruf unserer Internetseite erfasst unser System automatisiert Daten und Informationen vom Computersystem des aufrufenden Rechners. Folgende Daten werden hierbei erhoben:
-
-1. Informationen über den Browsertyp und die verwendete Version
-2. Das Betriebssystem des Nutzers
-3. Den Internet-Service-Provider des Nutzers
-4. Die IP-Adresse des Nutzers
-5. Datum und Uhrzeit des Zugriffs
-6. Websites, von denen das System des Nutzers auf unsere Internetseite gelangt (Referrer)
-7. Websites, die vom System des Nutzers über unsere Website aufgerufen werden
-
-Eine Speicherung dieser Daten zusammen mit anderen personenbezogenen Daten des Nutzers findet nicht statt.
-
-#### 5.2 Zweck der Datenverarbeitung
-
-Die vorübergehende Speicherung der IP-Adresse durch das System ist notwendig, um eine Auslieferung der Webseite an den Rechner des Nutzers zu ermöglichen. Die Speicherung in Logfiles erfolgt, um die Funktionsfähigkeit der Webseite sicherzustellen sowie zur Gewährleistung der Sicherheit unserer informationstechnischen Systeme. Eine Auswertung der Daten zu Marketingzwecken findet in diesem Zusammenhang nicht statt.
-
-#### 5.3 Rechtsgrundlage für die Datenverarbeitung
-
-Rechtsgrundlage für die vorübergehende Speicherung der Daten und der Logfiles ist Art. 6 Abs. 1 S. 1 lit. f DSGVO.
-
-#### 5.4 Dauer der Speicherung
-
-Die Daten werden gelöscht, sobald sie für die Erreichung des Zweckes ihrer Erhebung nicht mehr erforderlich sind. Im Falle der Speicherung der Daten in Logfiles ist dies nach spätestens sieben Tagen der Fall.
-
-#### 5.5 Widerspruchs- und Beseitigungsmöglichkeit
-
-Die Erfassung der Daten zur Bereitstellung der Webseite und die Speicherung der Daten in Logfiles ist für den Betrieb der Internetseite zwingend erforderlich. Es besteht folglich seitens des Nutzers keine Widerspruchsmöglichkeit.
+Es werden keine Logfiles angelegt und keine personenbezogenen Daten gespeichert, wenn Sie unsere Webseite besuchen. Die Webseite wird ausschließlich statisch bereitgestellt und es werden keine serverseitigen Skripte ausgeführt.
 
 ### 6 E-Mail-Kontakt
 
@@ -183,4 +155,4 @@ Der Nutzer hat jederzeit die Möglichkeit, seine Einwilligung zur Verarbeitung d
 
 ### 7 Hosting
 
-Die Webseite wird bei GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA (für Nutzer aus der EU/EWR: GitHub B.V.), im Rahmen des Dienstes „GitHub Pages" gehostet. Die Server erheben und speichern automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch übermittelt (vgl. Abschnitt 5 „Bereitstellung der Webseite und Erstellung von Logfiles"). Da GitHub, Inc. ein Unternehmen mit Sitz in den USA ist, kann es bei der Verarbeitung der Daten zu einer Übermittlung in ein Drittland kommen. GitHub ist Teilnehmer des EU-U.S. Data Privacy Framework, das ein angemessenes Datenschutzniveau für die Verarbeitung von Daten in den USA gewährleisten soll.
+Die Webseite wird bei GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA (für Nutzer aus der EU/EWR: GitHub B.V.), im Rahmen des Dienstes „GitHub Pages" gehostet. Die Server erheben und speichern automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch übermittelt. Da GitHub, Inc. ein Unternehmen mit Sitz in den USA ist, kann es bei der Verarbeitung der Daten zu einer Übermittlung in ein Drittland kommen. GitHub ist Teilnehmer des EU-U.S. Data Privacy Framework, das ein angemessenes Datenschutzniveau für die Verarbeitung von Daten in den USA gewährleisten soll.
