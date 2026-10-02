@@ -1,9 +1,7 @@
 ---
-title: HowToWriteTests
+title: How to write tests
 slug: trails-docs/tutorials/HowToWriteTests
 ---
-
-# How to write tests
 
 This document explains how to write a few different kinds of tests.
 

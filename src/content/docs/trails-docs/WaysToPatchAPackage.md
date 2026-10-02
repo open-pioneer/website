@@ -1,9 +1,7 @@
 ---
-title: WaysToPatchAPackage
+title: Ways to patch a package
 slug: trails-docs/WaysToPatchAPackage
 ---
-
-# Ways to patch a package
 
 This document gives an overview over different techniques to change the behavior of an existing package.
 

@@ -1,9 +1,7 @@
 ---
-title: HowToCreateAService
+title: How to create a service
 slug: trails-docs/tutorials/HowToCreateAService
 ---
-
-# How to create a service
 
 This tutorial will demonstrate some more advanced topics related to the creation of services.
 We recommend reading the simpler [How to use a service](./HowToUseAService.md) tutorial first.

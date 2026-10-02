@@ -1,9 +1,7 @@
 ---
-title: BestPractices
+title: Best practices and common issues
 slug: trails-docs/BestPractices
 ---
-
-# Best practices and common issues
 
 ## Best practices
 

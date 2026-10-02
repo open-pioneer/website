@@ -3,8 +3,6 @@ title: Introduction
 slug: trails-docs/Introduction
 ---
 
-# Introduction
-
 The Open Pioneer Trails framework supports the creation of client side web applications.
 It offers a simple architecture where an application can be assembled from a set of packages.
 Packages are reusable components that can be used in multiple applications and with different configuration.

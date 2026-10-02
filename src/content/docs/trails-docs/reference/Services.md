@@ -3,8 +3,6 @@ title: Services
 slug: trails-docs/reference/Services
 ---
 
-# Services
-
 Services are application components that implement one or more interfaces.
 Service instances are created automatically by the framework when required,
 and their dependencies will automatically be resolved prior to their construction.

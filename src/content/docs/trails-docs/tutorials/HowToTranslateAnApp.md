@@ -1,9 +1,7 @@
 ---
-title: HowToTranslateAnApp
+title: How to translate an app
 slug: trails-docs/tutorials/HowToTranslateAnApp
 ---
-
-# How to translate an app
 
 To show how we can use I18n in our Open Pioneer Trails apps, we will extend the empty app (at `src/apps/empty`).
 

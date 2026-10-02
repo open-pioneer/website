@@ -1,9 +1,7 @@
 ---
-title: HowToCreateAPackage
+title: How to create a package
 slug: trails-docs/tutorials/HowToCreateAPackage
 ---
-
-# How to create a package
 
 Packages are the building blocks of which an application is composed.
 They can contain code, UI components, styles, services, translation files etc.

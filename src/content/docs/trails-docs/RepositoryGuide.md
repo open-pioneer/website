@@ -1,9 +1,7 @@
 ---
-title: RepositoryGuide
+title: Guide to the repository
 slug: trails-docs/RepositoryGuide
 ---
-
-# Guide to the repository
 
 ## Overview
 

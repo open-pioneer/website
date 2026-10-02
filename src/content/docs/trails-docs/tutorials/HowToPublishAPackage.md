@@ -1,9 +1,7 @@
 ---
-title: HowToPublishAPackage
+title: How to publish a package
 slug: trails-docs/tutorials/HowToPublishAPackage
 ---
-
-# How to publish a package
 
 This tutorial describes how to share an Open Pioneer Trails package with other developers.
 You can skip this document if you're just working in the context of a single application.

@@ -1,9 +1,7 @@
 ---
-title: Package
+title: Package Reference
 slug: trails-docs/reference/Package
 ---
-
-# Package Reference
 
 ## Introduction
 

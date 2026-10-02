@@ -1,9 +1,7 @@
 ---
-title: HowToSupportDynamicConfig
+title: How to support dynamic configuration
 slug: trails-docs/tutorials/HowToSupportDynamicConfig
 ---
-
-# How to support dynamic configuration
 
 This tutorial describes how to support dynamic configuration in your app.
 

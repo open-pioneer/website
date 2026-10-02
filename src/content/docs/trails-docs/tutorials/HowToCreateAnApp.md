@@ -1,9 +1,7 @@
 ---
-title: HowToCreateAnApp
+title: How to create an app
 slug: trails-docs/tutorials/HowToCreateAnApp
 ---
-
-# How to create an app
 
 An app is a JavaScript or TypeScript package that provides a web component.
 The web component can in turn be used within a html file in the same project.

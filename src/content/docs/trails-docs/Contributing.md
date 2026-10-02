@@ -1,9 +1,7 @@
 ---
-title: Contributing
+title: Contribution guide
 slug: trails-docs/Contributing
 ---
-
-# Contribution guide
 
 Thank you for your interest in contributing to our projects!
 Read our [Code of Conduct](https://github.com/open-pioneer/.github/blob/main/CODE_OF_CONDUCT.md) to keep our community approachable and respectable.

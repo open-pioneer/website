@@ -1,9 +1,7 @@
 ---
-title: Versions
+title: Versions Overview
 slug: trails-docs/reference/Versions
 ---
-
-# Versions Overview
 
 ## Introduction
 

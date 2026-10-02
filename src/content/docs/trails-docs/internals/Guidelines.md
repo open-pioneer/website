@@ -1,9 +1,7 @@
 ---
-title: Guidelines
+title: Development Guidelines
 slug: trails-docs/internals/Guidelines
 ---
-
-# Development Guidelines
 
 ## Definitions of Done
 

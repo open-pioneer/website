@@ -1,9 +1,6 @@
 ---
-title: README
-slug: trails-docs
+title: Open Pioneer Trails documentation
 ---
-
-# Open Pioneer Trails documentation
 
 ## Table of contents
 

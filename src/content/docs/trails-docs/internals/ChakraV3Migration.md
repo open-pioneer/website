@@ -1,9 +1,7 @@
 ---
-title: ChakraV3Migration
+title: Migration to Chakra V3
 slug: trails-docs/internals/ChakraV3Migration
 ---
-
-# Migration to Chakra V3
 
 This document contains a collection of resources that may help you adapt your app to Chakra V3.
 

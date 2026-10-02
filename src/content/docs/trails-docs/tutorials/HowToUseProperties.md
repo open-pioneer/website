@@ -1,9 +1,7 @@
 ---
-title: HowToUseProperties
+title: How to use properties
 slug: trails-docs/tutorials/HowToUseProperties
 ---
-
-# How to use properties
 
 Properties are configurable values associated with a [Package](../reference/Package.md).
 Packages can use their [build.config.mjs](../reference/Package.md#properties) to define which properties they support and assign some optional default values.

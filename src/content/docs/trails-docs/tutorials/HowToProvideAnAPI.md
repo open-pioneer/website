@@ -1,9 +1,7 @@
 ---
-title: HowToProvideAnAPI
+title: How to provide an API
 slug: trails-docs/tutorials/HowToProvideAnAPI
 ---
-
-# How to provide an API
 
 An app is a package that provides a web component. The web component is usually embedded into a host site.
 In some use cases it can be beneficial to implement communication between the app and the surrounding site.

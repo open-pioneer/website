@@ -1,9 +1,7 @@
 ---
-title: GettingStarted
+title: Getting started
 slug: trails-docs/GettingStarted
 ---
-
-# Getting started
 
 ## System requirements
 

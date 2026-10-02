@@ -1,9 +1,7 @@
 ---
-title: HowToUseAService
+title: How to use a service
 slug: trails-docs/tutorials/HowToUseAService
 ---
-
-# How to use a service
 
 Services are one of the central mechanisms of code sharing in an Open Pioneer Trails client application.
 Instead of using global variables (or singletons), services are started per-application instance.
