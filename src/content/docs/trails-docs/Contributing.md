@@ -48,7 +48,7 @@ Then, follow the instructions in [Creating a pull request](#creating-a-pull-requ
 Contributing to the Open Pioneer project requires signing a Contributor License Agreement (CLA) before source code can be merged.
 This can be done by your employer or by yourself.
 
-To obtain a copy of the CLA, please email to [contact@open-pioneer.dev](mailto:contact@open-pioneer.dev) (We do not have an automated process in place at this time).
+To obtain a copy of the CLA, please email to [contact@openpioneer.dev](mailto:contact@openpioneer.dev) (We do not have an automated process in place at this time).
 
 ## Set up the project
 
@@ -105,7 +105,7 @@ $ pnpm dev
 
 - Paths to JavaScript modules can get rather long on windows in combination with PNPM. If you see weird errors (I/O errors, file not found, etc.) when you're trying to install dependencies or run the development server, try moving the git repository to a shorter path on disk (less nesting, shorter name).
 
-- Either use eslint's autofix feature or your IDE to ensure that your files contain license headers.
+- Either use Oxlint's autofix feature or your IDE to ensure that your files contain license headers.
 
     The following snippet can be used in VSCode.
     Create a snippet via "Ctrl+Shift+P --> Configure User Snippets" (either globally or in this project).

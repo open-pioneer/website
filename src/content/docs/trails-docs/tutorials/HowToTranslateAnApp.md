@@ -47,7 +47,7 @@ messages:
 By default, the app uses the browser settings or system default for determining the locale.
 If your browser locale is set to `de` you should see the values from `de.yaml` (maybe you will need to restart the dev server).
 
-![i18n howto app](./HowToTranslateAnApp_App.png)
+<img src="./HowToTranslateAnApp_App.png" alt="i18n howto app" style="border: 1px solid black;" />
 
 To demonstrate the multi-language support and force a language of our choice, we need to modify the `app.ts`:
 

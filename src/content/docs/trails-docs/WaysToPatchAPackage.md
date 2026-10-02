@@ -60,6 +60,22 @@ For more details, see
 - [How to use properties](./tutorials/HowToUseProperties.md)
 - [Package reference](./reference/Package.md)
 
+### I18n messages
+
+Just like properties, an app can also overwrite the i18n messages used by other packages.
+For example:
+
+```yaml
+# src/apps/your-app/i18n/en.yaml
+messages:
+    # ...
+
+overrides:
+    # Overrides `message.id` in "some-package-name"
+    some-package-name:
+        message.id: "Replacement message"
+```
+
 For more details, see the [I18N format reference](./reference/I18nFormat.md).
 
 ### Services
@@ -219,7 +235,7 @@ The result can be observed in the `map-sample` application:
 
 pnpm computes the changes made by your edits and saves them as a patch:
 
-```diff
+```patch
 # patches/@open-pioneer__basemap-switcher@0.4.2.patch
 diff --git a/BasemapSwitcher.js b/BasemapSwitcher.js
 index e1b45ef281a5a670a9137b85b0f0ea81c916776f..869e78329fcbf863199669508f1c7ab23a822dd8 100644
@@ -460,7 +476,7 @@ NOTE:
 - When you're patching a built package, it is probably best to remove source maps for files that you have edited.
   These can be misleading, since they reflect the _old_ content of the file.
   Source maps are either located at the end of the file (as a comment) or as a separate `.map` file.
-- You may have to adjust your TypeScript or ESLint rules (e.g. update `.eslintignore` to ignore the patched package).
+- You may have to adjust your TypeScript or Oxlint (ignore) rules.
 - When copying a built package into the source directory, our Vite plugin will print a warning:
 
     ```text
