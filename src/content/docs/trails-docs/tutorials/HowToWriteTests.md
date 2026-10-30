@@ -195,7 +195,7 @@ To create a browser mode test, create a test file using the `.browser.test.*` fi
 In your test file you can import the `render` function from [vitest-browser-react](https://vitest.dev/api/browser/react.html) and use it to mount DOM elements.
 The following example shows how to render a simple component.
 It is wrapped in the `PackageContextProvider`, that is needed to inject services and properties into the component tree.
-The example also demonstrates how to use actual i18n values in the rendered components (for more details see [Use real i18n messages in tests](#Use-real-i18n-messages-in-tests)).
+The example also demonstrates how to use actual i18n values in the rendered components (for more details see [Use real i18n messages in tests](#use-real-i18n-messages-in-tests)).
 
 ```tsx
 import { PackageContextProvider } from "@open-pioneer/test-utils/react";
