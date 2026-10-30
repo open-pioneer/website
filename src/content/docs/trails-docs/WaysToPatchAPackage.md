@@ -424,7 +424,7 @@ Either the source code version (from [here](https://github.com/open-pioneer/trai
 
 To indicate that the package has been modified, we simply change the version a bit:
 
-```json
+```jsonc
 // src/packages/custom-runtime/package.json
 {
     "name": "@open-pioneer/runtime",
