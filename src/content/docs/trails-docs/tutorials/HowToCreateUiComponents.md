@@ -1,9 +1,7 @@
 ---
-title: HowToCreateUiComponents
+title: How to create UI components
 slug: trails-docs/tutorials/HowToCreateUiComponents
 ---
-
-# How to create UI components
 
 When developing applications with the Open Pioneer Trails client framework, [React](https://reactjs.org/) can be used to create UI components.
 We can also use pre-defined components from the [Chakra UI](https://chakra-ui.com/) framework.
@@ -47,6 +45,7 @@ In this case, the app's entire UI is defined in `AppUI.tsx`:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
+
 // (1)
 import { Container, Heading, Text, chakra } from "@chakra-ui/react";
 import { useIntl, useService } from "open-pioneer:react-hooks";
@@ -96,6 +95,7 @@ For this example, we will create a button that has a `label` and tracks the numb
 
 ```tsx
 // src/apps/empty/AppUI.tsx
+
 import { Container, Heading, Text, chakra, Button } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -141,6 +141,7 @@ Now, use the new button from the `AppUI` component:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
+
 import { Container, Button, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -169,7 +170,6 @@ For example, to embed an image called `my-image.png` from the same directory as 
 
 ```tsx
 import { Image } from "@chakra-ui/react";
-
 // Import image as URL
 import myImageUrl from "./my-image.png";
 

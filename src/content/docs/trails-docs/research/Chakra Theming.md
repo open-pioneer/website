@@ -1,9 +1,7 @@
 ---
-title: Chakra Theming
+title: Hints Chakra Theming
 slug: trails-docs/research/Chakra Theming
 ---
-
-# Hints Chakra Theming
 
 (applies to Chakra UI version `2.8.0`)
 

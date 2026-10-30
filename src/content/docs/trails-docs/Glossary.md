@@ -3,8 +3,6 @@ title: Glossary
 slug: trails-docs/Glossary
 ---
 
-# Glossary
-
 ## App
 
 An app is a [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components) produced by this framework.

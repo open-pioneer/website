@@ -1,9 +1,7 @@
 ---
-title: ServiceLayer
+title: Service Layer
 slug: trails-docs/internals/ServiceLayer
 ---
-
-# Service Layer
 
 This document contains details about the implementation of the Open Pioneer Trails runtime's service layer.
 It should aid developers to gain an understanding of the implementation in order to maintain or extend it.

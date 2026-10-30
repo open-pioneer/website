@@ -1,9 +1,7 @@
 ---
-title: HowToDeployAnApp
+title: How to deploy an app
 slug: trails-docs/tutorials/HowToDeployAnApp
 ---
-
-# How to deploy an app
 
 Building apps and sites with this framework always produces a set of static files, which can be easily deployed on any http server or CDN (content delivery network).
 

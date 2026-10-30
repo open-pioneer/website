@@ -3,8 +3,6 @@ title: Theming
 slug: trails-docs/reference/Theming
 ---
 
-# Theming
-
 When developing Open Pioneer Trails applications, arbitrary [React](https://reactjs.org/) components can be used to create the user interface.
 However, we mostly use pre-defined components from the Chakra UI framework.
 Chakra UI comes with a theming mechanism that is re-used in Open Pioneer Trails and briefly explained here.

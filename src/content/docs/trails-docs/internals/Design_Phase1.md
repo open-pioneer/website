@@ -1,9 +1,7 @@
 ---
-title: Design_Phase1
+title: Design
 slug: trails-docs/internals/Design_Phase1
 ---
-
-# Design
 
 The purpose of this project is building web applications from a set of composable building blocks.
 
@@ -188,13 +186,12 @@ The following example shows an `app.ts` file that demonstrates the integration o
 The only 'magic' behavior is provided as an import of a virtual module `pioneer:app`.
 
 ```js
+// Web component factory function imported from the runtime package.
+import { createCustomElement } from "@open-pioneer/runtime";
 // Virtual module supported in app.{js,ts} files, implemented via plugin.
 // The imports contain the generated data structures (and references to code) mentioned in step 2.
 // The vite plugin is responsible for generating data structures in the appropriate format understood by the runtime.
 import { bundles, styles } from "pioneer:app";
-
-// Web component factory function imported from the runtime package.
-import { createCustomElement } from "@open-pioneer/runtime";
 
 // Configuration object accepted by the runtime environment; `bundles` and `styles` are simply passed through.
 // This would also be the appropriate place to implement additional features (such as custom configuration options, or
@@ -283,7 +280,6 @@ The utility should perform dependency injection in the same way as the runtime, 
 ```js
 // DRAFT API
 import { createService } from "@open-pioneer/runtime-test-utils";
-
 // Requires `some.Service` as `foo`.
 import { MyService } from "./MyService";
 

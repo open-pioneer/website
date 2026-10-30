@@ -3,8 +3,6 @@ title: Services
 slug: trails-docs/reference/Services
 ---
 
-# Services
-
 Services are application components that implement one or more interfaces.
 Service instances are created automatically by the framework when required,
 and their dependencies will automatically be resolved prior to their construction.
@@ -262,8 +260,8 @@ The properties and methods from the type are merged with the service's lifecycle
 
 ```ts
 // ExampleService.ts
-import { Service } from "@open-pioneer/runtime";
 
+import { Service } from "@open-pioneer/runtime";
 // The ./api file contains the public interface
 import { MyService } from "./api";
 
@@ -279,9 +277,10 @@ It accepts an optional `References` type parameter with the types of the expecte
 
 ```ts
 // ExampleService.ts
+
 import { Service, ServiceOptions } from "@open-pioneer/runtime";
-import { MyService } from "./api";
 import { SomeRefType } from "otherPackage/api";
+import { MyService } from "./api";
 
 interface References {
     // someRef is actually declared in the build.config.mjs,
@@ -307,6 +306,7 @@ The `DeclaredService` type does not add any required properties or methods to yo
 
 ```ts
 // somePackage/api.ts
+
 import { DeclaredService } from "@open-pioneer/runtime";
 
 /** All implementations of `"hello.HelloWorldService"` must conform to this interface. */
@@ -322,6 +322,7 @@ That information can be used in React components using the interface via `useSer
 
 ```tsx
 // ExampleComponent.tsx
+
 function ExampleComponent() {
     // Would report an error via TypeScript if we accidentally mistyped the string argument.
     const service = useService<HelloWorldService>("hello.HelloWorldService");
@@ -340,6 +341,7 @@ In your package:
 
 ```ts
 // some-logger-package/api.ts
+
 /** Properties accepted by this package */
 export interface LoggingProperties {
     /** Log level for the shared logger. */
@@ -360,10 +362,11 @@ In an app:
 
 ```ts
 // your-app/app.ts
+
 import { createCustomElement } from "@open-pioneer/runtime";
-import { AppUI } from "./AppUI";
 import * as appMetadata from "open-pioneer:app";
 import { createLoggingProperties } from "some-logger-package";
+import { AppUI } from "./AppUI";
 
 const element = createCustomElement({
     component: AppUI,

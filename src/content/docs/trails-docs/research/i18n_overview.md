@@ -1,9 +1,7 @@
 ---
-title: i18n_overview
+title: I18N Comparsion
 slug: trails-docs/research/i18n_overview
 ---
-
-# I18N Comparsion
 
 ## Criteria
 

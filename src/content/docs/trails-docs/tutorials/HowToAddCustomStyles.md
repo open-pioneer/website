@@ -1,9 +1,7 @@
 ---
-title: HowToAddCustomStyles
+title: How to add custom styles
 slug: trails-docs/tutorials/HowToAddCustomStyles
 ---
-
-# How to add custom styles
 
 In this example, we will enhance the empty app (at `src/apps/empty`) to include custom css rules.
 We intend to add a custom class to the app's container and define that class in a `.css` file.

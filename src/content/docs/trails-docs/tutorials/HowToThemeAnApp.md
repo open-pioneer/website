@@ -1,9 +1,7 @@
 ---
-title: HowToThemeAnApp
+title: How to theme an app
 slug: trails-docs/tutorials/HowToThemeAnApp
 ---
-
-# How to theme an app
 
 This "how to" shows how to create a custom theme for an app. To learn more about the theming
 mechanism in Open Pioneer Trails apps, refer to [Theming](../reference/Theming.md).
@@ -27,11 +25,12 @@ Add the following content to your file:
 
 ```ts
 // src/apps/empty/theme/theme.ts
+
 // (1)
 import { mergeConfigs } from "@chakra-ui/react";
+import { sliderAnatomy } from "@chakra-ui/react/anatomy";
 // (2)
 import { config as defaultTrailsConfig } from "@open-pioneer/base-theme";
-import { sliderAnatomy } from "@chakra-ui/react/anatomy";
 
 // (3)
 export const config = mergeConfigs(

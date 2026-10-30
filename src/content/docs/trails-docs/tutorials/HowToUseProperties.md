@@ -1,9 +1,7 @@
 ---
-title: HowToUseProperties
+title: How to use properties
 slug: trails-docs/tutorials/HowToUseProperties
 ---
-
-# How to use properties
 
 Properties are configurable values associated with a [Package](../reference/Package.md).
 Packages can use their [build.config.mjs](../reference/Package.md#properties) to define which properties they support and assign some optional default values.
@@ -105,7 +103,7 @@ import { useService } from "open-pioneer:react-hooks";
 
 export function AppUI() {
     // TypeScript integration skipped in this tutorial, see "How to create a service" tutorial.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
     const searchService = useService<any>("search-service.SearchService");
     return (
         <Container>
@@ -180,7 +178,7 @@ import { Button, Container } from "@chakra-ui/react";
 import { useService } from "open-pioneer:react-hooks";
 
 export function AppUI() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
     const searchService = useService<any>("search-service.SearchService");
     return (
         <Container>

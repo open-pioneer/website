@@ -1,8 +1,6 @@
 ---
-title: README
+title: Open Pioneer Trails documentation
 ---
-
-# Open Pioneer Trails documentation
 
 ## Table of contents
 
@@ -34,13 +32,14 @@ title: README
     - [Package Reference](./reference/Package.md)
     - [I18N format](./reference/I18nFormat.md)
     - [Services](./reference/Services.md)
+    - [Versions Overview](./reference/Versions.md)
     - [Chakra Theming](./reference/Theming.md)
 
 - Internal Documentation
     - [Design (Phase 1)](./internals/Design_Phase1.md)
     - [Design (Phase 2)](./internals/Design_Phase2.md)
     - [Service layer](./internals/ServiceLayer.md)
-    - [Build tools](./internals/BuildTools.md)
+    - [Build process](./internals/BuildProcess.md)
     - [React integration](./internals/ReactIntegration.md)
     - [Development Guidelines](./internals/Guidelines.md)
     - [Chakra V3 Migration](./internals/ChakraV3Migration.md)

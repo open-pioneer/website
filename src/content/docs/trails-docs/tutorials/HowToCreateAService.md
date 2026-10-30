@@ -1,9 +1,7 @@
 ---
-title: HowToCreateAService
+title: How to create a service
 slug: trails-docs/tutorials/HowToCreateAService
 ---
-
-# How to create a service
 
 This tutorial will demonstrate some more advanced topics related to the creation of services.
 We recommend reading the simpler [How to use a service](./HowToUseAService.md) tutorial first.
@@ -101,8 +99,9 @@ Now create the test file:
 
 ```ts
 // src/packages/math/MathServiceImpl.test.ts
-import { it, expect } from "vitest";
+
 import { createService } from "@open-pioneer/test-utils/services";
+import { it, expect } from "vitest";
 import { MathServiceImpl } from "./MathServiceImpl";
 
 it("multiplies two numbers", async () => {
@@ -180,7 +179,7 @@ export function AppUI() {
     const [leftValue, setLeftValue] = useState("3");
     const [rightValue, setRightValue] = useState("4");
     const [result, setResult] = useState<number | undefined>();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
     const service = useService("math.MathService") as any; // (1)
     const onMultiplyClicked = () => {
         setResult(service.multiply(leftValue, rightValue)); // (2)
@@ -386,8 +385,9 @@ We will update the test with an empty array and, while we're at it, add a test f
 
 ```ts
 // src/packages/MathServiceImpl.test.ts
-import { it, expect } from "vitest";
+
 import { createService } from "@open-pioneer/test-utils/services";
+import { it, expect } from "vitest";
 import { MathServiceImpl } from "./MathServiceImpl";
 
 it("multiplies two numbers", async () => {
@@ -501,8 +501,9 @@ For this example, we'll implement the class directly in the `services.ts`:
 
 ```ts
 // src/apps/empty/services.ts
-import { MathServiceExtension } from "math";
+
 import { createLogger } from "@open-pioneer/core";
+import { MathServiceExtension } from "math";
 import { sourceId } from "open-pioneer:source-info";
 
 const LOG = createLogger(sourceId);

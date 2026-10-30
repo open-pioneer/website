@@ -1,9 +1,7 @@
 ---
-title: ReactIntegration
+title: React Integration
 slug: trails-docs/internals/ReactIntegration
 ---
-
-# React Integration
 
 This framework currently requires all UI components to be written using [React](https://reactjs.org/).
 
