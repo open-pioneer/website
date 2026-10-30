@@ -189,7 +189,7 @@ catalogs:
       specifier: ^1.90.0
       version: 1.90.0
     satteri:
-      specifier: ^0.11.4
+      specifier: ^0.11.5
       version: 0.11.6
     sharp:
       specifier: ^0.35.5
