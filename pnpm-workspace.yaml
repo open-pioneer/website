@@ -17,7 +17,7 @@ catalog:
 
   #devDependencies
   "@tony.ganchev/eslint-plugin-header": "^3.4.4"
-  "oxfmt": "^0.62.0"
+  "oxfmt": "^0.75.0"
   "oxlint": "^1.90.0"
   "typescript": "^7.0.2"
 
