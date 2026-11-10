@@ -1,47 +1,24 @@
 ---
-title: Open Pioneer Trails documentation
+title: Introduction
 ---
 
-## Table of contents
+The Open Pioneer Trails framework supports the creation of client side web applications.
+It offers a simple architecture where an application can be assembled from a set of packages.
+Packages are reusable components that can be used in multiple applications and with different configuration.
+When an application is built, it can be deployed either as a single (or multi-) page application or as an easily embeddable Web Component.
 
-- [Introduction](./Introduction.md)
-- [Getting started](./GettingStarted.md)
-- [Repository guide](./RepositoryGuide.md)
-- [Contribution guide](./Contributing.md)
+To get started developing an application, head over to [Getting Started](./GettingStarted.md).
 
-- Tutorials
-    - [How to create an app](./tutorials/HowToCreateAnApp.md)
-    - [How to deploy an app](./tutorials/HowToDeployAnApp.md)
-    - [How to create a package](./tutorials/HowToCreateAPackage.md)
-    - [How to use a service](./tutorials/HowToUseAService.md)
-    - [How to create a service](./tutorials/HowToCreateAService.md)
-    - [How to create UI components](./tutorials/HowToCreateUiComponents.md)
-    - [How to theme an app](./tutorials/HowToThemeAnApp.md)
-    - [How to add custom styles](./tutorials/HowToAddCustomStyles.md)
-    - [How to translate an App](./tutorials/HowToTranslateAnApp.md)
-    - [How to use properties](./tutorials/HowToUseProperties.md)
-    - [How to support dynamic configuration](./tutorials/HowToSupportDynamicConfig.md)
-    - [How to provide an API](./tutorials/HowToProvideAnAPI.md)
-    - [How to publish a package](./tutorials/HowToPublishAPackage.md)
-    - [How to write tests](./tutorials/HowToWriteTests.md)
+## Technology Stack
 
-- [Best practices and common issues](./BestPractices.md)
-- [Ways to patch a package](./WaysToPatchAPackage.md)
+This project is built on various high quality projects from the open source community:
 
-- Reference
-    - [Package Reference](./reference/Package.md)
-    - [I18N format](./reference/I18nFormat.md)
-    - [Services](./reference/Services.md)
-    - [Versions Overview](./reference/Versions.md)
-    - [Chakra Theming](./reference/Theming.md)
-
-- Internal Documentation
-    - [Design (Phase 1)](./internals/Design_Phase1.md)
-    - [Design (Phase 2)](./internals/Design_Phase2.md)
-    - [Service layer](./internals/ServiceLayer.md)
-    - [Build process](./internals/BuildProcess.md)
-    - [React integration](./internals/ReactIntegration.md)
-    - [Development Guidelines](./internals/Guidelines.md)
-    - [Chakra V3 Migration](./internals/ChakraV3Migration.md)
-
-- [Glossary](./Glossary.md)
+- [Vite](https://vitejs.dev/) is used as the development environment and application bundler.
+- [Vitest](https://vitest.dev/) runs our tests.
+- [React](https://reactjs.org/) provides the foundation of our UI.
+- We use accessible UI Components from [Chakra UI](https://chakra-ui.com/).
+- Applications can support multiple languages by using [FormatJS](https://formatjs.io/).
+- Framework Code is written in [TypeScript](https://www.typescriptlang.org/).
+  We recommend, but do not require, TypeScript for application code as well.
+- [PNPM](https://pnpm.io/) is our package manager.
+- Finally, applications are shipped as [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).

@@ -48,10 +48,9 @@ export default defineConfig({
             },
             sidebar: [
                 {
-                    label: "Technical documentation",
+                    label: "Documentation",
                     items: [
-                        { label: "Table of contents", link: "/trails-docs/" },
-                        { label: "Introduction", link: "/trails-docs/Introduction" },
+                        { label: "Introduction", link: "/trails-docs" },
                         { label: "Getting started", link: "/trails-docs/GettingStarted" },
                         { label: "Repository guide", link: "/trails-docs/RepositoryGuide" },
                         { label: "Contribution guide", link: "/trails-docs/Contributing" },
