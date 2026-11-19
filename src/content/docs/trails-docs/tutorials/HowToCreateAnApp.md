@@ -153,7 +153,8 @@ Vite derives the site's URL from the `index.html` file's path in the source dire
 
 ## Including static assets
 
-Vite has out of the box support for two ways to include static assets:
+There are three ways to include static assets.
+The first two are supported by Vite out of the box, the third one is provided by Open Pioneer Trails:
 
 - **Importing static assets**: You can import the content of files (or URLs _to_ the content) into your source code.
 
@@ -213,17 +214,67 @@ Vite has out of the box support for two ways to include static assets:
 
     For more details, see [Vite's documentation on public assets](https://vite.dev/guide/assets.html#the-public-directory).
 
+- **Referencing public assets of a package**: Trails packages can also defined public assets of their own.
+  These files are copied to the output directory without any modification, just like the files in Vite's public directory, but they stay with their package:
+  an application that uses the package automatically receives the package's public assets, even if the package was installed from a registry.
+
+    To declare public assets, configure a directory in the package's `build.config.mjs`:
+
+    ```js
+    // src/packages/my-package/build.config.mjs
+    import { defineBuildConfig } from "@open-pioneer/build-support";
+
+    export default defineBuildConfig({
+        publicAssets: "public" // (1)
+    });
+    ```
+
+    ```ts
+    // src/packages/my-package/someFile.ts
+    import { getPublicAssetUrl } from "open-pioneer:assets"; // (2)
+
+    // (3)
+    const configUrl = getPublicAssetUrl("my-config-file.json");
+    const response = await fetch(configUrl);
+    const config = await response.json();
+    ```
+
+    - **(1)**
+      Declares all files in `src/packages/my-package/public` as public assets of the package.
+
+    - **(2)**
+      The `open-pioneer:assets` module provides the URLs to the public assets of the _current_ package.
+
+    - **(3)**
+      Returns the URL of the file `src/packages/my-package/public/my-config-file.json`.
+      The path used as an argument is relative to the root of the package's public assets.
+
+        During development, Vite's dev server will serve the current content of that file.
+        When building for production, the file will be _copied_ to a package specific location in the `dist/www` directory and the URL will point to that file instead.
+
+    After building the app, the output directory contains the public assets of all packages used by the app:
+
+    ```text
+    dist/www
+    ├── packages
+    │   └── my-package
+    │       └── my-config-file.json
+    └── ...
+    ```
+
+    Always use the `open-pioneer:assets` module to obtain their URLs: the specific location of the files in the output directory (the `packages` directory in this case) could be subject to a configuration option in the future.
+
+    For more details, see the reference for [`publicAssets`](../reference/Package.md#publicassets).
+
 ### When to use which approach
 
 - Use static assets if you only need the static data at build time. This should be the most common case.
 - Use public assets if you care about the file's location on your web server.
 - Use public assets if the file is meant to be edited to change the behavior of the application without rebuilding it.
+- Use public assets of a package if the files belong to a reusable package instead of the project, or if you want to keep your public assets organized into packages.
 
 > NOTE: Static assets work everywhere, even as part of a published package.
-> Note that you may have to configure `assets` in your package's `build.config.mjs`, see [`publishConfig.assets](../reference/Package.md#publishconfigassets).
-
-> NOTE: A published package cannot provide public assets at this time (Vite's mechanism only works for _apps_).
-> This requirement is tracked [here](https://github.com/open-pioneer/trails-build-tools/issues/60), let us know if you need that feature.
+> Note that you may have to configure `assets` in your package's `build.config.mjs`, see [`publishConfig.assets`](../reference/Package.md#publishconfigassets).
 
 ## Building the site
 

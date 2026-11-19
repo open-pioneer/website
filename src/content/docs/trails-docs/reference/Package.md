@@ -60,6 +60,7 @@ export default defineBuildConfig({});
 interface BuildConfig {
     entryPoints?: string | string[];
     styles?: string;
+    publicAssets?: string | PublicAssetDir[];
     i18n?: string[];
     services?: Record<string, ServiceConfig>;
     servicesModule?: string;
@@ -111,6 +112,52 @@ export default defineBuildConfig({
     styles: "./styles.css"
 });
 ```
+
+#### `publicAssets`
+
+One or more directories that contain the _public assets_ of the package.
+Public assets are copied to the output directory of an application that uses the package: the files are not modified and they keep their original file names.
+
+```ts
+interface PublicAssetDir {
+    src: string;
+    dest: string;
+}
+```
+
+- `src` is the directory containing the files, relative to the package's directory.
+- `dest` is the location of these files below the root of the package's public assets (`"."` for the root itself).
+
+A plain string is short for a single directory with `dest: "."`.
+If multiple directories provide the same file, the file from the directory that is listed first is used.
+
+The URLs of a package's public assets can be obtained at runtime by importing `publicAssetsUrl` or `getPublicAssetUrl()` from the `open-pioneer:assets` module.
+
+> NOTE: Files and directories with names starting with `.` are always ignored for security reasons.
+
+Example:
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    publicAssets: "public"
+});
+```
+
+```js
+// build.config.mjs
+export default defineBuildConfig({
+    publicAssets: [
+        { src: "public", dest: "." },
+        { src: "./node_modules/third-party-lib/cdn", dest: "third-party-lib" }
+    ]
+});
+```
+
+See also:
+
+- [Including static assets](../tutorials/HowToCreateAnApp.md#including-static-assets) for an introduction to public assets.
+- [How to publish a package](../tutorials/HowToPublishAPackage.md#package-compilation) for the restrictions that apply to published packages.
 
 #### `i18n`
 
@@ -428,6 +475,7 @@ export interface PublishConfig {
     sourceMaps?: boolean;
     strict?: boolean;
     validation?: ValidationOptions;
+    packageFormatTarget?: "1.0" | "1.1" | "1.2";
 }
 ```
 
@@ -490,6 +538,17 @@ export interface ValidationOptions {
     requireChangelog?: boolean;
 }
 ```
+
+#### `publishConfig.packageFormatTarget`
+
+The version of the package metadata format used for the published package. Defaults to `"1.0"`.
+
+Some features require a newer version of the format:
+
+- `"1.1"` enables the `open-pioneer:deployment` module.
+- `"1.2"` enables [`publicAssets`](#publicassets) and the `open-pioneer:assets` module.
+
+An application that uses the published package needs a version of the Vite plugin that supports the chosen format, see [Versions](./Versions.md#vite-plugin).
 
 ## Service definition
 
