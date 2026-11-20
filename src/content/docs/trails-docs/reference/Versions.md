@@ -108,6 +108,7 @@ Notes:
 
 | Since Version | Vite Version(s) | Package Metadata Versions | Runtime Metadata Version(s) |
 | ------------- | --------------- | ------------------------- | --------------------------- |
+| 7.2.0         | ^8.0.0          | 1.0.x, 1.1.x, 1.2.x       | 1.0.x, 1.1.x                |
 | 6.0.0         | ^8.0.0          | 1.0.x, 1.1.x              | 1.0.x, 1.1.x                |
 
 Notes:
@@ -119,21 +120,23 @@ Notes:
 
 | Since Version | Package Metadata Version(s) |
 | ------------- | --------------------------- |
+| 4.1.0         | 1.0.x, 1.1.x, 1.2.x         |
 | 3.1.0         | 1.0.x, 1.1.x                |
 
 Notes:
 
 - The package metadata version generated for a package can be configured in the `build.config.mjs` file.
   Certain newer features may require using a newer metadata version, which may require users to update their vite plugin in order to use that package.
-- To publish packages with a specific metadata version, use the `publishConfig.packageFormatTarget` option in `build.config.mjs` (see [Docs](https://github.com/open-pioneer/trails-build-tools/blob/60024a4a57b210dc51b059b42fa801b06fb7aa4f/packages/build-support/index.d.ts#L299-L307)).
+- To publish packages with a specific metadata version, use the `publishConfig.packageFormatTarget` option in `build.config.mjs` (see [Reference](./Package.md#publishconfigpackageformattarget)).
 
 ### Package Metadata
 
-| Version | Comment                                                                                                                       |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| 1.1.0   | Support for the `open-pioneer:deployment` module (support introduced with @open-pioneer/vite-plugin-pioneer@6.0.0).           |
-| 1.0.1   | Transports the `runtimeMeta` field, used to detect which runtime metadata format version is supported by the runtime package. |
-| 1.0.0   | Original version used for all previous releases.                                                                              |
+| Version | Comment                                                                                                                                       |
+| ------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1.2.0   | Support for public assets of packages and the `open-pioneer:assets` module (support introduced with @open-pioneer/vite-plugin-pioneer@7.2.0). |
+| 1.1.0   | Support for the `open-pioneer:deployment` module (support introduced with @open-pioneer/vite-plugin-pioneer@6.0.0).                           |
+| 1.0.1   | Transports the `runtimeMeta` field, used to detect which runtime metadata format version is supported by the runtime package.                 |
+| 1.0.0   | Original version used for all previous releases.                                                                                              |
 
 For more details about the metadata format, see [packageMetadata/v1.ts](https://github.com/open-pioneer/trails-build-tools/blob/60024a4a57b210dc51b059b42fa801b06fb7aa4f/packages/build-common/src/packageMetadata/v1.ts).
 
