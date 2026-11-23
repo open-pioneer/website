@@ -3,7 +3,7 @@ title: How to deploy an app
 slug: trails-docs/tutorials/HowToDeployAnApp
 ---
 
-Building apps and sites with this framework always produces a set of static files, which can be easily deployed on any http server or CDN (content delivery network).
+Building apps and sites with this framework always produces a set of static files, which can be deployed on any HTTP server or CDN (content delivery network).
 
 ## Building the project
 
@@ -30,9 +30,9 @@ For example, the configuration of the `pioneer` plugin can be adapted to include
 
 ## Deployment of a static site
 
-Vite has [extensive documentation](https://vitejs.dev/guide/static-deploy.html) for multiple deployment options.
+Vite has [documentation](https://vitejs.dev/guide/static-deploy.html) for multiple deployment options.
 
-As an example, we will build a simple docker image based on the popular [Caddy](https://caddyserver.com/) server.
+As an example, we will build a simple docker image based on the [Caddy](https://caddyserver.com/) server.
 
 First, create the `Dockerfile`:
 
@@ -66,11 +66,11 @@ $ docker build -t example-site .
 
 Start a container:
 
-```
+```bash
 $ docker run -it --rm -p 5555:80 example-site caddy file-server
 ```
 
-Open you browser at <http://localhost:5555> to see the result.
+Open your browser at <http://localhost:5555> to see the result.
 
 Please refer to Caddy's [Documentation](https://caddyserver.com/docs/) for more details.
 
@@ -108,7 +108,7 @@ dist/
 
 Next, deploy your `www` directory to a web server (see above).
 
-To embed your app in a host site, simply load the `empty.js` as a module:
+To embed your app in a host site, load the `empty.js` as a module:
 
 ```html
 <!-- Some host html site -->

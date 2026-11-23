@@ -66,7 +66,7 @@ interface BuildConfig {
     servicesModule?: string;
     ui?: UiConfig;
     properties?: Record<string, unknown>;
-    propertiesMeta?: Record<string, PropertiesMeta>;
+    propertiesMeta?: Record<string, PropertyMetaConfig>;
     overrides?: Record<string, PackageOverridesConfig>;
     publishConfig?: PublishConfig;
 }
@@ -91,15 +91,15 @@ export default defineBuildConfig({
 
 The array can also be left empty if your package does not provide any importable entities.
 
-> NOTE: There is no need to list the [servicesModule](#servicesmodule) in here, that module automatically becomes an entry point if the package defines any services.
+> NOTE: There is no need to list the [`servicesModule`](#servicesmodule) in here. That module automatically becomes an entry point if the package defines any services.
 
 > NOTE: Entry point modules are currently not enforced during development,
-> meaning that you can import arbitrary modules from other packages when using the vite dev server.
+> meaning that you can import arbitrary modules from other packages when using the Vite dev server.
 > This is however considered a bad practice and may be enforced in a later version.
 
 #### `styles`
 
-A path to a `.css` file within the package.
+A path to a `.css` or `.scss` file within the package.
 The file will automatically be linked into the application, and the styles will be loaded when the application runs.
 
 Note that the `.css` file may include `@import`s to other `.css` files.
@@ -163,7 +163,7 @@ See also:
 
 An array of locales supported by the package or application.
 When a package declares support for a given locale `<LOC>`, then a file named `./i18n/<LOC>.yaml` must exist.
-See [I18N-Format](./I18nFormat.md) for more details about the format of i18n files.
+See [I18N Format](./I18nFormat.md) for more details about the format of i18n files.
 
 Example:
 
@@ -207,13 +207,13 @@ Services and UI components will automatically receive appropriate `intl` objects
 
     - If your project uses `options.intl`, consider switching to `options.currentIntl` instead, as the former is deprecated and will be removed in a future version.
 
-- The react hook `useIntl()` (see below) provides the same `intl` object.
+- The React hook `useIntl()` (see below) provides the same `intl` object.
 
 See [I18N Format](./I18nFormat.md) for more details.
 
 > NOTE: The `i18n` value has an additional meaning in application packages:
 > The defined languages will be the languages supported by the application, and they must either be defined
-> in all packages or must be added manually in the application (via `overrides` in a `lang.yaml` file).
+> in all packages or must be added manually in the application (via `overrides` in the app's `i18n/<LOC>.yaml` file).
 >
 > The first language in `i18n` becomes the application's fallback language when no other language can be applied for a given user.
 
@@ -222,7 +222,7 @@ See [I18N Format](./I18nFormat.md) for more details.
 Declares services that are provided by the package.
 Services will be included in the application and will automatically start when they are needed.
 
-The name of a service must match the exported class name from the package's service module.
+The name of a service must match the name of an export of the package's services module.
 
 ```ts
 export interface ServiceConfig {
@@ -237,8 +237,8 @@ Example:
 // build.config.mjs
 export default defineBuildConfig({
     services: {
-        // The framework will `import { LogService } from "packageName/services";`,
-        // by default, so a matching export must exist (see .js file below).
+        // By default, the framework imports `LogService` from "packageName/services",
+        // so a matching export must exist (see .js file below).
         LogService: {
             provides: "logging.LogService"
         }
@@ -337,7 +337,7 @@ export class Foo {
 
 #### `ui`
 
-Contains metadata about UI Components provided by the package.
+Contains metadata about UI components provided by the package.
 
 ```ts
 export interface UiConfig {
@@ -416,7 +416,7 @@ export default defineBuildConfig({
 });
 ```
 
-> Note: You cannot configure `required: true` for nested object properties at the moment.
+> NOTE: You cannot configure `required: true` for nested object properties at the moment.
 
 #### `overrides`
 
@@ -432,7 +432,7 @@ export interface ServiceOverridesConfig {
 }
 ```
 
-Currently, it only provides the power to completely remove the implementation of a service, for example:
+Currently, an override can only disable a service, for example:
 
 ```js
 // build.config.mjs
@@ -456,11 +456,11 @@ export default defineBuildConfig({
 
 - **(1)** The key in the `overrides` object is a package name.
 - **(2)** The key in the `services` object is a service name within that package.
-- **(3)** Disables the service (the default is always `true`).
+- **(3)** Disables the service (the default is `true`).
 
-The snippet above completely _removes_ to service called `GreeterImpl` from the package `sample-package`.
-If that service provided any interfaces required by the rest of the application, the app would now be responsible
-to provide alternative implementations, making this an expert feature that should not be overused.
+The snippet above completely _removes_ the service `GreeterImpl` from the package `sample-package`.
+If that service provided any interfaces required by the rest of the application, the app must then provide alternative implementations.
+This is an expert feature that should not be overused.
 
 > NOTE: It is forbidden to use `overrides` from a normal (i.e. not "application") package.
 
@@ -474,7 +474,7 @@ export interface PublishConfig {
     types?: boolean;
     sourceMaps?: boolean;
     strict?: boolean;
-    validation?: ValidationOptions;
+    validation?: ValidationOptions | false;
     packageFormatTarget?: "1.0" | "1.1" | "1.2";
 }
 ```
@@ -529,7 +529,9 @@ all errors will be shown as warnings instead of aborting at the first error.
 #### `publishConfig.validation`
 
 Fine-tuning options for package validation.
-For example, this option can be used to make `CHANGELOG` and `LICENSE` optional (they are required by default).
+For example, this option can be used to make `CHANGELOG`, `LICENSE` and `README` optional (they are required by default).
+All three options default to `true`.
+Set `validation: false` to disable all of them.
 
 ```ts
 export interface ValidationOptions {
@@ -632,7 +634,7 @@ See [I18N Format](./I18nFormat.md) for more details.
 
 ## Advanced service references
 
-The `references` object in a service configuration block and the `references` array in the ui configuration block both accept a `ReferenceConfig` object for advanced use cases:
+The `references` object in a service configuration block and the `references` array in the UI configuration block both accept a `ReferenceConfig` object for advanced use cases:
 
 ```ts
 export interface ReferenceConfig {
@@ -826,4 +828,4 @@ function ExampleComponent() {
 
 ## See also
 
-The [type declaration file](https://github.com/open-pioneer/trails-build-tools/blob/main/packages/build-support/index.d.ts) of the `@open-pioneer/build-support` package contains additional documentation for the `defineBuildConfig(...)` function.
+The [type declaration file](https://github.com/open-pioneer/trails-build-tools/blob/main/packages/build-support/src/index.ts) of the `@open-pioneer/build-support` package contains additional documentation for the `defineBuildConfig(...)` function.

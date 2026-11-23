@@ -5,9 +5,9 @@ slug: trails-docs/GettingStarted
 
 ## System requirements
 
-Ensure that you have [Node](https://nodejs.org/en/) (Version 20 or later) and [pnpm](https://pnpm.io/) (Version 10.x) installed.
+Ensure that you have [Node](https://nodejs.org/en/) (version 24 or later) and [pnpm](https://pnpm.io/) (version 10 or later) installed.
 
-Assuming Node has been installed, `pnpm` can simply be installed via `npm`:
+Assuming Node has been installed, `pnpm` can be installed via `npm`:
 
 ```bash
 $ npm install -g pnpm
@@ -41,7 +41,7 @@ To start the development server, execute the following command:
 
 ```bash
 $ pnpm dev
-# VITE v4.1.4 ready in 647 ms
+# VITE vX.Y.Z ready in 647 ms
 #
 # ➜  Local:   http://localhost:5173/
 # ➜  Network: use --host to expose
@@ -56,7 +56,7 @@ When you open the address that has been printed to the console (<http://localhos
 > **Note**  
 > Because [pnpm](https://pnpm.io/) is our package manager, all scripts and commands should use `pnpm` instead of `npm`.
 
-This project comes prepared with an empty application and a set of samples, all of which can be found from the test page.
+This project comes prepared with an empty application and a set of samples, all of which are linked from the test site.
 The empty app is defined in `src/apps/empty` (`apps` is the location for application packages by convention).
 Samples are grouped together in `src/samples/*`.
 Feel free to take a look at the sample applications, or to delete them if you don't want them in your repository.
@@ -72,7 +72,7 @@ The script `pnpm run build` creates a production build of your project:
 
 ```bash
 $ pnpm run build
-# vite v4.1.4 building for production...
+# vite vX.Y.Z building for production...
 # ✓ 1453 modules transformed.
 # Generated an empty chunk: "index".
 # ../dist/www/sites/empty/index.html                  0.52 kB
@@ -82,17 +82,17 @@ $ pnpm run build
 ```
 
 All built artifacts are placed in the `dist` directory.
-`dist/www` contains a ready-to-use static web application that can be hosted on all common HTTP-Servers or CDNs (Content Delivery Networks), often without any additional configuration.
+`dist/www` contains a ready-to-use static web application that can be hosted on any common HTTP server or CDN (Content Delivery Network), often without any additional configuration.
 
 The contents of your production build can be configured by editing the `pioneer` plugin settings in your `vite.config.ts`.
 You can choose which `.html` sites to deploy, or which `apps` to include, depending on your environment (development, production, testing) or other settings.
 
-Vite comes with a built-in http server to serve the content of `dist/www` on your local machine.
-To start the server, simply run `pnpm preview` after building the project.
+Vite comes with a built-in HTTP server to serve the content of `dist/www` on your local machine.
+To start the server, run `pnpm preview` after building the project.
 
-## Customizing the vite configuration
+## Customizing the Vite configuration
 
-The `vite.config.ts` is designed to be customized.
+You can customize the `vite.config.ts`.
 It comes preconfigured with defaults to run and build the samples in this repository.
 Some parts, like the `pioneer` or `react` plugins, should not be removed.
 Most other sections, like the global log level or the settings of the `pioneer` plugin, can be changed at will.

@@ -8,7 +8,7 @@ It assumes that you already have detailed knowledge about Trails from a _user's_
 
 Only the high level concepts are covered here.
 Details live in the source code of the [build tools repository](https://github.com/open-pioneer/trails-build-tools).
-See [Build Tools Repository](#build-tools-repository) for a brief overview.
+See [Build tools repository](#build-tools-repository) for a brief overview.
 
 ## Build tools repository
 
@@ -19,7 +19,7 @@ These packages are used directly in a Trails project:
 - **`@open-pioneer/build-support`**
 
     Defines the `defineBuildConfig` function used by every `build.config.mjs`.
-    The function itself is trivial, the important bit are its types: they define the schema of the configuration object and give the developer documentation and autocompletion.
+    The function itself is trivial. The important part is its types: they define the schema of the configuration object and give the developer documentation and autocompletion.
 
 - **`@open-pioneer/vite-plugin-pioneer`**
 
@@ -51,7 +51,7 @@ There are two different ways in which Trails code gets compiled:
 
     A Trails project is a [Vite](https://vite.dev) project.
     Our Vite plugin (`@open-pioneer/vite-plugin-pioneer`) runs inside `vite dev` and `vite build`.
-    When building for production: the result is a set of static files (HTML, JavaScript, CSS) in `dist/www`.
+    A production build produces a set of static files (HTML, JavaScript, CSS) in `dist/www`.
     This step is used by every project.
 
 2. **Building a package for publishing.**
@@ -73,7 +73,7 @@ Vite handles:
 - Transforming React JSX to JavaScript (via the `react()` plugin)
 - Compiling and bundling everything into a set of static files in `dist/www`
 
-The following image shows how vite bundles source files into a bundled application:
+The following image shows how Vite bundles the source files into an application:
 
 ![Vite Build](images/vite-build.png)
 
@@ -107,7 +107,7 @@ The plugin generates its content for the app that imports it.
 To do so, the plugin starts from the `app.ts` that contains the import, inspects its dependencies (and their dependencies, and so on) and aggregates everything that the application needs to know about itself.
 Every app can have a different set of dependencies and different local overrides, so the content of the module differs from app to app.
 
-Note that `appMetadata` only contains metadata about _Trails_ packages: plain node packages are ignored.
+Note that `appMetadata` only contains metadata about _Trails_ packages: plain Node packages are ignored.
 
 ![Generating app metadata](images/trails-metadata.png)
 
@@ -259,19 +259,22 @@ The Vite plugin implements a few additional virtual modules.
 These play a much smaller role, and their implementation is quite simple compared to `open-pioneer:app`.
 
 - `open-pioneer:react-hooks` provides the React hooks that interact with the framework (`useService`, `useIntl`, ...).
-  Their generation is trivial: only the current package name is needed, the generated functions are otherwise simple wrappers around the [(internal) hooks](https://github.com/open-pioneer/trails-core-packages/blob/18b9eed1d9a5d75d4d33ff55245a915d25a9805c/src/packages/runtime/react-integration/hooks.ts) in the `@open-pioneer/runtime` package.
+  Their generation is trivial: only the current package name is needed. The generated functions are otherwise simple wrappers around the [(internal) hooks](https://github.com/open-pioneer/trails-core-packages/blob/18b9eed1d9a5d75d4d33ff55245a915d25a9805c/src/packages/runtime/react-integration/hooks.ts) in the `@open-pioneer/runtime` package.
 - `open-pioneer:deployment` provides metadata about the deployment environment (e.g. the application's base URL).
 - `open-pioneer:source-info` returns the `sourceId` of a module (e.g. `@open-pioneer/package-name/path/to/module`).
+- `open-pioneer:assets` exports `publicAssetsUrl` and `getPublicAssetUrl()` for the public assets of the importing package.
+- `open-pioneer:test-support` provides the i18n messages of the importing package for tests.
+  It can only be imported from tests.
 
 ### How code generation works
 
-The virtual modules listed above depend on the current state of the trails project (or app, or package) where they are used.
+The virtual modules listed above depend on the current state of the Trails project (or app, or package) where they are used.
 Their content is derived from many files on disk (e.g. `package.json`, `build.config.mjs`), but they never materialize on disk themselves.
 Their content is generated when they are needed by Vite:
 
-- Vite sees an import into a virtual module, for example `open-pioneer:app`.
+- Vite sees an import of a virtual module, for example `open-pioneer:app`.
 - Vite calls the `resolveId` hook(s) of its plugins in order to find it.
-  Our codegen plugin runs and returns with a result.
+  Our codegen plugin runs and returns a result.
   If no plugin were to return a valid result, Vite would attempt to locate the file on disk, which would produce an error.
 - Vite then calls the `load` hook for the resolved module in order to read its source code (JavaScript).
   This is done _once_ during build or after every relevant _change_ during dev (which is why caching is important here).
@@ -303,8 +306,8 @@ The goal is to show how the pieces introduced so far (virtual modules, plugin ho
 Consider a minimal app:
 
 ```ts
-import { createCustomElement } from "@open-pioneer/runtime";
 // src/apps/my-app/app.ts
+import { createCustomElement } from "@open-pioneer/runtime";
 import * as appMetadata from "open-pioneer:app";
 
 const Element = createCustomElement({
@@ -317,7 +320,7 @@ customElements.define("my-app", Element);
 `createCustomElement` is an ordinary function.
 It expects the application's metadata in a certain shape (see its typings), but it does not care where that object comes from.
 In a real app, the object is always produced by the Vite plugin.
-The tests of the runtime package construct them by hand.
+The tests of the runtime package construct it by hand.
 
 **Step 1: Resolving the import.**
 When Vite encounters the import of `open-pioneer:app`, it calls the `resolveId` hook of our plugin.
@@ -338,11 +341,11 @@ The helper modules exist for organization and for more efficient HMR: a change t
 They cannot be imported by user code.
 
 ```js
+// Simplified content of "open-pioneer:app" for `my-app`.
+// Module ids and the metadata format are implementation details and may change at any time.
 import packages from "/src/apps/my-app/@@open-pioneer-app?open-pioneer-packages";
 import stylesString from "/src/apps/my-app/@@open-pioneer-app?open-pioneer-styles&inline&lang.css";
 import { locales, loadMessages } from "/src/apps/my-app/@@open-pioneer-app?open-pioneer-i18n-index";
-// Simplified content of "open-pioneer:app" for `my-app`.
-// Module ids and the metadata format are implementation details and may change at any time.
 import { createBox } from "@open-pioneer/runtime/metadata";
 
 const styles = createBox(stylesString);
@@ -369,7 +372,7 @@ Together, the helper modules produce the four exports of `open-pioneer:app`.
     Each entry lists the package's service definitions (with their `provides` and `references`), the services referenced by its UI and its properties.
     Service classes are imported from the packages' `services` modules and placed directly into the structure, so the runtime can instantiate them without any further lookup.
     The [Service layer](./ServiceLayer.md) uses this data to start all required services.
-    See the example output in [App Metadata](#app-metadata).
+    See the example output in [App metadata](#app-metadata).
 
 - **`styles`** (from `app-css`)
 
@@ -526,7 +529,7 @@ Most of these checks are implemented in the Rollup plugin [`checkImports.ts`](ht
 ### Virtual modules
 
 A package may import the [virtual modules](#other-virtual-modules) provided by the Vite plugin, such as `open-pioneer:react-hooks`.
-These are handled as follows by the rollup [plugin(s)](https://github.com/open-pioneer/trails-build-tools/tree/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/build-package/src/rollup):
+These are handled as follows by the Rollup [plugin(s)](https://github.com/open-pioneer/trails-build-tools/tree/ab735175fa97e4328c56a2b6e5b538aa0e740539/packages/build-package/src/rollup):
 
 - `open-pioneer:react-hooks` and `open-pioneer:source-info` are generated at compile time, since enough information is present to generate them statically.
 - `open-pioneer:deployment` is left in place, because its content is only known when the final app is built.
@@ -548,7 +551,7 @@ Repositories that ship many packages can still build their packages in parallel,
 
 This section contains a few pointers into the most relevant parts of the implementation.
 
-> NOTE: These are permalinks to a specific revision. They may become out of date. If you notice that they are no longer helpful: update them.
+> NOTE: These are permalinks to a specific revision. They may become out of date. If you notice that they are no longer helpful, update them.
 
 ### Vite plugin
 

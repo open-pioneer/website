@@ -3,7 +3,7 @@ title: How to add custom styles
 slug: trails-docs/tutorials/HowToAddCustomStyles
 ---
 
-In this example, we will enhance the empty app (at `src/apps/empty`) to include custom css rules.
+In this example, we will enhance the empty app (at `src/apps/empty`) to include custom CSS rules.
 We intend to add a custom class to the app's container and define that class in a `.css` file.
 
 > **Note**  
@@ -32,8 +32,8 @@ export default defineBuildConfig({
 });
 ```
 
-The framework will automatically gather all css rules of packages that declare `styles` and distribute them with your application.
-After hitting save, you will now get an (expected) error in your browser, since the file does not yet exist.
+The framework will automatically gather all CSS rules of packages that declare `styles` and distribute them with your application.
+After you save the file, you will now get an (expected) error in your browser, since the file does not yet exist.
 
 Now create it:
 
@@ -48,7 +48,7 @@ Now create it:
 
 After reloading your browser, the previous error will be gone.
 However, since the class isn't being used, your UI still looks the same.
-Setting the css class of a React element is done via the `className` prop:
+Setting the CSS class of a React element is done via the `className` prop:
 
 ```tsx
 import { Container, Heading, Text } from "@chakra-ui/react";
@@ -73,7 +73,7 @@ export function AppUI() {
 }
 ```
 
-Now hit save.
+Now save the file.
 Your browser should show the new styles immediately:
 
 ![Styles have been applied](./HowToAddCustomStyles_StylesApplied.png)
@@ -97,7 +97,7 @@ export default defineBuildConfig({
 });
 ```
 
-The following scss file is equivalent to the css file from above:
+The following SCSS file is equivalent to the CSS file from above:
 
 ```scss
 /* src/apps/empty/styles.scss */
@@ -114,7 +114,7 @@ The following scss file is equivalent to the css file from above:
 
 ### Hot reloading
 
-Changing the content of your package's css files will automatically apply those changes _without_ reloading the app (hot update).
+Changing the content of your package's CSS files will automatically apply those changes _without_ reloading the app (hot update).
 
 ### CSS imports
 
@@ -127,7 +127,7 @@ Example:
 /* Imports a package-local file. */
 @import "./other/css/file.css";
 
-/* This is how the open layers styles are included internally (imports from `ol` package). */
+/* This is how the OpenLayers styles are included internally (imports from `ol` package). */
 @import "ol/ol.css";
 ```
 
@@ -139,9 +139,9 @@ This section contains a few hints and examples for different ways to style your 
 
 Chakra UI already provides different concepts for styling (see [styling documentation](https://chakra-ui.com/docs/styling/overview)).
 
-Especially useful is the very large set of style properties to customize single components: [Style props documentation](https://chakra-ui.com/docs/styling/overview#style-props).
+Style props customize a single component, see the [style props documentation](https://chakra-ui.com/docs/styling/overview#style-props).
 
-Helpful is also the `css` prop which allows to apply css rules directly to a component. Examples:
+The `css` prop applies CSS rules directly to a component. Examples:
 
 ```tsx
 import { Box, Text } from "@chakra-ui/react";
@@ -149,8 +149,8 @@ import { Box, Text } from "@chakra-ui/react";
 export function AppUI() {
     return (
         <Box>
-            {/* Simple example: increase font size of a text element*/}
-            <Text css={{ "font-size": "25px" }}>This is an text.</Text>
+            {/* Simple example: increase font size of a text element */}
+            <Text css={{ fontSize: "25px" }}>This is a text.</Text>
         </Box>
     );
 }
@@ -178,11 +178,11 @@ export function AppUI() {
 ```
 
 Additionally, Chakra provides extensive theming support ([Documentation](https://chakra-ui.com/docs/theming/overview)).
-It is possible to create a custom theme for an app. For details see [How To Theme An App](./HowToThemeAnApp.md).
+It is possible to create a custom theme for an app. For details see [How to theme an app](./HowToThemeAnApp.md).
 
 #### React classes
 
-React supports the `className` prop to set an element's css classes as a string ([Documentation](https://reactjs.org/docs/faq-styling.html)).
+React supports the `className` prop to set an element's CSS classes as a string ([Documentation](https://reactjs.org/docs/faq-styling.html)).
 
 Using our `classNames` utility, you can easily compose a className string from multiple, potentially dynamic inputs:
 
@@ -198,11 +198,11 @@ export function AppUI() {
 }
 ```
 
-The `div` will have the css classes `foo`, `bar` and `qux` but not `baz`, because it has been set to false.
+The `div` will have the CSS classes `foo`, `bar` and `qux` but not `baz`, because it has been set to false.
 
 #### React inline styles
 
-You can also use React's builtin support for the `style` property.
+You can also use React's built-in support for the `style` property.
 Styles defined this way appear as inline styles directly on the DOM element:
 
 ```tsx

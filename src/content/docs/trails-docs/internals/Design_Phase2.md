@@ -19,7 +19,7 @@ However, some infrastructure and conventions are needed to enable easy sharing o
 So far, packages have only been compiled in the context of an app, together with all other packages.
 In order to be "publishable", packages must be prepared as individual artifacts.
 
-For better stability, compatibility and performance it is desirable to restrict files types within published
+For better stability, compatibility and performance it is desirable to restrict file types within published
 packages to a certain subset of "simple" types:
 
 - `.js` for code (optionally including `.map` and `.d.ts` files)
@@ -49,7 +49,7 @@ It may in fact be a disadvantage because it makes generated code harder to read 
 
 - The `build.config.mjs` format will be extended with the `entryPoints` option.
   Listed entry points are TypeScript/JavaScript files that will be made available to importers.
-  _All other files are not guaranteed to be present and can not be directly imported at all._
+  _All other files are not guaranteed to be present and cannot be directly imported at all._
 
     Example:
 
@@ -121,7 +121,7 @@ It may in fact be a disadvantage because it makes generated code harder to read 
 The existing vite plugin must be extended to handle Open Pioneer Trails packages from `node_modules`.
 Vite handles node packages from `node_modules` just fine on its own, but our own build plugin ignores them currently.
 
-They must not be be ignored in the future because the services, properties and styles from such a package must be linked into the application,
+They must not be ignored in the future because the services, properties and styles from such a package must be linked into the application,
 which is the responsibility of our plugin.
 
 Vite build plugin will scan all dependencies (local and non-local) of an app to check whether they are either local or use Open Pioneer Trails extensions (check for presence of `openPioneer` in `package.json`).
@@ -137,7 +137,7 @@ will not be detected.
 
 This is a worthwhile tradeoff because
 
-1. all of our own packages should be build with `"openPioneer"` included (so the situation shouldn't occur in practice) and
+1. all of our own packages should be built with `"openPioneer"` included (so the situation shouldn't occur in practice) and
 2. it still lets us skip many node modules (e.g. dependencies of chakra-ui), thereby improving performance
 
 ## Package build tool

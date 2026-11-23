@@ -8,18 +8,19 @@ slug: trails-docs/BestPractices
 ### Logging
 
 The framework provides a logger for standardized application wide logging.
-The log level is configured globally in the vite.config.js.
+The log level is configured globally in the `vite.config.ts`.
 
-We recommend to use this logger for all log messages to achieve a uniform logging.
-This is especially helpful if the loglevel should be change or the logger should be
+We recommend using this logger for all log messages to keep logging uniform.
+This is especially helpful if the log level is changed or the logger should be
 replaced with a new implementation later on.
 
-To create a logger instance, call the `createLogger` method.
+To create a logger instance, call the `createLogger` function.
 It takes a prefix (string) to prepend to each message.
-In most cases, you can simply generate the log prefix using the `open-pioneer:source-info` module:
+In most cases, you can generate the log prefix using the `open-pioneer:source-info` module:
 
 ```ts
 // packageName/foo.ts
+import { createLogger } from "@open-pioneer/core";
 import { sourceId } from "open-pioneer:source-info";
 
 const LOG = createLogger(sourceId);
@@ -38,7 +39,7 @@ In Firefox this only seems to work for error messages.
 ### HTTP requests
 
 Use the central `http.HttpService` (see [@open-pioneer/http](https://www.npmjs.com/package/@open-pioneer/http)) to perform HTTP requests.
-The service exposes the method `fetch()` which is compatible to (and implemented in terms of) the Browser's modern [`fetch()` function](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
+The service exposes the method `fetch()` which is compatible with (and implemented in terms of) the browser's modern [`fetch()` function](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
 
 Using a central method is important for future proofing our development.
 We might add new features such as automatic authentication (e.g. tokens) or automatic proxy support which users of the `HttpService`
@@ -50,7 +51,7 @@ can then automatically take advantage of.
 
 When developing locally in the context of an app and "local" packages, you can often get away with being imprecise about your package's dependencies - things will often "just work".
 In this case, it is "just" a good practice to be precise in your dependency management.
-When you're developing shared packages (e.g. published on npmjs.com), good dependency management becomes critical, or you code will not work when used by other developers.
+When you're developing shared packages (e.g. published on npmjs.com), good dependency management becomes critical, or your code will not work when used by other developers.
 
 When thinking about dependencies, follow these general guidelines:
 
@@ -74,9 +75,9 @@ When thinking about dependencies, follow these general guidelines:
     ```
 
 - Use "open" specifiers for dependencies like `^`.
-  Not depending on a fixed version avoid conflicts if multiple packages prefer slightly different versions.
+  Not depending on a fixed version avoids conflicts if multiple packages prefer slightly different versions.
 
-For information about version handling of trails packages, see [Version Overview](./reference/Versions.md).
+For information about version handling of Trails packages, see [Version Overview](./reference/Versions.md).
 
 #### dependencies vs peerDependencies
 
@@ -117,7 +118,7 @@ For example:
 import { EventEmitter } from "@open-pioneer/core";
 const emitter = new EventEmitter();
 const events = [];
-const handle = emitter.on("mouseClicked", (event) => observed.push(event));
+const handle = emitter.on("mouseClicked", (event) => events.push(event));
 emitter.emit("mouseClicked", { x: 1, y: 2 });
 handle.destroy(); // don't forget to unsubscribe during cleanup
 ```
@@ -126,23 +127,21 @@ handle.destroy(); // don't forget to unsubscribe during cleanup
 
 ### Debugging Vitest
 
-#### Intellij IDEA
+#### IntelliJ IDEA
 
-In Intellij IDEA the debugging of Vitest tests in monorepos may lead to problems.
+In IntelliJ IDEA the debugging of Vitest tests in monorepos may lead to problems.
 However, it is possible to define a custom run configuration to enable debugging:
 
-- In Intellij open the "Run/Debug Configurations" dialog ("Run" --> "Edit Configurations").
+- In IntelliJ open the "Run/Debug Configurations" dialog ("Run" --> "Edit Configurations").
 - Create a new configuration by clicking the "+" icon in the upper left.
 - Select "Node.js" from the new configuration list.
 - Choose a name (e.g. "Vitest") and ensure that the node interpreter (node.exe) and working directory
-  (trails project root path) are selected reasonable.
+  (Trails project root path) are set correctly.
 - In the field "JavaScript file" add the path to vitest.mjs (e.g. `./node_modules/vitest/vitest.mjs`)
-- In the field "Application parameters" add the following: `run --threads false --testTimeOut 30000 <Relative path to your test file>`. The `testTimeOut`is optional, however useful for long-running tests. Example: `run --threads false --testTimeout 30000 src/packages/legend/Legend.test.tsx`
-- Click "save". Run the new configuration in debug mode zu start debugging.
+- In the field "Application parameters" add the following: `run --threads false --testTimeout 30000 <Relative path to your test file>`. The `testTimeout` is optional, however useful for long-running tests. Example: `run --threads false --testTimeout 30000 src/packages/legend/Legend.test.tsx`
+- Click "save". Run the new configuration in debug mode to start debugging.
 
-Official information for debugging Vitest in Intellij IDEA can be found in the Vitest documentation:
-https://vitest.dev/guide/debugging#intellij-idea  
-Note: the link references the newest version of vitest
+Official information for debugging Vitest in IntelliJ IDEA can be found in the [Vitest documentation](https://vitest.dev/guide/debugging#intellij-idea).
 
 ## Common issues
 
@@ -156,12 +155,12 @@ If absolutely necessary, you can force a service to start even if it's not refer
 ### Hot reloading with \[jt\]sx-Files and side effects
 
 Vite will automatically hot reload `.jsx` and `.tsx` files when they are being edited.
-Most changes to react components can then be applied without reloading the page.
+Most changes to React components can then be applied without reloading the page.
 
 However, during hot reload, the containing module will be executed again.
 It should therefore be free of side effects at the module level.
 
-This might be a problem if a `.[jt]sx` defines a Web Component (via `customElements.define(...)`) because redefining a Web Component is an error.
+This might be a problem if a `.jsx` or `.tsx` file defines a Web Component (via `customElements.define(...)`) because redefining a Web Component is an error.
 
 There are two recommendations to avoid problems:
 

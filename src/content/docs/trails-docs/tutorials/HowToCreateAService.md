@@ -112,16 +112,16 @@ it("multiplies two numbers", async () => {
 
 The test creates a new service instance by calling the `createService` helper and then tests the result of `multiply(...)` by using Vitest's [`expect` API](https://vitest.dev/api/expect.html).
 
-We can run `pnpm test` to execute all tests in this repository, which is Vitest's default behavior.
+`pnpm test` runs all tests of the project.
 For this example, we will only execute tests in the `math` directory for the sake of simplicity:
 
 ```bash
-$ pnpm test  src/packages/math
+$ pnpm test src/packages/math
 # > starter@ test <PROJECT_DIR>
 # > vitest "src/packages/math"
 #
 #
-#  DEV  v0.28.5 <PROJECT_DIR>/src
+#  DEV  vX.Y.Z <PROJECT_DIR>/src
 #
 #  ✓ packages/math/MathServiceImpl.test.ts (1)
 #
@@ -135,7 +135,7 @@ $ pnpm test  src/packages/math
 
 We will also add our first 'real' use of the service by editing the `empty` app.
 
-First, add the packages `math` and `@open-pioneer/chakra-snippets` in the app's `package.json`:
+First, add the packages `math` and `@open-pioneer/chakra-snippets` to the app's `package.json`:
 
 ```jsonc
 // src/apps/empty/package.json
@@ -170,6 +170,7 @@ export default defineBuildConfig({
 In the app's UI, we call the service when a button is pressed by the user:
 
 ```tsx
+// src/apps/empty/AppUI.tsx
 import { Button, Container, HStack, Text, VStack } from "@chakra-ui/react";
 import { NumberInputRoot, NumberInputField } from "@open-pioneer/chakra-snippets/number-input";
 import { useService } from "open-pioneer:react-hooks";
@@ -182,7 +183,7 @@ export function AppUI() {
     // oxlint-disable-next-line @typescript-eslint/no-explicit-any
     const service = useService("math.MathService") as any; // (1)
     const onMultiplyClicked = () => {
-        setResult(service.multiply(leftValue, rightValue)); // (2)
+        setResult(service.multiply(Number(leftValue), Number(rightValue))); // (2)
     };
 
     return (
@@ -272,6 +273,8 @@ export interface MathService extends DeclaredService<"math.MathService"> {
     This means that we can now also remove the `as any` cast in `AppUI.tsx`:
 
     ```diff
+    + import { MathService } from "math";
+
     - const service = useService("math.MathService") as any;
     + const service = useService<MathService>("math.MathService");
     ```
@@ -291,7 +294,7 @@ export class MathServiceImpl implements MathService {
 
 ## Referencing all services that provide a certain interface
 
-Services have the powerful capability to gather all services that provide a certain interface name
+A service can reference all services that provide a certain interface name
 by specifying `all: true` in the `build.config.mjs`.
 
 This can be used, for example, to implement an extension API: a user may add its own services into the inner workings of another service by providing an interface.
@@ -384,7 +387,7 @@ This is because our test code does not provide the `extensions` array and theref
 We will update the test with an empty array and, while we're at it, add a test for the new feature:
 
 ```ts
-// src/packages/MathServiceImpl.test.ts
+// src/packages/math/MathServiceImpl.test.ts
 
 import { createService } from "@open-pioneer/test-utils/services";
 import { it, expect } from "vitest";
@@ -453,7 +456,7 @@ it("invokes the extensions when a multiplication is triggered", async () => {
 - **(3)**
   We call `multiply` and check that our extensions have been invoked by asserting the contents of the `events` array.
 
-#### Implementing an actual service providing the interface
+### Implementing an actual service providing the interface
 
 Now we will implement an extension class that simply logs all arguments to demonstrate that the system works as expected. Like before, we'll use the empty app to do this.
 
@@ -515,7 +518,7 @@ export class LoggingMathExtension implements MathServiceExtension {
 }
 ```
 
-Restart the empty app in your browser, open the console and click the "Multiply!" button.
+Reload the page in your browser, open the console and click the "Multiply!" button.
 Your console should display a message just like this:
 
 ![Log message from extension](./HowToCreateAService_LogMessage.png)
@@ -546,18 +549,18 @@ export default defineBuildConfig({
 });
 ```
 
-By providing the interface in (1), the framework will automatically instantiate your service.
+The framework automatically starts every service that provides `runtime.AutoStart` (1).
 Of course, you can still provide any other interfaces just like usual.
 
 > NOTE: Services providing `runtime.AutoStart` are launched in arbitrary order.
 > If you need to enforce starting order, add a dependency to the service(s) that must start
 > before yours does.
 
-If you're curious: the framework still only starts referenced services.
+The framework still only starts referenced services.
 It just has an implicit dependency on all services implementing `runtime.AutoStart`, thus triggering their instantiation.
 
 ## Further reading
 
 Some service features have not been touched in this tutorial.
-For example, you can translate messages within a service by using the `intl` object in the constructor's `ServiceOptions` object.
+For example, you can translate messages within a service by using `currentIntl` from the constructor's `ServiceOptions` object.
 All details are documented in the [Services reference](../reference/Services.md) and in the [Package reference](../reference/Package.md).

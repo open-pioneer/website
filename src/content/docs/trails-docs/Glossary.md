@@ -22,7 +22,7 @@ Application packages are also Trails packages.
 
 ## Package
 
-A npm package, i.e. a directory containing at least a valid `package.json` file.
+An npm package, i.e. a directory containing at least a valid `package.json` file.
 
 ## Site
 
@@ -38,12 +38,12 @@ References to services are handled by the system, which will inject appropriate 
 
 ## Separate compilation
 
-Pioneer packages may be compiled (and distributed) independently from other packages or the context of a specific application.
+Trails packages can be compiled (and distributed) independently of other packages and of any specific app.
 These packages can be linked together into an application using our build tooling.
 
 ## Trails package
 
-A special package type for the Open Pioneer Trails framework that serve as the building blocks of an app.
+A package type for the Open Pioneer Trails framework that serves as a building block of an app.
 Trails packages may define and use services and UI components.
 The packages used by an app are automatically linked into the application.
 The build system ensures that the code (and assets) required are automatically loaded.

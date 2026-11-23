@@ -31,7 +31,7 @@ With version 3, the Chakra team has separated their package into multiple layers
   Most of the rendering code is implemented in Ark, but it does not provide any styling.
 - [Chakra UI](https://chakra-ui.com/).
   The component library is based on React and uses Ark internally.
-  This is essentially a repackaging of Ark components with chakra's theming and styling system ("styled system") on top of it.
+  This is essentially a repackaging of Ark components with Chakra's theming and styling system ("styled system") on top of it.
 
 [This site](https://ark-ui.com/docs/overview/introduction) contains an image that illustrates the architecture of Chakra UI v3.
 
@@ -51,8 +51,8 @@ Instead, components must be imported from the `@chakra-ui/react` package directl
 Chakra V3 has a new snippet system.
 Snippets are composite components that are based on Chakra components, but that are not published as part of the Chakra package.
 
-The goal of Chakra is to provide extremely flexible components in its core.
-These components are powerful and can be used to build complex UIs, but they are sometimes cumbersome to use for simple use cases.
+The goal of Chakra is to provide flexible components in its core.
+These components can be used to build complex UIs, but they need a lot of code for simple use cases.
 Snippets resolve this issue by providing a standard component with good defaults (but less flexibility).
 
 When browsing Chakra's documentation, you will sometimes find references to snippet imports such as this:
@@ -70,11 +70,11 @@ import { Tooltip } from "@open-pioneer/chakra-snippets/tooltip";
 
 For more details, see the [README](https://github.com/open-pioneer/trails-core-packages/tree/main/src/packages/chakra-snippets#readme) of the `@open-pioneer/chakra-snippets` package.
 
-If you need to use your own custom version of a snippet (e.g. for heavy customization), you can simply download the snippet yourself
+If you need to use your own custom version of a snippet (e.g. for heavy customization), you can download the snippet yourself
 and place it somewhere in your project.
 The [Chakra CLI](https://chakra-ui.com/docs/get-started/cli#chakra-snippet) can be used for this purpose.
 
-#### Breaking changes
+### Breaking changes
 
 Because Chakra was essentially rewritten from the ground up, many component names (or individual properties) have changed.
 For details, see the migration documents linked below.
@@ -110,8 +110,8 @@ The following is a collection of findings that we made during the migration.
     This issue is mostly relevant when using components such as the `Tooltip`, which require that the child (the icon)
     implements the `ref` property correctly.
 
-    To work around this, simply wrap the react icons in a span or div.
-    Chakra will style the span and the icon child with fill its parent.
+    To work around this, wrap the React icons in a span or div.
+    Chakra will style the span and the icon child will fill its parent.
 
     ```jsx
     <Icon {...props} asChild>
@@ -121,7 +121,7 @@ The following is a collection of findings that we made during the migration.
     </Icon>
     ```
 
-    Another approach is to use the icon directly and not using the `<Icon/>` component at all, for example:
+    Another approach is to use the icon directly and not use the `<Icon/>` component at all, for example:
 
     ```jsx
     <Tooltip content="...">
@@ -135,7 +135,7 @@ The following is a collection of findings that we made during the migration.
 
 - Chakra's `<Icon />` applies `aria-hidden="true"` by default.
 
-    This is good in general, but hurts when you assigned an `aria-label` to the icon manually.
+    This is good in general, but is a problem when you assign an `aria-label` to the icon manually.
     The `aria-hidden` attribute can be overwritten:
 
     ```jsx
@@ -157,14 +157,14 @@ The following is a collection of findings that we made during the migration.
 
 - Theming mechanism has changed:
     - Instead of configuring a _theme_ only, you now configure a _SystemConfig_ object.
-    - Use mergeConfigs to merge the base theme with your custom theme (instead of extendTheme).
+    - Use `mergeConfigs` to merge the base theme with your custom theme (instead of `extendTheme`).
       Pass theme to `chakraSystemConfig` in `createCustomElement` in `app.ts`.
     - Adjust theme config object to match the new Chakra 3 theme structure of the style SystemConfig object (many changes, see Chakra 3 PR for details).
-      To overwrite the default color scheme, you need to specify the color scheme as a token, then set specific semantic tokens and set the colorPalette property in the globalCss object.
-    - Removed custom semantics tokens where possible (if chakra has native support). Examples: background_body, background_primary.
-    - Added a new prefix to custom semantic tokens (trails\_\*) to avoid conflicts with other tokens / css variables.
+      To overwrite the default color scheme, you need to specify the color scheme as a token, then set specific semantic tokens and set the `colorPalette` property in the `globalCss` object.
+    - Removed custom semantic tokens where possible (if Chakra has native support). Examples: `background_body`, `background_primary`.
+    - Added a new prefix to custom semantic tokens (`trails_*`) to avoid conflicts with other tokens / CSS variables.
     - Tokens that have been used directly in the projects need to be renamed (see Chakra 3 PR for details).
     - `theme` export of `@open-pioneer/base-theme` has been renamed to `config` (of type `SystemConfig`).
 
-- @open-pioneer/chakra-integration has been removed
-- @open-pioneer/runtime-react-support has been removed. This was an internal package.
+- `@open-pioneer/chakra-integration` has been removed.
+- `@open-pioneer/runtime-react-support` has been removed. This was an internal package.

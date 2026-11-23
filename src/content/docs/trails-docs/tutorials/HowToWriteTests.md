@@ -8,9 +8,10 @@ This document explains how to write a few different kinds of tests.
 ## Vitest
 
 We use [`Vitest`](https://vitest.dev/) to run our automated tests.
-This section only explain a few basics to get you started, please refer to the [official guide](https://vitest.dev/guide/) for more information.
+This section only explains a few basics to get you started.
+See the [official guide](https://vitest.dev/guide/) for more information.
 
-To run the entire test suite, simply execute the `test` script from the project root:
+To run the entire test suite, execute the `test` script from the project root:
 
 ```bash
 $ pnpm test
@@ -22,7 +23,7 @@ $ pnpm test
 ```
 
 Vitest will, by default, discover all test files in the entire repository and run them all.
-We use `<NAME>.test.<EXT>` (with `<EXT>` usually being one of `.js`, `.ts`, `.jsx` or `.tsx`) as the file name pattern, which will be automatically picked up by Vitest.
+We use `<NAME>.test.<EXT>` (with `<EXT>` usually being one of `js`, `ts`, `jsx` or `tsx`) as the file name pattern, which will be automatically picked up by Vitest.
 
 You can use Vitest's [support for filters](https://vitest.dev/guide/cli.html#command-line-interface) to run only a few tests.
 For example, to only run the tests in the `core` package, execute:
@@ -71,8 +72,8 @@ export function multiply(a: number, b: number): number {
 }
 ```
 
-To create tests, simply create a new `*.test.ts` (or `.js` etc.) file.
-In this case, we'll reuse the `multiply` file name:
+To create tests, create a new `*.test.ts` (or `.js` etc.) file.
+In this case, we'll reuse the `math` file name:
 
 ```ts
 // src/apps/empty/math.test.ts
@@ -87,7 +88,7 @@ it("multiplies two numbers", () => {
 
 - **(1)**  
   Imports test helpers from `vitest`.
-  `it` (or `test`) define a new test.
+  `it` (or `test`) defines a new test.
   `describe` can be used to group tests together, to share common setup code for example.
 
 - **(2)**
@@ -96,7 +97,7 @@ it("multiplies two numbers", () => {
 
 For more details, visit [Vitest's API reference](https://vitest.dev/api/).
 
-Running our new test is as simple as executing the following command:
+Run the new test with the following command:
 
 ```bash
 $ pnpm test src/apps/empty/
@@ -185,39 +186,41 @@ Vitest will now report success:
 Vitest can be used to write simple UI tests.
 We recommend using the [Vitest browser mode](https://vitest.dev/guide/browser/#browser-mode) which is part of the Vitest API and allows you to run tests natively in the browser.
 
-The repository is already prepared for using Vitest browser mode. It is configured to use playwright as a provider.
+The repository is already prepared for using Vitest browser mode. It is configured to use Playwright as a provider.
 Hence, you need to install Playwright dependencies before running browser tests:
 
-`pnpm exec playwright install`
+```bash
+$ pnpm exec playwright install chromium
+```
 
 To create a browser mode test, create a test file using the `.browser.test.*` filename pattern.
 
 In your test file you can import the `render` function from [vitest-browser-react](https://vitest.dev/api/browser/react.html) and use it to mount DOM elements.
 The following example shows how to render a simple component.
-It is wrapped in the `PackageContextProvider`, that is needed to inject services and properties into the component tree.
+It is wrapped in the `PackageContextProvider`, which is needed to inject services and properties into the component tree.
 The example also demonstrates how to use actual i18n values in the rendered components (for more details see [Use real i18n messages in tests](#use-real-i18n-messages-in-tests)).
 
 ```tsx
 import { PackageContextProvider } from "@open-pioneer/test-utils/react";
 import { messages, messageLocale } from "open-pioneer:test-support";
+import { expect, it } from "vitest";
 import { render } from "vitest-browser-react";
 import { SimpleUiComponent } from "./SimpleUiComponent";
 
 it("simple ui component is rendered", async () => {
-
     const screen = await render(
         <PackageContextProvider messages={messages} locale={messageLocale}>
-            <SimpleUiComponent textToShow="rendered successfully" data-testid="uiDiv "/>
+            <SimpleUiComponent textToShow="rendered successfully" data-testid="uiDiv" />
         </PackageContextProvider>
     );
-    ...
-}
+    // ...
+});
 ```
 
-A full example for a browser test file can be found in the sample package (`sample-package`) in `SimpleUiComponentent.browser.test.tsx`.
+A full example for a browser test file can be found in the sample package (`sample-package`) in `SimpleUiComponent.browser.test.tsx`.
 
 It is often more convenient (and faster) to test the React components instead of the complete web component application since there are fewer moving parts and fewer dependencies to mock.
-However, testing the final application can be great too for automated acceptance tests etc.
+However, testing the complete application is useful for automated acceptance tests.
 
 Recommended resources:
 
@@ -227,9 +230,9 @@ Recommended resources:
 
 ## UI Tests (with mocked DOM)
 
-Beside the option to create UI test using the Vitest browser mode, it is also possible to write simple UI tests by simulating a browser environment.
+Besides UI tests in Vitest browser mode, it is also possible to write simple UI tests by simulating a browser environment in Node.
 
-The repository is configured to allow the usage of `happy-dom`, (see [Reference](https://vitest.dev/guide/environment.html)) in your test files using the `.test.*` filename pattern (not `.browser.test.*`).
+The repository is configured to allow the usage of `happy-dom` (see [Reference](https://vitest.dev/guide/environment.html)) in your test files using the `.test.*` filename pattern (not `.browser.test.*`).
 
 You can use [@testing-library/react](https://testing-library.com/) to render your UI components.
 
@@ -262,9 +265,9 @@ render(
 
 - **(1)** Import `messages` and `messageLocale`
 
-- **(2)** Pass the imported `messages` and `messageLocale`to the `PackageContextProvider` so that they are used in the components that are rendered in the test.
+- **(2)** Pass the imported `messages` and `messageLocale` to the `PackageContextProvider` so that they are used in the components that are rendered in the test.
 
-By default, the messages are returned in the first locale listed in the `i18n` array of the package's 'build.config.mjs'.
+By default, the messages are returned in the first locale listed in the `i18n` array of the package's `build.config.mjs`.
 A different locale can be requested with a query, for example:
 
 ```js

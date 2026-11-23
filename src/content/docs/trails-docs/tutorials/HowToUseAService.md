@@ -4,9 +4,9 @@ slug: trails-docs/tutorials/HowToUseAService
 ---
 
 Services are one of the central mechanisms of code sharing in an Open Pioneer Trails client application.
-Instead of using global variables (or singletons), services are started per-application instance.
+Instead of using global variables (or singletons), services are started per app instance.
 
-Builtin dependency injection support allows services to declare their dependencies on other services.
+Built-in dependency injection support allows services to declare their dependencies on other services.
 The framework automatically starts all required services in their correct order and injects references where needed.
 
 Services can be used from other services or from UI components.
@@ -21,9 +21,9 @@ It can be useful to change the element's attributes from inside the application,
 
 Our objective in this section is to add a custom attribute to the component by pressing a button in our app's UI.
 By default, services or UI components inside the app do not get a reference to the app's custom element.
-However, the builtin service providing `"runtime.ApplicationContext"` can be used to achieve that goal.
+However, the built-in service providing `"runtime.ApplicationContext"` can be used to achieve that goal.
 
-Thus, we edit our app's `build.config.mjs` to state that the UI requires a reference of the service:
+Thus, we edit our app's `build.config.mjs` to state that the UI requires a reference to the service:
 
 ```js
 // src/apps/empty/build.config.mjs
@@ -39,11 +39,11 @@ export default defineBuildConfig({
 ```
 
 The package providing the implementation of a service must be declared as a dependency in the `package.json`.
-Luckily, the empty app already depends on the `@open-pioneer/runtime` package, so we don't have to do anything in this case.
+The empty app already depends on the `@open-pioneer/runtime` package, so we don't have to do anything in this case.
 
 React components can use [hooks](https://reactjs.org/docs/hooks-intro.html) to interact with the Open Pioneer Trails framework.
-One of which is the `useService` hook, we will use below.
-We extend the UI of the empty app to add our custom class:
+One of them is the `useService` hook, which we will use below.
+We extend the UI of the empty app to add our custom attribute:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
@@ -105,7 +105,7 @@ The custom attribute will now be present when you inspect your app after pressin
 
 ## Using a service from another service
 
-For this example, we will build upon the example from previous section.
+For this example, we will build upon the example from the previous section.
 We will move the logic of updating the element's attribute into a service.
 The new service will reference `"runtime.ApplicationContext"`, and the UI will be changed to reference our new service instead.
 
@@ -117,7 +117,7 @@ Thus, make sure to add an export in there.
 We will create the class for our service:
 
 ```ts
-// src/apps/empty-app/services.ts
+// src/apps/empty/services.ts
 export class AttributeService {
     // TODO
 }
@@ -126,7 +126,7 @@ export class AttributeService {
 To register the service with the framework, we must edit the `build.config.mjs`:
 
 ```js
-// src/apps/empty-app/build.config.mjs
+// src/apps/empty/build.config.mjs
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
@@ -149,7 +149,7 @@ export default defineBuildConfig({
 ```
 
 - **(1)**  
-  Declares the new service. The name here (left to the `":"`) must match the `export` from the `services.ts`.
+  Declares the new service. The key (left of the `":"`) must match the `export` from the `services.ts`.
 
 - **(2)**  
   Declares the interfaces provided by the new service.
@@ -158,19 +158,17 @@ export default defineBuildConfig({
 
 - **(3)**  
   References the interface `"runtime.ApplicationContext"`.
-  The service object will be injected by the framework into the class' constructor as `ctx` (the name can be freely chosen).
+  The service object will be injected by the framework into the class's constructor as `ctx` (the name can be freely chosen).
 
 Next, we will fill in the implementation of `AttributeService`:
 
 ```ts
-// src/apps/empty-app/services.ts
+// src/apps/empty/services.ts
 import { ServiceOptions, ApplicationContext } from "@open-pioneer/runtime";
 
 interface References {
     ctx: ApplicationContext;
 }
-
-const CLASS_NAME = "my-custom-class";
 
 export class AttributeService {
     private _ctx: ApplicationContext;
@@ -210,7 +208,7 @@ Finally, we will update our UI to use our new service.
 In the `build.config.mjs`, the UI now requires the interface `"empty.AttributeService"`:
 
 ```js
-// src/apps/empty-app/build.config.mjs
+// src/apps/empty/build.config.mjs
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
@@ -224,6 +222,7 @@ export default defineBuildConfig({
 And our UI will now call the methods of our `AttributeService`:
 
 ```tsx
+// src/apps/empty/AppUI.tsx
 import { Container, Heading, Text, chakra, Button, VStack } from "@chakra-ui/react";
 import { useIntl, useService } from "open-pioneer:react-hooks";
 import { useState } from "react";
@@ -236,11 +235,11 @@ export function AppUI() {
     // (1)
     const attributeService = useService("empty.AttributeService") as AttributeService;
 
-    // (2)
     const [clickCount, setClickCount] = useState(0);
     const onButtonClicked = () => {
         const newCount = clickCount + 1;
         setClickCount(newCount);
+        // (2)
         attributeService.updateAttribute(newCount);
     };
 
@@ -268,7 +267,7 @@ export function AppUI() {
 - **(1)**  
   We updated the interface name.
 
-    The return value from `useService` has to be casted manually to the expected type in this case, otherwise we would receive `unknown`.
+    The return value from `useService` must be cast manually to the expected type in this case, otherwise we would receive `unknown`.
     This is because we have not registered the interface type with the framework (which can be okay for internal services and simple examples).
     The document [How to create a service](./HowToCreateAService.md) goes into more detail.
 

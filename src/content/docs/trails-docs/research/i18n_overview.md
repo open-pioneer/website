@@ -1,5 +1,5 @@
 ---
-title: I18N Comparsion
+title: I18N Comparison
 slug: trails-docs/research/i18n_overview
 ---
 
@@ -8,9 +8,9 @@ slug: trails-docs/research/i18n_overview
 - Complex plural support
 - Localized number and date formatting
 - [ICU Message Format](https://phrase.com/blog/posts/guide-to-the-icu-message-format/) support (?)
-- light weight
+- lightweight
 - support for package concept
-- on runtime language detection
+- language detection at runtime
 - one translation file per language / page
 - active development / community
 - license
@@ -59,7 +59,7 @@ slug: trails-docs/research/i18n_overview
 
 - first-party React integration, [react-intl](https://formatjs.github.io/docs/react-intl/)
 - first-class ICU Message Format support
-- no build-in translation file loading and user language detection
+- no built-in translation file loading and user language detection
 - good tooling ([CLI](https://formatjs.github.io/docs/tooling/cli/),[eslint-plugin](https://formatjs.github.io/docs/tooling/linter),...)
 - good [TMS integration](https://formatjs.github.io/docs/getting-started/message-extraction/#translation-management-system-tms-integration)
 - support for [pre-compiled messages](https://formatjs.github.io/docs/guides/advanced-usage/) into AST, reduced react-intl without parser (40% smaller)
@@ -68,7 +68,7 @@ slug: trails-docs/research/i18n_overview
 
 ### Polyglot
 
-- light weight with minimum feature set
+- lightweight with minimum feature set
 - simple solutions for translation, interpolation and pluralization
 - no external dependencies
 - support for nested phrase objects
@@ -80,7 +80,7 @@ slug: trails-docs/research/i18n_overview
 - support for interpolation, plurals, date/number formats
 - uses ICU message format
 - CLI for extracting messages
-- no build-in translation loader
+- no built-in translation loader
 - support for JS and React
 - newer smaller community, but active and helpful
 - well documented
@@ -95,7 +95,7 @@ slug: trails-docs/research/i18n_overview
 - TypeScript support
 - optimized for tree shaking
 - built with hooks and functional components only
-- support for dates, nummeric values and plurals
+- support for dates, numeric values and plurals
 - nested support
 
 ### messageformat

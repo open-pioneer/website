@@ -3,18 +3,18 @@ title: How to theme an app
 slug: trails-docs/tutorials/HowToThemeAnApp
 ---
 
-This "how to" shows how to create a custom theme for an app. To learn more about the theming
+This tutorial shows how to create a custom theme for an app. To learn more about the theming
 mechanism in Open Pioneer Trails apps, refer to [Theming](../reference/Theming.md).
 
 To show how a custom theme for an app can be created, we will extend the empty app
 (at `src/apps/empty`).
 
-By default, the app is shown in a theme specified in the Trails core packages.
-To overwrite some or all styles (e.g. the "trails" color scheme), a custom app-theme can be created.
+By default, the app uses the Trails base theme (`@open-pioneer/base-theme`).
+To override some or all styles (e.g. the "trails" color palette), a custom theme can be created.
 
 ## Create custom theme
 
-First, in your apps "empty" folder, create a new folder called "theme" and add a file called "config.ts".
+First, in `src/apps/empty`, create the directory `theme` and the file `theme/config.ts`.
 
 This file will contain our theme configuration which is part of a Chakra UI style system config object.
 The structure of this style system config is described in the [Chakra documentation](https://chakra-ui.com/docs/theming/overview#config).
@@ -24,7 +24,7 @@ The custom theme does not need to be a complete theme config: we can just overri
 Add the following content to your file:
 
 ```ts
-// src/apps/empty/theme/theme.ts
+// src/apps/empty/theme/config.ts
 
 // (1)
 import { mergeConfigs } from "@chakra-ui/react";
@@ -44,7 +44,7 @@ export const config = mergeConfigs(
         theme: {
             tokens: {
                 colors: {
-                    // define color palette for color scheme
+                    // define the color palette
                     primary: {
                         50: { value: "#defffd" },
                         100: { value: "#b3fffa" },
@@ -147,12 +147,12 @@ export const config = mergeConfigs(
 
 - **(1)** Import the `mergeConfigs` helper function.
 - **(2)** Import the Trails base theme config from the "@open-pioneer/base-theme" package.
-- **(3)** Use `mergeConfigs` to create an own style system configuration. Use the `defaultTrailsConfig` as first parameter so that the custom theme configuration is based on the Trails' base theme configuration.
+- **(3)** Use `mergeConfigs` to create your own style system configuration. Pass `defaultTrailsConfig` as the first parameter, so that your configuration extends the Trails base theme.
 - **(3.1)** Chakra UI style system configuration object that holds the custom configuration.
 
 The Trails base theme introduces an additional special semantic token that might be overridden in the custom theme.
 This semantic token is `trails_placeholder` and specifies the color used for the placeholder text in input fields or text areas.
-For additional information about which values are available, see the base-theme core package code.
+For additional information about which values are available, see `src/packages/base-theme/config.ts` in the trails-core-packages repository.
 
 The dependency of the `@open-pioneer/base-theme` package needs to be added in the `package.json` of the app:
 
@@ -166,6 +166,8 @@ The dependency of the `@open-pioneer/base-theme` package needs to be added in th
     }
 }
 ```
+
+Then run `pnpm install`.
 
 ## Use the created theme in an app
 
@@ -190,4 +192,4 @@ customElements.define("empty-app", Element);
 ```
 
 - **(1)** Imports the custom theme config.
-- **(2)** Specifies `chakraSystemConfig` as the application's theme configuration.
+- **(2)** Passes the config to the app as `chakraSystemConfig`.

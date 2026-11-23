@@ -3,7 +3,7 @@ title: Ways to patch a package
 slug: trails-docs/WaysToPatchAPackage
 ---
 
-This document gives an overview over different techniques to change the behavior of an existing package.
+This document gives an overview of different techniques to change the behavior of an existing package.
 
 ## Introduction
 
@@ -28,9 +28,9 @@ A future version of the package that includes your changes would mean that you d
 With those risks in mind, choose one of the following alternatives, depending on your requirements.
 When in doubt, choose the less powerful alternative, since it often comes with a smaller maintenance burden.
 
-## Using methods of the trails framework
+## Using methods of the Trails framework
 
-If the package you attempt to modify is a trails package, you have some builtin methods to achieve that.
+If the package you attempt to modify is a Trails package, you have some built-in methods to achieve that.
 
 ### Properties
 
@@ -44,7 +44,7 @@ const Element = createCustomElement({
     appMetadata,
     config: {
         properties: {
-            // Overrides the `someProperty` property in "some-package-name"`
+            // Overrides the `someProperty` property in "some-package-name"
             "some-package-name": {
                 someProperty: "new-value"
             }
@@ -147,7 +147,7 @@ export class CustomNotificationService {
 
     // This method is an internal API used by the <Notifier /> component,
     // used to register a handler (listener) for incoming notifications.
-    // If this method wouldn't exist, we would get a runtime error in the Notifier component.
+    // If this method did not exist, we would get a runtime error in the Notifier component.
     registerHandler() {
         return {
             destroy() {}
@@ -156,7 +156,7 @@ export class CustomNotificationService {
 }
 ```
 
-Besides implementing a complete new service, it is also possible to reuse the original service in your new code. For example, the original service can be wrapped or extended to adjust its functionality.
+Besides implementing a completely new service, it is also possible to reuse the original service in your new code. For example, the original service can be wrapped or extended to adjust its functionality.
 The original implementation can be retrieved by importing it from the patched package's service entry point.
 
 See also the [Service reference](./reference/Services.md) for more details.
@@ -181,7 +181,7 @@ You can use pnpm to make complex changes to your packages.
 pnpm's capabilities include:
 
 - A workflow for simple patches to another package (by applying a patch/diff file).
-  This is a great alternative if you only need to change a few lines of code.
+  This is a good option if you only need to change a few lines of code.
 - Changing a package's metadata, for example the `dependencies` or `peerDependencies`
 - Overriding packages and their dependencies.
   You can change packages at will in your application's entire dependency graph.
@@ -334,8 +334,8 @@ peerDependencyRules:
 In this walkthrough, we will fork an existing package, extend it and build it ourselves to test the changes.
 This can be helpful if you intend to contribute a new feature or fix a bug to some upstream package, but need to use the changed version in your application immediately.
 
-Fist, fork the source repository (or create a branch in the original repository) and make your changes.
-In this example, we will make a very simple change the `@open-pioneer/basemap-switcher` package ([v0.11.0](https://github.com/open-pioneer/trails-openlayers-base-packages/tree/%40open-pioneer/basemap-switcher%400.11.0/src/packages/basemap-switcher)).
+First, fork the source repository (or create a branch in the original repository) and make your changes.
+In this example, we will make a very simple change to the `@open-pioneer/basemap-switcher` package ([v0.11.0](https://github.com/open-pioneer/trails-openlayers-base-packages/tree/%40open-pioneer/basemap-switcher%400.11.0/src/packages/basemap-switcher)).
 
 ```bash
 $ git checkout -b feature/my-basemap-switcher-changes
@@ -381,7 +381,7 @@ $ pnpm pack
 /path/to/project/trails-openlayers-base-packages/src/packages/basemap-switcher/dist/open-pioneer-basemap-switcher-0.11.0.tgz
 ```
 
-`pnpm pack` creates a tarball that contains the build package.
+`pnpm pack` creates a tarball that contains the built package.
 This is the format that you would download via your package manager when installing a package from `npmjs.com`.
 
 Next, you can copy the tar file to your project (for example, into the `patches` directory) and override
@@ -404,15 +404,15 @@ The application will now use the modified version of the package:
   This works best if the modified version of the package is close to (or compatible with) the original version.
 - You can commit the tarball to your git repository.
   Other developers will automatically apply the override when they run `pnpm install`.
-- PNPM will currently not detect changes (file modifications) in the tarball itself.
-  If you need to update it, simply change the file name as well.
+- pnpm will currently not detect changes (file modifications) in the tarball itself.
+  If you need to update it, change the file name as well.
 - This process can also be used for multiple packages:
     ```bash
     # Runs pack on every package and places the output into the specified directory.
     $ pnpm recursive pack --filter='@open-pioneer/*' --pack-destination=/path/to/output/directory
     ```
     However, this may become too cumbersome in the long run.
-    If you need custom development versions of trails packages, you can also contact the maintenance team to publish a custom development snapshot.
+    If you need custom development versions of Trails packages, you can also contact the maintenance team to publish a custom development snapshot.
 
 #### Walkthrough: replacing @open-pioneer/runtime
 
@@ -460,12 +460,12 @@ peerDependencyRules:
         "@open-pioneer/runtime": "*"
 ```
 
-After editing the `package.json` file, execute `pnpm install`.
+After editing the `pnpm-workspace.yaml` file, execute `pnpm install`.
 You can already verify that the changes have been applied: open an application or package
 that uses `@open-pioneer/runtime` and inspect the `node_modules`.
 You will see that it now uses the custom version.
 
-Running an app (both in development or production) will now print the new message into the console:
+Running an app (in development and in production) will now print the new message into the console:
 
 ![An additional message is printed to the console](./WaysToPatchAPackage_RuntimeLogMessage.png)
 
@@ -478,7 +478,7 @@ NOTE:
 - When copying a built package into the source directory, our Vite plugin will print a warning:
 
     ```text
-    [vite] warning: Using framework metadata from package.json instead of build.config.mjs in /home/michael/projects/pioneer/starter/src/packages/custom-runtime, make sure that this intended.
+    [vite] warning: Using package metadata from package.json instead of build.config.mjs in /path/to/starter/src/packages/custom-runtime, make sure that this intended.
     ```
 
     You can safely ignore this warning if it is expected (which is the case here).
@@ -486,7 +486,7 @@ NOTE:
 
 - When you're patching another package in its source form (e.g. by copying it from its source repository), you might have to fix up its dependencies.
   These might use the `workspace:...` protocol, and those packages are not available locally (just use real versions instead).
-- When you're replacing a trails package, don't change the `name` in its `package.json` file: it is currently significant for the registration of services.
+- When you're replacing a Trails package, don't change the `name` in its `package.json` file: it is currently significant for the registration of services.
   However, you can freely change the `version` or the directory name.
 - All of this should be considered a hack.
   Use this technique only when no other options are available to you.

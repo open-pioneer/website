@@ -4,7 +4,7 @@ slug: trails-docs/internals/ServiceLayer
 ---
 
 This document contains details about the implementation of the Open Pioneer Trails runtime's service layer.
-It should aid developers to gain an understanding of the implementation in order to maintain or extend it.
+It helps developers understand the implementation so that they can maintain or extend it.
 
 The service layer provides a generic dependency injection mechanism in which services can be defined.
 Services may reference each other through references, forming a graph of services.
@@ -13,7 +13,7 @@ See [Design](./Design_Phase1.md) for some background information.
 
 ## Overview
 
-The service layer's implementation lives in the package `@open-pioneer/runtime`, mostly in the `services` directory.
+The service layer's implementation lives in the package `@open-pioneer/runtime`, mostly in the `service-layer` directory.
 It is heavily inspired by the Spring framework.
 
 The most important classes and modules are:
@@ -27,7 +27,7 @@ The most important classes and modules are:
 
     The service layer will verify the services' dependency graph before starting them by calling this function.
     It will visit all services to ensure that their dependencies can be fulfilled and that no cycles occur.
-    On error, the method will output sensible error messages that can be easily understood by the developer.
+    On error, the function throws an error with a message that names the affected services.
 
     In its current form, the function essentially ensures that the dependency graph is an acyclic graph.
 
@@ -35,19 +35,19 @@ The most important classes and modules are:
     It contains the service index (mapping interface names, qualifiers etc. to services) and the
     verified dependency information (mapping services to other referenced services).
     The service layer will use the index to support dynamic service lookups (e.g. for the UI)
-    and the dependency information during service construction to setup service references.
+    and the dependency information during service construction to set up service references.
 
 - `class PackageRepr` / `ServiceRepr`
 
     Represents a package / service at runtime.
-    It must be noted that these classes are stateful: their state will reflect the changes made by the service layer.
+    These classes are stateful: their state will reflect the changes made by the service layer.
     For example, a `ServiceRepr`'s `instance` attribute will hold the actual service instance once it has been created.
     As a consequence, they cannot be reused or shared between multiple application instances.
 
 - `function createPackages`
 
     Parses metadata into instances of `PackageRepr` and `ServiceRepr`.
-    This transforms the well defined metadata format (input to the service layer) into the internal runtime representation.
+    This transforms the well-defined metadata format (input to the service layer) into the internal runtime representation.
     Package properties are also handled here: properties defined by the application are merged with the default values declared in
     the individual packages.
 
@@ -63,7 +63,7 @@ When the metadata format is altered, the build tooling will (most likely) have t
 
 ## Service Layer Lifecycle
 
-1. _Construction_
+1. _construction_
 
     The service layer is constructed from a set of `PackageRepr`.
     It will immediately verify and index the services in the dependency graph.
@@ -71,7 +71,7 @@ When the metadata format is altered, the build tooling will (most likely) have t
 
     During its construction, the service layer will first verify the entire service graph (needed _and_ unneeded services).
     It will then compute the set of actually required services.
-    This set is currently made up of the services required by the UI (taking from package metadata) and the services required
+    This set is currently made up of the services required by the UI (taken from package metadata) and the services required
     by the framework (constructor parameter).
     Only those services (and their transitive dependencies) will actually be started.
 
@@ -83,7 +83,7 @@ When the metadata format is altered, the build tooling will (most likely) have t
 
     The process to construct a service `s` is as follows:
     1. Has `s` already been constructed? Return `s.instance` and increment its reference count.
-    2. Is the service in any other state than `not-constructed`? Throw an error (this is a sanity check, since `verifyDependency` should have caught the issue).
+    2. Is the service in any other state than `not-constructed`? Throw an error (this is a sanity check, since `verifyDependencies` should have caught the issue).
     3. Call `createService(d)` for every service `d` required by `s` and store the instance reference.
     4. Finally create the service `s` by passing the required references and other parameters into its constructor.
        Note that this initializes the service's reference count to `1`.
@@ -96,8 +96,8 @@ When the metadata format is altered, the build tooling will (most likely) have t
 
 4. _destroy_
 
-    The `destroy()` is being called on the service layer.
-    This currently happens when the custom component is removed from the DOM.
+    `destroy()` is called on the service layer.
+    This currently happens when the custom element is disconnected from the DOM.
 
     Destruction reverses the process in `start()`.
 
@@ -139,7 +139,7 @@ Note that it is not an error if there are zero implementations of an interface: 
 ## Runtime lookups
 
 The service layer provides an API to retrieve interface implementations at runtime (`getService` and `getServices`).
-This is a required building block for the integration with react components: when a react component calls `useService(...)`,
+This is a required building block for the integration with React components: when a React component calls `useService(...)`,
 a dynamic lookup will be triggered (the result can be cached).
 An error will be thrown if the dependency on that service has not been declared in the package's metadata (`ui.references`).
 
@@ -148,7 +148,7 @@ An error will be thrown if the dependency on that service has not been declared 
 ### Cycles are forbidden
 
 A service cannot depend on itself (directly or indirectly).
-Such a thing would be impossible to implement (reasonably) because a dependency should be fully initialized
+This cannot be implemented reasonably because a dependency should be fully initialized
 before it is being used.
 
 We currently verify that there are no cycles through static analysis.

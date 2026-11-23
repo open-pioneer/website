@@ -7,19 +7,19 @@ This tutorial describes how to share an Open Pioneer Trails package with other d
 You can skip this document if you're just working in the context of a single application.
 
 Until now, this manual has only been concerned with building an _application_, possibly including a set of _local_ packages.
-The result of building an application is always a set of static files (.i.e. `.html`, `.js`, etc.) that can be interpreted by a browser.
+The result of building an application is always a set of static files (i.e. `.html`, `.js`, etc.) that can be interpreted by a browser.
 This output is ideal for distributing a final application, but it is not suitable for sharing reusable parts of your application.
 
 One of the key advantages of the Open Pioneer Trails client framework is the ability to scale up application development by sharing reusable application components as packages.
 Shared Trails packages are similar to "plain" node packages (in fact, they _are_ node packages), but they come with the additional feature set you have learned already:
 services of a package are automatically started when needed, styles are automatically applied, etc.
 
-There are some things to consider and a few steps to follow when indenting to share a package with other developers.
+There are some things to consider and a few steps to follow when intending to share a package with other developers.
 We will first discuss the underlying concepts and then work through a specific example.
 
 ## Concepts
 
-- **Package Compilation**
+- **Package compilation**
 
     To prepare a package for publishing, it must be built first.
     Building a package produces a `dist` directory in that package's source directory containing a compiled version of that package.
@@ -36,7 +36,7 @@ We will first discuss the underlying concepts and then work through a specific e
 
 - **Package installation**
 
-    After a package has been published, it can simply be installed in any project, e.g. by executing `pnpm add`.
+    After a package has been published, it can be installed in any project, e.g. by executing `pnpm add`.
     Our build tools automatically detect Trails packages in an app's dependency graph.
     A package installed this way should work the same way _as if_ it were developed locally.
 
@@ -56,7 +56,7 @@ After successful execution, it will have assembled a compiled version of that pa
 By default, this validation is strict: all validation errors are fatal.
 This can be changed by configuring `publishConfig.strict: false` in your package's `build.config.mjs`,
 which is convenient when first preparing an existing package for publishing.
-`strict` should be `true` in production!
+`strict` should be `true` in production.
 
 For a properly configured package, the output of `build-pioneer-package` can look like this:
 
@@ -108,7 +108,7 @@ Package compilation involves the following steps:
     This also gives us the (future) opportunity to apply optimizations (e.g. minify code).
 
     Files that are not needed will be skipped (such as `*.test.*`).
-    To decide which files are actually needed, your _must_ configure your package's `entryPoints` in the `build.config.mjs`.
+    To decide which files are actually needed, you _must_ configure your package's `entryPoints` in the `build.config.mjs`.
     All modules used by one of your entry points (transitively) will be included in the compiled package; other modules will not.
 
     Most packages will simply have a single entry point (e.g. `index`), or none at all.
@@ -129,7 +129,7 @@ Package compilation involves the following steps:
 
 - **Copy i18n files.**
 
-    I18N files for supported locales (e.g. `i18n/en.yaml`) are copied to `dist`.
+    i18n files for supported locales (e.g. `i18n/en.yaml`) are copied to `dist`.
 
 - **Copy assets.**
 
@@ -160,20 +160,19 @@ Package compilation involves the following steps:
 
 - **Copy auxiliary files.**
 
-By default, a package must contain the following text files:
+    By default, a package must contain the following text files:
+    - `README`, `README.md` or `README.txt`
+    - `LICENSE`, `LICENSE.md` or `LICENSE.txt`
+    - `CHANGELOG`, `CHANGELOG.md` or `CHANGELOG.txt`
 
-- `README`, `README.md` or `README.txt`
-- `LICENSE`, `LICENSE.md` or `LICENSE.txt`
-- `CHANGELOG`, `CHANGELOG.md` or `CHANGELOG.txt`
+    Additionally, a `NOTICE`, `NOTICE.md` or `NOTICE.txt` may be present.
+    All these files are copied into the compiled package.
 
-Additionally, a `NOTICE`, `NOTICE.md` or `NOTICE.txt` may be present.
-All these files are copied into the compiled package.
-
-You can configure `publishConfig.validation` to opt out of these required files.
+    You can configure `publishConfig.validation` to opt out of these required files.
 
 ### Publishing
 
-Publishing a npm package has a few requirements:
+Publishing an npm package has a few requirements:
 
 1.  The package must not be set to `private`.
 
@@ -236,14 +235,14 @@ There are multiple options:
 
     This is the recommended operation mode by the developers of [Verdaccio](https://verdaccio.org).
 
-    See [here](https://verdaccio.org/docs/setup-npm) for setup instructions (which also apply to pnpm).
+    See the [Verdaccio documentation](https://verdaccio.org/docs/setup-npm) for setup instructions (which also apply to pnpm).
 
 - Using a different registry for one or more specific scopes.
 
     You will still use the default registry for all other packages, but packages from your scope (e.g. `@my-company/*`)
     would be loaded from a custom registry.
 
-    See [here](https://docs.npmjs.com/cli/v9/using-npm/scope#associating-a-scope-with-a-registry) for setup instructions.
+    See the [npm documentation](https://docs.npmjs.com/cli/v9/using-npm/scope#associating-a-scope-with-a-registry) for setup instructions.
 
 Depending on your chosen scenario and the software you're using you will also have to consider authentication and permission management, but that is out of scope for this document.
 
@@ -301,7 +300,7 @@ The initial `package.json`:
 }
 ```
 
-And the initial `build.config.mjs`
+And the initial `build.config.mjs`:
 
 ```js
 // src/packages/test-package/build.config.mjs
@@ -318,7 +317,7 @@ export default defineBuildConfig({
 
 ### Step 2: Getting the package to build
 
-You can use the `build-pioneer-package` CLI to validate your package, it will notify you about problems with your package.
+You can use the `build-pioneer-package` CLI to validate your package. It will notify you about problems with your package.
 
 To execute the command, point your terminal to the package's directory `src/packages/test-package` and then execute one of the two following commands:
 
@@ -332,27 +331,27 @@ Because we have disabled strict validation in the `build.config.mjs`, `build-pio
 ```text
 $ pnpm build
 
-> test-package@ build /home/michael/projects/pioneer/starter/src/packages/test-package
+> test-package@ build <PROJECT_DIR>/src/packages/test-package
 > build-pioneer-package
 
-Building package at /home/michael/projects/pioneer/starter/src/packages/test-package
-/home/michael/projects/pioneer/starter/src/packages/test-package/build.config.mjs must define the 'entryPoints' property in order to be built.
+Building package at <PROJECT_DIR>/src/packages/test-package
+<PROJECT_DIR>/src/packages/test-package/build.config.mjs must define the 'entryPoints' property in order to be built.
 Generating TypeScript declaration files...
 Copying assets...
 Writing package metadata...
-/home/michael/projects/pioneer/starter/src/packages/test-package/package.json should define a version.
-/home/michael/projects/pioneer/starter/src/packages/test-package/package.json should define a license.
-/home/michael/projects/pioneer/starter/src/packages/test-package/package.json should define 'publishConfig.directory' to point to the 'dist' directory (see https://pnpm.io/package_json#publishconfigdirectory).
+<PROJECT_DIR>/src/packages/test-package/package.json should define a version.
+<PROJECT_DIR>/src/packages/test-package/package.json should define a license.
+<PROJECT_DIR>/src/packages/test-package/package.json should define 'publishConfig.directory' to point to the 'dist' directory (see https://pnpm.io/package_json#publishconfigdirectory).
 Copying auxiliary files...
-Failed to find LICENSE in /home/michael/projects/pioneer/starter/src/packages/test-package (attempted exact match and extensions .md, .txt).
-Failed to find README in /home/michael/projects/pioneer/starter/src/packages/test-package (attempted exact match and extensions .md, .txt).
-Failed to find CHANGELOG in /home/michael/projects/pioneer/starter/src/packages/test-package (attempted exact match and extensions .md, .txt).
+Failed to find LICENSE in <PROJECT_DIR>/src/packages/test-package (attempted exact match and extensions .md, .txt).
+Failed to find README in <PROJECT_DIR>/src/packages/test-package (attempted exact match and extensions .md, .txt).
+Failed to find CHANGELOG in <PROJECT_DIR>/src/packages/test-package (attempted exact match and extensions .md, .txt).
 Success
 ```
 
 #### Configuring entry points
 
-Only entry point modules and modules imported by them will be included in the build package (under `dist`).
+Only entry point modules and modules imported by them will be included in the built package (under `dist`).
 You will notice that right now, the package is empty aside from its `package.json`, because we have not configured any entry points yet.
 
 Here is how to add them:
@@ -373,12 +372,12 @@ However, executing `build` now gives us a different problem:
 ```text
 $ pnpm build
 
-> test-package@ build /home/michael/projects/pioneer/starter/src/packages/test-package
+> test-package@ build <PROJECT_DIR>/src/packages/test-package
 > build-pioneer-package
 
-Building package at /home/michael/projects/pioneer/starter/src/packages/test-package
+Building package at <PROJECT_DIR>/src/packages/test-package
 Building JavaScript...
-[plugin check-imports] Failed to import '@open-pioneer/core', the package '@open-pioneer/core' must be configured either as a dependency or as a peerDependency in /home/michael/projects/pioneer/starter/src/packages/test-package/package.json
+[plugin check-imports] Failed to import '@open-pioneer/core', the package '@open-pioneer/core' must be configured either as a dependency or as a peerDependency in <PROJECT_DIR>/src/packages/test-package/package.json
 ... in logger.ts
 
 ... SNIP ...
@@ -465,10 +464,10 @@ Building the package after all these changes should now succeed:
 ```bash
 $ pnpm build
 
-> test-package@1.0.0 build /home/michael/projects/pioneer/starter/src/packages/test-package
+> test-package@1.0.0 build <PROJECT_DIR>/src/packages/test-package
 > build-pioneer-package
 
-Building package at /home/michael/projects/pioneer/starter/src/packages/test-package
+Building package at <PROJECT_DIR>/src/packages/test-package
 ...
 Success
 ```
@@ -506,14 +505,14 @@ npm notice Publishing to https://registry.npmjs.org/ (dry-run)
 + test-package@1.0.0
 ```
 
-`--dry-run` makes (p-)npm stop just before uploading it to the actual registry.
+`--dry-run` makes pnpm stop before uploading the package to the actual registry.
 `--no-git-checks` allows us to use the command with a dirty working directory (this should not be used in production).
 
 Finally, when you're ready to publish, commit and tag your release and leave out the `--dry-run` flag.
 
 ### Further reading
 
-See also [Contributing packages to the registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry)
+See also [Contributing packages to the registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
 
 ## Checklist
 

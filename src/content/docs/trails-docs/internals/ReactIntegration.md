@@ -26,13 +26,13 @@ customElements.define("test-app", Element);
 
 ## Accessing Packages and Services
 
-UI Components written in React must be able to interact with the package system and the service layer.
+UI components written in React must be able to interact with the package system and the service layer.
 This means that services, package properties and package i18n must be accessible.
 
 In a React component, the developer can write:
 
 ```jsx
-//  apps/test-app/TestComponent.jsx
+// apps/test-app/TestComponent.jsx
 import { useService, useIntl, useProperties } from "open-pioneer:react-hooks";
 
 function TestComponent() {
@@ -44,15 +44,15 @@ function TestComponent() {
 ```
 
 `useIntl` and `useProperties` must return the appropriate value for `test-app`.
-`useService` returns the requested service (if it can be found) and is also supposed to
-check that `test-app` actually declares a reference to `foo.bar` (for dependency hygiene).
+`useService` returns the requested service (if it can be found) and also checks
+that `test-app` actually declares a reference to `foo.bar` (for dependency hygiene).
 
 ### Using the package context
 
 React supports two ways to provide values to a component: [Props](https://reactjs.org/docs/components-and-props.html) and the [Context API](https://reactjs.org/docs/context.html).
-Props are used for "direct" arguments from parent component to child, whereas context values are provided into the entire react component tree rooted in a `Provider`.
+Props are used for "direct" arguments from parent component to child, whereas context values are provided into the entire React component tree rooted in a `Provider`.
 
-Since (potentially) all react component require access to the service layer, we have chosen to transport references via the context API instead of props: using props would put a lot of manual work on the developer (forwarding values all the time) and would also pollute component interfaces with mostly internal stuff like i18n and service references.
+Since (potentially) all React components require access to the service layer, we have chosen to transport references via the context API instead of props: using props would put a lot of manual work on the developer (forwarding values all the time) and would also pollute component interfaces with mostly internal stuff like i18n and service references.
 
 When the UI is rendered (`Component` in the example), it is always surrounded by a `PackageContext.Provider`:
 
@@ -81,7 +81,7 @@ function render(Component: ComponentType, props: Record<string, unknown>) {
 
 The `packageContext` contains references to all packages (and their services) in the application.
 It is an internal data structure that can only be used indirectly through the provided hooks (e.g. `useService`),
-but in theory it is accessible to the entire react part of the application.
+but in theory it is accessible to the entire React part of the application.
 There is only one `packageContext` per application, shared between all packages.
 
 Obtaining a reference to the `packageContext` looks like this:
@@ -97,12 +97,12 @@ export function useIntlInternal(packageName: string): PackageIntl {
 ```
 
 `useIntlInternal` is the implementation of the `useIntl` hook.
-It retrieves the packageContext using React's Context API and then attempts to find a package with the given name
+It retrieves the `packageContext` using React's Context API and then attempts to find a package with the given name
 in the shared lookup structure, finally returning its `intl` value.
 
 `useIntlInternal` is not supposed to be called directly because the `packageName` can easily be mistyped or set to the name of a different package (violating encapsulation).
 Instead, developers invoke the `useIntl` hook exported from the module `"open-pioneer:react-hooks"`.
-The module is implemented in the vite plugin: it automatically detects the containing package, looks for the `package.json` and reads the package `name` from that file, saving the developer from maintaining the package name manually.
+The module is implemented in the Vite plugin: it automatically detects the containing package, looks for the `package.json` and reads the package `name` from that file, saving the developer from maintaining the package name manually.
 
 The following example shows the content of `"open-pioneer:react-hooks"` when imported from an application package called `"properties-app"`:
 
@@ -123,5 +123,5 @@ export const useIntl = /*@__PURE__*/ useIntlInternal.bind(undefined, PACKAGE_NAM
 
 ### Getting services from the service layer
 
-The `useService` and `useServices` hooks are implemented very similar to the `useIntlInternal` hook above.
-They use a shared reference to the [`ServiceLayer`](./ServiceLayer.md) (which has been started before the UI is being rendered) to find services in the application (methods `getService` / `getServices`).
+The `useService` and `useServices` hooks are implemented similarly to the `useIntlInternal` hook above.
+They use a shared reference to the [`ServiceLayer`](./ServiceLayer.md) (which has been started before the UI is rendered) to find services in the application (methods `getService` / `getServices`).

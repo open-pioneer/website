@@ -5,7 +5,7 @@ slug: trails-docs/research/Chakra Theming
 
 (applies to Chakra UI version `2.8.0`)
 
-- Chakra use a few (internal) semantic tokes that can be overridden to quickly change the default colors
+- Chakra uses a few (internal) semantic tokens that can be overridden to quickly change the default colors
 - these values are not applied to components that define a color scheme by default (e.g. Button uses color scheme _gray_ by default)
 
 ```json

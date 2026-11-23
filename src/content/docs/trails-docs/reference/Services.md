@@ -35,12 +35,12 @@ export default defineBuildConfig({
 });
 ```
 
-A matching export using the same name (see _(1)_) must be provided from `services.ts` or (`.js`).
+A matching export using the same name (see _(1)_) must be provided from `services.ts` (or `services.js`).
 The framework will try to import the class from that file:
 
 ```js
 // some-package/services.ts
-// The export name here must match the service name in the build.config.js.
+// The export name here must match the service name in the build.config.mjs.
 // The actual class name in the source code does not matter.
 // The class could also be defined in this module instead of importing it from a different file.
 export { HelloWorldService } from "./HelloWorldService";
@@ -155,7 +155,7 @@ export default defineBuildConfig({
 ```
 
 The snippet above tells the system that React components from the package `sample-app` may reference the service implementing `"hello.HelloWorldService"`.
-The framework will ensure that that service is started, or that an error is thrown if no service provides that interface.
+The framework starts that service, or throws an error if no service provides that interface.
 
 From within the React component, the `useService` hook can be used to reference the service:
 
@@ -169,7 +169,7 @@ function ExampleComponent() {
     useEffect(() => {
         service.sayHello();
     }, []);
-    return <div>This components calls service.sayHello after mounting</div>;
+    return <div>This component calls service.sayHello after mounting</div>;
 }
 ```
 
@@ -178,7 +178,7 @@ function ExampleComponent() {
 It is possible to gather all services that provide a certain interface name by specifying `all: true` in the `build.config.mjs`.
 The services are gathered and available as an array in the referencing service or UI.
 
-An example is shown in [How To Create a Service Tutorial](../tutorials/HowToCreateAService.md).
+For an example, see the tutorial [How to create a service](../tutorials/HowToCreateAService.md).
 
 See documentation and examples in [Package Reference](./Package.md) for more details.
 
@@ -203,7 +203,9 @@ The following values are available as properties of `serviceOptions`:
 - `references`: An object containing references to other services (as defined in the `build.config.mjs`).
 - `referencesMeta`: Metadata about references, uses the same names as `references`.
 - `properties`: An object containing the current package's properties (default values from `build.config.mjs`, possibly modified/overwritten by the application).
-- `intl`: The current package's `intl` object to support translations and formatting in the user's locale (see [I18N Format](./I18nFormat.md)).
+- `currentIntl`: A signal that holds the current package's `intl` object to support translations and formatting in the user's locale (see [I18N Format](./I18nFormat.md)).
+  The object changes when the locale changes, so watch the signal for changes.
+- `intl`: Deprecated, use `currentIntl` instead.
 
 <!-- TODO: Link to hosted api documentation ?? -->
 
@@ -246,7 +248,7 @@ Dependencies are destroyed after their dependents to ensure that their instances
 
 ## Overriding services
 
-Applications can override services from other packages, see [Reference](./Package.md#overrides).
+Applications can override services from other packages, see [`overrides` in the package reference](./Package.md#overrides).
 
 ## TypeScript Integration
 
@@ -254,7 +256,7 @@ It is recommended, but not required, to author all services in TypeScript.
 The runtime provides a few facilities to aid with the implementation.
 
 The `Service` interface provides types for the service's lifecycle methods.
-At the time of this writing this is just `destroy()`, but more methods may be added in the future.
+Currently, the only lifecycle method is `destroy()`.
 It also accepts an optional type parameter representing the service's public API.
 The properties and methods from the type are merged with the service's lifecycle methods:
 
@@ -299,7 +301,8 @@ export class MyServiceImpl implements Service<MyService> {
 
 ### Declaring the service's interface name
 
-A Service's TypeScript interface can be associated with an interface name (a string constant), which greatly improves the developer experience when interacting with services.
+A service's TypeScript interface can be associated with an interface name (a string constant).
+TypeScript then checks the interface name passed to `useService`.
 
 To link your TypeScript type with its associated interface name, make sure that your service's interface extends from `DeclaredService`.
 The `DeclaredService` type does not add any required properties or methods to your service; it simply transports the associated interface name at compile time.

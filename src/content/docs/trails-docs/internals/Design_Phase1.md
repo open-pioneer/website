@@ -12,7 +12,7 @@ The purpose of this project is building web applications from a set of composabl
 
 - Web applications shall be able to expose an API to their host site (e.g. methods, events)
 
-- It should also be possible to easily implement and deploy "classic" single page application, both
+- It should also be possible to easily implement and deploy "classic" single page applications, both
   for testing/demonstration and for projects where the application does not need to be embedded anywhere else
 
 - Applications should be composed of smaller packages that may be developed separately.
@@ -84,7 +84,7 @@ A monorepo approach appears to be a good solution to facilitate separate develop
 will consist of one or more bundles, packages and apps that may depend on each other.
 Well defined interfaces can be enforced on the package level.
 
-With its support for workspaces, advanced dependency management and generally good performance, [PNPM](https://pnpm.io/) has been chosen as the package manager.
+With its support for workspaces, advanced dependency management and generally good performance, [pnpm](https://pnpm.io/) has been chosen as the package manager.
 PNPM can automatically link packages within the same workspace when they depend on each other (still enforcing 'clean' dependency declarations).
 Vite supports pnpm workspace layouts by following the links and detecting that they point into the project itself, automatically applying rules and plugins like "usual".
 
@@ -105,7 +105,7 @@ React has been chosen instead of Vue for a few reasons:
 1. React's open source community is significantly larger and maintains a richer ecosystem.
    This should make it easier to find appropriate open source solutions (e.g. for a11y, i18n).
 2. React's long term stability has historically been very good.
-   See also react's stability commitment: https://reactjs.org/docs/faq-versioning.html#commitment-to-stability
+   See also React's stability commitment: https://reactjs.org/docs/faq-versioning.html#commitment-to-stability
 3. It integrates slightly better with TypeScript:
    TypeScript natively supports React's syntax, whereas Vue requires special IDE-addons and compiler plugins to implement its custom languages.
 
@@ -113,21 +113,21 @@ Ultimately, we expect the integration with the UI layer to be relatively simple,
 
 ### Component Framework
 
-[Chakra UI](https://chakra-ui.com/) was chosen as the main React component framework after a in-depth evaluation of alternatives (including MUI, Fluent UI and Mantine).
+[Chakra UI](https://chakra-ui.com/) was chosen as the main React component framework after an in-depth evaluation of alternatives (including MUI, Fluent UI and Mantine).
 Reasons for that choice include:
 
 - Very good support for a11y
 - Good support for customization / themes
 - Large set of builtin components (although no rich table by default)
 - Well maintained
-- Can integrate (with some complexity) into the shadow dom technology
+- Can integrate (with some complexity) into the shadow DOM technology
 
 [Material UI](https://mui.com/core/) was the second contender.
 
 ### I18N Framework
 
 [FormatJS](https://formatjs.io/) was chosen as the i18n framework for our technology stack.
-It it well maintained, used by a large number of projects and has a well designed API.
+It is well maintained, used by a large number of projects and has a well designed API.
 The central interface exposed by FormatJS is the `intl` object (see [API](https://formatjs.github.io/docs/react-intl/api/#intlshape)).
 
 ## Implementation strategy
@@ -215,7 +215,7 @@ The `resolveId` hook handles the virtual module id and takes note of its importe
 The module id will be resolved to an absolute virtual module id (e.g. `"\0pioneer:app?imported-from=..."`) which must in turn be implemented by the `load` hook.
 
 During `load`, the resolved module id is parsed and the app's `package.json` is located.
-For every `node_modules/*` dependency, check the _real_ path of the package on disk and if it is located inside the source folder, analyze it like described in step 1 above.
+For every `node_modules/*` dependency, check the _real_ path of the package on disk and if it is located inside the source folder, analyze it as described in step 1 above.
 To enable reloads during development, all `package.json` files (and other config files) read along the way must be tracked via rollup's `this.addWatchFile(...)`.
 Finally, the `load` hook generates a JavaScript module containing the building block's metadata found in the analysis (i.e. the exports `bundles` and `styles` in the code sample above).
 
@@ -267,7 +267,7 @@ The responsibilities are:
 1. Return a web component class from `createCustomElement` that launches the configured app when loaded into the DOM.
 2. Load all required styles into the web component's shadow DOM
 3. Load translation files and pick the correct language
-4. Launch all requires services and inject required references (required components launch before their dependents, cycles are an error)
+4. Launch all required services and inject required references (required components launch before their dependents, cycles are an error)
 5. Set up the UI Framework (Framework specific options, e.g. root nodes for menus).
 6. Render the application's UI
 7. Expose an API from the web component
@@ -298,7 +298,7 @@ it("should run", function () {
 });
 ```
 
-React components that integrate into the service layer (via hooks `useSerivce`, `useProperties` etc.) also need some testing support to provide test dependencies.
+React components that integrate into the service layer (via hooks `useService`, `useProperties` etc.) also need some testing support to provide test dependencies.
 A custom provider can be used to supply service instances (and properties etc.) into the component tree.
 This is implemented in the `@open-pioneer/test-utils` package:
 
@@ -376,7 +376,7 @@ Every package can define a set of translation files (one per supported language)
 > NOTE: The build system combines translation files of individual packages into per-app translation files for efficiency.
 > Thus, there is one translation file per (app, supported language) combination.
 
-Every package currently receives its own `intl` instances with the appropriate messages defined in the translation files.
+Every package currently receives its own `intl` instance with the appropriate messages defined in the translation files.
 
 ### Multi-page application
 

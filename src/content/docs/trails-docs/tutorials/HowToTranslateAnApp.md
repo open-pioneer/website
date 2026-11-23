@@ -9,17 +9,17 @@ By default, the empty app is prepared to support I18n with locale `en`.
 We will add support for another language (locale `de`) and demonstrate advanced features of [FormatJS](https://formatjs.io/) Intl.
 
 > **Note**  
-> For more details to I18n file format please check [I18nFormat](../reference/I18nFormat.md).
+> For details about the i18n file format, see [I18nFormat](../reference/I18nFormat.md).
 
 ## Preparing i18n support for our app
 
-To begin, start the development server
+To begin, start the development server:
 
 ```bash
 pnpm run dev
 ```
 
-and open the [empty app](http://localhost:5173/sites/empty/)
+Then open the [empty app](http://localhost:5173/sites/empty/).
 
 Open the `build.config.mjs` and add locale `de` to the `i18n` property:
 
@@ -32,7 +32,7 @@ export default defineBuildConfig({
 });
 ```
 
-We will see an error message in browser, because of the missing yaml file for our new locale.
+We will see an error message in the browser, because of the missing YAML file for our new locale.
 We need to create the file in the `i18n` folder. The naming schema of the file is `{locale}.yaml`.
 
 ```yaml
@@ -45,7 +45,7 @@ messages:
 By default, the app uses the browser settings or system default for determining the locale.
 If your browser locale is set to `de` you should see the values from `de.yaml` (maybe you will need to restart the dev server).
 
-<img src="./HowToTranslateAnApp_App.png" alt="i18n howto app" style="border: 1px solid black;" />
+![i18n howto app](./HowToTranslateAnApp_App.png)
 
 To demonstrate the multi-language support and force a language of our choice, we need to modify the `app.ts`:
 
@@ -66,7 +66,7 @@ const Element = createCustomElement({
     appMetadata,
     config: {
         // Forces the locale if set to a string.
-        // 'undefined' choses an automatic locale based on the app and
+        // 'undefined' chooses an automatic locale based on the app and
         // the user's preferred languages.
         locale: FORCED_LANG
     }
@@ -167,7 +167,7 @@ Add the defined keys to all yaml files.
 The `interpolation.value` key uses a placeholder for `name`.
 In the rendered text the passed value of `name` will replace the placeholder.
 
-![interplation example](./HowToTranslateAnApp_Interpolation.png)
+![interpolation example](./HowToTranslateAnApp_Interpolation.png)
 
 ### Plurals
 
@@ -195,7 +195,7 @@ function ExampleStack() {
 }
 ```
 
-With plural support we can output different text depending on a count value (see [Link](https://formatjs.github.io/docs/core-concepts/icu-syntax/#plural-format)).
+With plural support we can output different text depending on a count value (see [plural format](https://formatjs.github.io/docs/core-concepts/icu-syntax/#plural-format)).
 We will use a RadioGroup to change the count value in our example:
 
 ```tsx
@@ -237,7 +237,7 @@ messages:
 
 Add the defined keys to all yaml files.
 
-The `plurals.value` key defines a count parameter `n`. In result the passed value of `n` will be used to generate the matching output.
+The `plurals.value` key defines a count parameter `n`. As a result, the passed value of `n` will be used to generate the matching output.
 
 ![plurals example](./HowToTranslateAnApp_Plurals.png)
 
@@ -270,7 +270,7 @@ function ExampleStack() {
 }
 ```
 
-With selection support we can output different text depending on a set of given values (see [Link](https://formatjs.github.io/docs/core-concepts/icu-syntax/#select-format)).
+With selection support we can output different text depending on a set of given values (see [select format](https://formatjs.github.io/docs/core-concepts/icu-syntax/#select-format)).
 In our example we will change the title depending on a gender selection.
 We will use a text input for name and a RadioGroup for gender selection:
 
@@ -332,15 +332,15 @@ messages:
 Add the defined keys to all `yaml` files.
 
 The `selection.value` key defines a parameter `gender` for selection and uses the dynamic parameter `name`.
-In a selection we always have to define the `other` parameter.
+In a selection we always have to define the `other` case.
 It is used if the given parameter value does not match one of the other values (e.g. `male` or `female`).
-In result the passed value of `gender` and `name` will be used to generate the matching output.
+As a result, the passed value of `gender` and `name` will be used to generate the matching output.
 
 ![selection example](./HowToTranslateAnApp_Selection.png)
 
 ### Number Format
 
-Now we add an entry for `NumberFormatExample` to our `ExampleStack` :
+Now we add an entry for `NumberFormatExample` to our `ExampleStack`:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
@@ -370,7 +370,7 @@ function ExampleStack() {
 }
 ```
 
-With `formatNumber` we can not only format numbers locale specific, but also use units and currencies (see [Link](https://formatjs.github.io/docs/react-intl/api/#formatnumber)).
+With `formatNumber` we can not only format numbers for the current locale, but also use units and currencies (see [`formatNumber`](https://formatjs.github.io/docs/react-intl/api/#formatnumber)).
 In our example we will have a number input and an output with different forms of unit and currency:
 
 ```tsx
@@ -445,13 +445,13 @@ messages:
 
 Add the defined keys to all yaml files.
 
-We pass the `value` with different `NumberFormatOptions` to `intl.formatNumber`. In result, we see our formatted numbers.
+We pass the `value` with different `NumberFormatOptions` to `intl.formatNumber`. As a result, we see our formatted numbers.
 
 ![number format example](./HowToTranslateAnApp_Numberformat.png)
 
 ### Date/Time Format and Relative Time Format
 
-Finally, we add an entry for the `DateTimeFormatExample` to our `ExampleStack` :
+Finally, we add an entry for the `DateTimeFormatExample` to our `ExampleStack`:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
@@ -520,7 +520,7 @@ function DateTimeFormatExample() {
 
 To calculate the delta for our relative time output we define the function `getDeltaTime`:
 
-```javascript
+```ts
 function getDeltaTime(datetime: string): number {
     const delta = new Date(datetime).getTime() - new Date().getTime();
     return Math.round(delta / 60000);
@@ -542,17 +542,17 @@ messages:
 
 Add the defined keys to all yaml files.
 
-We pass the `value` with `DateTimeFormatOptions` to `intl.formatDate` (see [Link](https://formatjs.github.io/docs/react-intl/api/#formatdate))
-and with `RelativeTimeFormatOptions` to `intl.formatRelativeTime` (see [Link](https://formatjs.github.io/docs/react-intl/api/#formatrelativetime))
+We pass the `value` with `DateTimeFormatOptions` to `intl.formatDate` (see [`formatDate`](https://formatjs.github.io/docs/react-intl/api/#formatdate))
+and with `RelativeTimeFormatOptions` to `intl.formatRelativeTime` (see [`formatRelativeTime`](https://formatjs.github.io/docs/react-intl/api/#formatrelativetime))
 
-In result, we see our selected formatted datetime and the relative time between now and the selected datetime.
+As a result, we see our selected formatted datetime and the relative time between now and the selected datetime.
 
 ![datetime format example](./HowToTranslateAnApp_DateTimeFormat.png)
 
 > **Note**  
 > The used datetime input does not support a forced locale.
 > It always uses the defined browser locale or the system default. In our example, if your browser uses locale `de`
-> but your app uses url parameter `lang=en` the input will show values matching to locale `de`.
+> but your app uses URL parameter `lang=en` the input will show values for locale `de`.
 
 ### Formatting rich text
 
@@ -561,9 +561,9 @@ Using this function, _primitive values_ (such as strings, numbers, etc.) can be 
 For rich user interfaces, this way of rendering messages can be limiting in practice.
 
 To render _rich_ text with _React_ components for your user interface, use `intl.formatRichMessage()` instead.
-This functions follows the same principles as `intl.formatMessage()`, but is different in a few key ways:
+This function follows the same principles as `intl.formatMessage()`, but is different in a few key ways:
 
-- It always returns a React node. This makes it very powerful, but this also means that it can only be used in combination with React components.
+- It always returns a React node. It can therefore only be used in combination with React components.
 - It supports React nodes as _values_. You can still use placeholders in your messages (like `{name}`) but you can substitute arbitrary React nodes instead of only primitive values.
 - It supports defining custom tags in terms of React nodes, using functions as _values_.
 - It provides a few basic formatting tags out of the box.
@@ -644,10 +644,11 @@ This object can be used in the same way as the `intl` object returned by `useInt
 
 ```ts
 // src/apps/empty/GreetingService.ts
+import { ReadonlyReactive } from "@conterra/reactivity-core";
 import { type DECLARE_SERVICE_INTERFACE, ServiceOptions, PackageIntl } from "@open-pioneer/runtime";
 
 export class GreetingService {
-    declare [DECLARE_SERVICE_INTERFACE]: "i18n-howto-app.GreetingService";
+    declare [DECLARE_SERVICE_INTERFACE]: "empty.GreetingService";
 
     private readonly _intl: ReadonlyReactive<PackageIntl>;
 
@@ -678,11 +679,11 @@ export default defineBuildConfig({
     i18n: ["de", "en"],
     services: {
         GreetingService: {
-            provides: ["i18n-howto-app.GreetingService"]
+            provides: ["empty.GreetingService"]
         }
     },
     ui: {
-        references: ["i18n-howto-app.GreetingService"]
+        references: ["empty.GreetingService"]
     }
 });
 ```
@@ -703,15 +704,15 @@ messages:
 #....
 ```
 
-The `ServiceI18nExample` component displays a plain and simple react form using the `intl` API you have already seen.
+The `ServiceI18nExample` component displays a simple React form using the `intl` API you have already seen.
 In addition to using i18n from within the React component, it also interacts with a service (`GreetingService`, **(1)** in the example below) to show a translated message.
-The form simply asks the user for a name and then calls the `greetingService.greet(name)` method (see **(2)** below) to show a greeting:
+The form asks the user for a name and then calls the `greetingService.greet(name)` method (see **(2)** below) to show a greeting:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
 function ServiceI18nExample() {
     const intl = useIntl();
-    const greetingService = useService<GreetingService>("i18n-howto-app.GreetingService");
+    const greetingService = useService<GreetingService>("empty.GreetingService"); // (1)
     const [inputValue, setInputValue] = useState("");
     const [greeting, setGreeting] = useState("");
     return (
@@ -726,7 +727,7 @@ function ServiceI18nExample() {
 
                     const name = inputValue.trim();
                     if (name) {
-                        setGreeting(greetingService.greet(name));
+                        setGreeting(greetingService.greet(name)); // (2)
                     } else {
                         setGreeting("");
                     }
@@ -773,7 +774,7 @@ Limitation:
 Currently, this requires a full restart of the application.
 Please create an issue or PR if you need support for changing the locale without restart.
 
-For more information refer to the API of the `core-packages` `runtime` package.
+For more information refer to the API documentation of the `@open-pioneer/runtime` package.
 
 ## Further reading
 

@@ -4,25 +4,25 @@ slug: trails-docs/tutorials/HowToProvideAnAPI
 ---
 
 An app is a package that provides a web component. The web component is usually embedded into a host site.
-In some use cases it can be beneficial to implement communication between the app and the surrounding site.
+In some use cases it can be beneficial to implement communication between the app and the host site.
 
-When implementing such a communication, two communication directions should be taken into account:
-communication from the host side to the web component and the other way around.
+When implementing such communication, two communication directions should be taken into account:
+communication from the host site to the web component and the other way around.
 
 The framework provides techniques for both directions.
-The outer site can call API methods implemented in the app to trigger actions in the web component
-and on the other hand the web component can emit events to be received by the outer site.
+The host site can call API methods implemented in the app to trigger actions in the web component
+and on the other hand the web component can emit events to be received by the host site.
 In the following tutorial we will see how to use both techniques.
 
 ## Web component API
 
-To allow the outer side to trigger actions in the web component, we can provide API functions in the app.
-These functions can then be called from the surrounding site to control the app.
+To allow the host site to trigger actions in the web component, we can provide API functions in the app.
+These functions can then be called from the host site to control the app.
 
-Following, we will extend the empty app (at `src/apps/empty`) so that it provides an API method which
-simply logs a message into the browsers console.
+In the following, we will extend the empty app (at `src/apps/empty`) so that it provides an API method which
+logs a message into the browser's console.
 
-### Create an API Extension that provides an API method
+### Create an API extension that provides an API method
 
 First, we need to implement a service that will provide the API methods.
 For simplicity, we will create the extension service directly in the app package.
@@ -44,9 +44,9 @@ Make sure to additionally add the `"@open-pioneer/integration"` dependency in th
 
 Now you should see an error similar to "Property 'getApiMethods' is missing" on the class.
 This is because the interface requires that a function `getApiMethods` must exist.
-This function should return a set of methods - wrapped in a `Promise` - which will become available as methods in the app's API.
+This function returns a set of methods (optionally wrapped in a `Promise`) which will become available as methods in the app's API.
 
-Thus, add the implementation for this async function in your class. It should return an object with a single method called `logText` which simple logs the string that it is called with to the console.
+Thus, add the implementation for this async function in your class. It should return an object with a single method called `logText` which logs the string that it is called with to the console.
 
 ```ts
 // src/apps/empty/LogApiExtension.ts
@@ -91,9 +91,9 @@ export default defineBuildConfig({
 
 Now, the API should provide the `logText` method.
 
-### Using the API method in the surrounding site
+### Using the API method in the host site
 
-To use the provided `logText` method we will call it from the surrounding site.
+To use the provided `logText` method we will call it from the host site.
 The "empty" app is by default embedded in the `index.html` at `sites/empty`.
 
 Open the `index.html`, add an id to the empty-app element and add a script tag.
@@ -106,8 +106,8 @@ It resolves to the app's API when the application has started.
 <html lang="en">
     ...
     <body>
-        <empty-app id="app"></empty-app>
         <!-- set id -->
+        <empty-app id="app"></empty-app>
         <script type="module" src="/apps/empty/app.ts"></script>
         <script>
             customElements.whenDefined("empty-app").then(() => {
@@ -120,8 +120,7 @@ It resolves to the app's API when the application has started.
 </html>
 ```
 
-Now it is possible to call the provided methods on the returned API instance.
-To do this, simply call the method on the returned API:
+Now it is possible to call the provided methods on the returned API instance:
 
 ```html
 <!-- src/sites/empty/index.html -->
@@ -149,7 +148,7 @@ you should see a log message with the text "Test text" in the browser's console.
 
 ## Web component events
 
-In the following, we will extend the app to additionally emit events to be received by the outer site.
+In the following, we will extend the app to additionally emit events to be received by the host site.
 As an example, we will extend the AppUI to send an event if a button is pressed.
 
 ### Emit an event
@@ -157,27 +156,28 @@ As an example, we will extend the AppUI to send an event if a button is pressed.
 To emit an event we first need to reference the `"integration.ExternalEventService"` from the UI to obtain the event service.
 Therefore, edit the `build.config.mjs`:
 
-```jsonc
+```js
 // src/apps/empty/build.config.mjs
 export default defineBuildConfig({
-    ...
+    // ...
     ui: {
         references: ["sample-package.Greeter", "integration.ExternalEventService"]
     }
 });
 ```
 
-Now we can use the event service in the UI and call its `emitEvent`method when a button is pressed:
+Now we can use the event service in the UI and call its `emitEvent` method when a button is pressed:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
 import { Button, Container, Heading, Text, chakra } from "@chakra-ui/react";
+import { ExternalEventService } from "@open-pioneer/integration";
 import { useIntl, useService } from "open-pioneer:react-hooks";
 import { Greeter, SimpleUiComponent } from "sample-package";
 
 export function AppUI() {
     // ...
-    const eventService = useService("integration.ExternalEventService");
+    const eventService = useService<ExternalEventService>("integration.ExternalEventService");
     const emitEventOnClick = () => {
         eventService.emitEvent("my-custom-event", {
             data: "my-event-data"
@@ -193,7 +193,7 @@ export function AppUI() {
 }
 ```
 
-The method takes an event name as a first argument and details in an object as a second parameter.
+The method takes the event name as the first argument and an optional detail value as the second argument.
 
 ### Receive event in the host site
 
@@ -227,4 +227,4 @@ If you click this button, the event should be logged into the console.
 
 For more details see the package documentation of `@open-pioneer/integration`.
 
-An additional example is shown in the `api-sample` at `@open-pioneer/trails-core-packages`.
+An additional example is shown in the `api-sample` in the `trails-core-packages` repository (`src/samples/api-sample`).
