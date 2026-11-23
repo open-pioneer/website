@@ -134,9 +134,21 @@ Package compilation involves the following steps:
 - **Copy assets.**
 
     Assets are "normal" files that are distributed alongside your code, for example images or fonts.
-    These can be configured via `publishConfig.assets`.
+    These can be configured via `publishConfig.assets` and can then be imported from your package's source files.
     Files matching any of the glob patterns in `publishConfig.assets` are simply copied to the `dist` directory.
     By default, all files in your package's `assets` directory are copied (if it exists).
+
+- **Copy public assets.**
+
+    Public assets configured via [`publicAssets`](../reference/Package.md#publicassets) must be available when your package is installed in another project.
+    `build-pioneer-package` therefore requires every public asset directory to be either:
+    - A directory within your package (e.g. `public`).
+      These directories are copied to the `dist` directory.
+    - A directory within a dependency, referenced through your package's `node_modules` (e.g. `./node_modules/third-party-lib/cdn`).
+      These files are _not_ copied: the dependency must be listed in the `dependencies` or `peerDependencies` of your `package.json` instead.
+
+    Other directories (e.g. `../shared-assets`) are an error.
+    Publishing public assets also requires `publishConfig.packageFormatTarget` to be `"1.2"` or later.
 
 - **Generate a package.json file.**
 

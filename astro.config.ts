@@ -96,8 +96,14 @@ export default defineConfig({
                     promote: ["index*", "*GettingStarted*"],
                     // Keep line breaks: the minifier breaks the markdown structure for some documents (huge headings containing too much text).
                     minify: { whitespace: false },
-                    // Starlight's heading anchors would otherwise appear as "[Section titled ...](#...)" links throughout the output.
-                    customSelectors: { all: ["a.sl-anchor-link"] },
+                    customSelectors: {
+                        all: [
+                            // Starlight's heading anchors would otherwise appear as "[Section titled ...](#...)" links throughout the output.
+                            "a.sl-anchor-link",
+                            // Exclude line numbers from code blocks (see pluginLineNumbers() below).
+                            "div.gutter"
+                        ]
+                    },
                     // Note: only removes from llms-small.txt
                     exclude: ["trails-docs/internals/**", "trails-docs/research/**"]
                 })
