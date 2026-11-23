@@ -26,5 +26,5 @@ This project is built on these open source projects:
 ## Further Reading
 
 More information about the underlying design decisions, build process, and repository guidelines
-is available in the [Core Packages repository](https://github.com/open-pioneer/trails-core-packages).
-It also includes guidance for migrating older Open Pioneer Trails applications from Chakra UI v2 to v3.
+is available in the [Core Packages repository](https://github.com/open-pioneer/trails-core-packages/tree/main/docs/internals).
+It also includes [guidance](https://github.com/open-pioneer/trails-core-packages/blob/main/docs/internals/ChakraV3Migration.md) for migrating older Open Pioneer Trails applications from Chakra UI v2 to v3.

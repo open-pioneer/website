@@ -244,7 +244,7 @@ Dependencies are destroyed after their dependents to ensure that their instances
 > NOTE:
 > Reference cycles between services are forbidden: the app will refuse to launch.
 > This can often be worked around by fixing the design: common functionality needs to move to a shared service.
-> In the future, we could consider implementing lazy references (see [Internal Documentation in Core Packages Repository](https://github.com/open-pioneer/trails-core-packages)).
+> In the future, we could consider implementing lazy references (see [Internal Documentation in Core Packages Repository](https://github.com/open-pioneer/trails-core-packages/blob/main/docs/internals/ServiceLayer.md)).
 
 ## Overriding services
 
