@@ -95,7 +95,7 @@ export default defineConfig({
                         ]
                     },
                     // Note: only removes from llms-small.txt
-                    exclude: ["trails-docs/internals/**", "trails-docs/research/**"]
+                    exclude: []
                 })
             ],
             expressiveCode: {
