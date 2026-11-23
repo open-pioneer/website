@@ -1,26 +1,30 @@
 ---
-title: Guide to the repository
+title: Repository guide
 slug: trails-docs/RepositoryGuide
 ---
 
 ## Overview
 
-The following figure gives a brief overview of the repository structure.
+The following figure gives a brief overview of the structure of the [Trails Starter Repository](https://github.com/open-pioneer/trails-starter) and of projects based on it.
 
 <!-- tree -L 2 --gitignore --dirsfirst -->
 
 ```
 starter
-├── docs                    -- Documentation
+├── .husky                  -- Git hooks (pre-commit checks)
+├── patches                 -- Patches for dependencies (applied by pnpm)
 ├── src                     -- Contains project code
 │   ├── apps                -- Apps go here
 │   ├── packages            -- Packages that can be used by apps
 │   ├── samples             -- Example sites, apps and packages
-│   ├── types               -- TypeScript support files
 │   ├── sites               -- Additional .html sites
+│   ├── testing             -- Global setup for automated tests
+│   ├── types               -- TypeScript support files
 │   └── index.html          -- Main HTML entry point
+├── support                 -- Configuration files for tools (license report, duplicate check) and build helpers
 ├── .editorconfig           -- Common text file settings (encoding, line length)
 ├── .gitignore              -- Lists files ignored by git
+├── .lintstagedrc           -- Configures the checks that run on staged files before a commit
 ├── oxlint.config.ts        -- Oxlint configuration file
 ├── oxfmt.config.ts         -- Oxfmt configuration file
 ├── package.json            -- Dependencies of the root package (mostly development tools)
@@ -92,7 +96,7 @@ Documentation is generated using [TypeDoc](https://typedoc.org/).
 
 TypeDoc is configured in the `typedoc.config.mjs` (this file contains the "global" TypeDoc configuration).
 Most importantly, it configures for which packages API documentation will be built.
-The default configuration file contained in this repository will build the documentation for all packages within `src/packages/**`.
+The default configuration file contained in the Trails Starter Repository will build the documentation for all packages within `src/packages/**`.
 However, you can freely edit the `typedoc.config.mjs` to your liking.
 
 In the individual packages, a `typedoc.json` file specifies how the input is converted.
@@ -145,6 +149,7 @@ Oxlint is configured via the `oxlint.config.ts` file.
 ### `pnpm run fmt`
 
 Runs [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) on all source code files for automated (re-) formatting.
+Use `pnpm run fmt:check` to only check the formatting without changing any files.
 
 ### `pnpm audit`
 
@@ -196,32 +201,26 @@ For example, the `@types/node` package may be deliberately kept at a lower versi
 #### Using a newer version
 
 In order to update the package version, either update the `package.json` of a certain package directly (if that package uses a specific version) or update your central catalog in `pnpm-workspace.yaml` (the default).
-The catalog in this repository has been prepared to make updating a package as easy as possible.
+The catalog in the Trails Starter Repository has been prepared to make updating a package as easy as possible.
 For example, updating the openlayers-base-packages can only require changing a single version number in the `pnpm-workspace.yaml`:
 
 ```yaml
 # pnpm-workspace.yaml
-__versions:
-    # ...
-    - &ol_base_packages_version ^0.7.0
-
 # https://pnpm.io/catalogs
 catalog:
     # Trails OpenLayers base packages
     # https://github.com/open-pioneer/trails-openlayers-base-packages
-    "@open-pioneer/basemap-switcher": *ol_base_packages_version
+    "@open-pioneer/basemap-switcher": &ol_base_packages_version ^1.7.0
+    "@open-pioneer/coordinate-search": *ol_base_packages_version
     "@open-pioneer/coordinate-viewer": *ol_base_packages_version
     "@open-pioneer/geolocation": *ol_base_packages_version
-    "@open-pioneer/map-navigation": *ol_base_packages_version
-    "@open-pioneer/map-ui-components": *ol_base_packages_version
     "@open-pioneer/map": *ol_base_packages_version
-    "@open-pioneer/measurement": *ol_base_packages_version
-    "@open-pioneer/overview-map": *ol_base_packages_version
-    "@open-pioneer/scale-bar": *ol_base_packages_version
-    "@open-pioneer/scale-viewer": *ol_base_packages_version
-    "@open-pioneer/theme": *ol_base_packages_version
+    "@open-pioneer/map-navigation": *ol_base_packages_version
     # ...
 ```
+
+The first entry defines the version as a YAML anchor (`&ol_base_packages_version`).
+All other entries of the group refer to that anchor (`*ol_base_packages_version`).
 
 After changing version numbers, run `pnpm install` to apply your changes.
 
@@ -231,7 +230,7 @@ For information about version handling and compatibility of Trails packages, see
 
 When installing new dependencies or updating existing ones, you may run into version conflicts related to transitive dependencies.
 Oftentimes pnpm will be able to select a common version that satisfies all requirements (sometimes it needs a little help by running `pnpm dedupe`).
-For example, if package `a` requires `"react": "^18.0.0"` and package `b` needs `"react": "^18.1.0"`, it will be able to install a shared version somewhere within the range `>= 18.1.0 < 19.0.0`.
+For example, if package `a` requires `"react": "^19.0.0"` and package `b` needs `"react": "^19.1.0"`, it will be able to install a shared version somewhere within the range `>= 19.1.0 < 20.0.0`.
 
 However, if the version ranges are incompatible, pnpm will resort to installing _both_ versions of the package (or generating an error for peer dependencies).
 Sometimes duplicate packages are not a problem, but for certain "central" packages (like `react`), there may only be a single version present in your application.
@@ -269,6 +268,9 @@ $ pnpm install
  ELIFECYCLE  Command failed with exit code 1.
 ```
 
+> NOTE: The output in this example was created with older package versions.
+> Package names and versions in your project will differ.
+
 The command tells us that `tslib` is present in versions `2.4.0` and `2.7.0`.
 We use `pnpm why` to investigate:
 
@@ -301,7 +303,7 @@ In this case, we can either update the version used by `framesync` (likely ok si
 # support/duplicate-packages.yaml
 # ...
 allowed:
-   - "stylis"
+   - "source-map"
 +  - "tslib"
 ```
 
@@ -355,29 +357,23 @@ Use [`pnpm why`](https://pnpm.io/cli/why) to display why a certain package is a 
 For example:
 
 ```bash
-# Explains why the runtime package depends on @formatjs/fast-memoize
-$ pnpm why -r --filter runtime @formatjs/fast-memoize
-# @open-pioneer/runtime@0.1.0 /home/<PROJECT_PATH>/src/packages/framework/runtime
-#
-# dependencies:
-# @formatjs/intl 2.6.7
-# ├── @formatjs/fast-memoize 1.2.8
-# └─┬ intl-messageformat 10.3.1
-#   └── @formatjs/fast-memoize 1.2.8
-#
-# devDependencies:
-# @open-pioneer/test-utils link:../test-utils
-# └─┬ @formatjs/intl 2.6.7
-#   ├── @formatjs/fast-memoize 1.2.8
-#   └─┬ intl-messageformat 10.3.1
-#     └── @formatjs/fast-memoize 1.2.8
+# Explains why @formatjs/fast-memoize is installed
+$ pnpm why -r @formatjs/fast-memoize
+# @formatjs/fast-memoize@3.1.7
+# ├─┬ @formatjs/intl@6.1.5
+# │ ├─┬ @open-pioneer/runtime@4.10.0
+# │ │ ├─┬ @open-pioneer/basemap-switcher@1.7.0
+# │ │ │ └── ol-app (dependencies)
+# ...
 ```
+
+The output lists the packages that depend on `@formatjs/fast-memoize`: it is used by `@formatjs/intl`, which is used by `@open-pioneer/runtime`, and so on.
 
 ## Concepts
 
 ### Package manager: pnpm
 
-Please use [`pnpm`](https://pnpm.io) instead of `npm` to manage dependencies in this repository.
+Please use [`pnpm`](https://pnpm.io) instead of `npm` to manage dependencies in your project.
 
 Here is a list of some common commands you are likely to need:
 
@@ -391,7 +387,7 @@ Here is a list of some common commands you are likely to need:
 
 ### Monorepo
 
-We use [pnpm's workspace support](https://pnpm.io/workspaces) to manage packages in our repository.
+We use [pnpm's workspace support](https://pnpm.io/workspaces) to manage the packages of a project.
 All node packages matching the patterns configured in the `pnpm-workspace.yaml` file are included in the workspace.
 Workspace packages may reference each other.
 
@@ -479,6 +475,17 @@ To create new tests for a source code file, simply add a `*.test.ts` (or `.tsx`,
 It will then be automatically picked up by Vitest.
 
 Use `pnpm run test` to run the test suite.
+The command starts Vitest in watch mode: it keeps running and executes tests again when files change.
+Use `pnpm test run` to run all tests once.
+
+There are two kinds of tests:
+
+- Files named `*.test.*` are unit tests.
+  They run in Node with a simulated DOM (`happy-dom`).
+- Files named `*.browser.test.*` are browser tests.
+  They run in a real browser using Vitest browser mode and require Playwright (see [`pnpm run test`](#pnpm-run-test)).
+
+See [How to write tests](./tutorials/HowToWriteTests.md) for an introduction.
 
 Please refer to the [official documentation](https://vitest.dev/guide/) for more information.
 

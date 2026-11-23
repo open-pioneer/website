@@ -69,6 +69,7 @@ interface BuildConfig {
     propertiesMeta?: Record<string, PropertyMetaConfig>;
     overrides?: Record<string, PackageOverridesConfig>;
     publishConfig?: PublishConfig;
+    runtimeMeta?: { metadataVersion?: string }; // internal
 }
 ```
 
@@ -262,7 +263,19 @@ export { LogService } from "./LogService";
 
 Interfaces provided by the service.
 They can be configured as a single string (a single interface name), or an array of entries.
-Every array entry can specify a string (the interface name) or an object with advanced properties.
+Every array entry can specify a string (the interface name) or a `ProvidesConfig` object with advanced properties:
+
+```ts
+interface ProvidesConfig {
+    name: string;
+    qualifier?: string;
+}
+```
+
+- `name` is the name of the interface provided by the service.
+- `qualifier` is an optional value that distinguishes multiple implementations of the same interface.
+  Set it to a unique value if the interface is designed to have multiple implementations.
+  References can then select a specific implementation by its qualifier (see [Advanced service references](#advanced-service-references)).
 
 Example:
 
@@ -277,7 +290,8 @@ export default defineBuildConfig({
             provides: [
                 "example.InterfaceB",
                 {
-                    name: "example.InterfaceC"
+                    name: "example.InterfaceC",
+                    qualifier: "service-b"
                 }
             ]
         }
@@ -552,6 +566,12 @@ Some features require a newer version of the format:
 
 An application that uses the published package needs a version of the Vite plugin that supports the chosen format, see [Versions](./Versions.md#vite-plugin).
 
+#### `runtimeMeta`
+
+Internal.
+This option is only used by the `@open-pioneer/runtime` package to declare the runtime metadata version it supports (see [Versions](./Versions.md)).
+Do not set it in your own packages.
+
 ## Service definition
 
 Read [Services](./Services.md) to see how services can be defined.
@@ -631,6 +651,21 @@ function ExampleComponent() {
 ```
 
 See [I18N Format](./I18nFormat.md) for more details.
+
+## Virtual modules
+
+The build tools provide a set of virtual modules that can be imported from the source code of a Trails package.
+The content of these modules is generated for the package (or app) that imports them.
+TypeScript declarations for all modules are available in `@open-pioneer/vite-plugin-pioneer/client`.
+
+| Module                      | Exports                                                 | Description                                                                                                                                                            |
+| --------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `open-pioneer:app`          | The app's metadata                                      | Imported in an app's `app.ts` and passed to `createCustomElement()` as `appMetadata`.                                                                                  |
+| `open-pioneer:react-hooks`  | `useService`, `useServices`, `useProperties`, `useIntl` | React hooks for the importing package, see [React Integration](#react-integration).                                                                                    |
+| `open-pioneer:source-info`  | `sourceId`                                              | A unique id of the importing module, for example to create a logger.                                                                                                   |
+| `open-pioneer:deployment`   | `baseUrl`                                               | The base URL of the deployed application. Published packages need `publishConfig.packageFormatTarget` `"1.1"` or later.                                                |
+| `open-pioneer:assets`       | `publicAssetsUrl`, `getPublicAssetUrl()`                | URLs of the public assets of the importing package, see [`publicAssets`](#publicassets). Published packages need `publishConfig.packageFormatTarget` `"1.2"` or later. |
+| `open-pioneer:test-support` | `messages`, `messageLocale`                             | The i18n messages of the importing package. Can only be imported in tests, see [How to write tests](../tutorials/HowToWriteTests.md#use-real-i18n-messages-in-tests).  |
 
 ## Advanced service references
 

@@ -77,11 +77,53 @@ customElements.define("empty-app", Element);
 Now we are able to force the locale with `lang` parameter:
 [http://localhost:5173/sites/empty/?lang=de](http://localhost:5173/sites/empty/?lang=de) or [http://localhost:5173/sites/empty/?lang=en](http://localhost:5173/sites/empty/?lang=en)
 
+The value must match one of the locales listed in `i18n`.
+Otherwise, the app shows an error screen instead of its UI.
+
 > **Note**
 > The integration of I18n works the same way for Trails packages. We have to add the `i18n` configuration in `build.config.mjs` and matching yaml files for each language in the `i18n` folder. For each app/language combination, the build tool collects the YAML files of the app and the used packages and merges them into a flattened JSON structure.
 > As mentioned in [I18nFormat](../reference/I18nFormat.md) we can override yaml entries from packages in our app yaml. Please check the [`i18n-sample`](https://github.com/open-pioneer/trails-core-packages/tree/main/src/samples/i18n-sample) app as a practical example for this topic.
 
 ## Using advanced features of FormatJS Intl
+
+The examples in this section use components from `@open-pioneer/chakra-snippets` and types from `@conterra/reactivity-core`.
+Add both packages to the dependencies of the empty app and run `pnpm install`:
+
+```jsonc
+// src/apps/empty/package.json
+{
+    // ...
+    "dependencies": {
+        // ...
+        "@conterra/reactivity-core": "catalog:",
+        "@open-pioneer/chakra-snippets": "catalog:"
+    }
+}
+```
+
+The code snippets below only show the components.
+They require the following imports at the top of the file:
+
+```tsx
+// src/apps/empty/AppUI.tsx
+import {
+    Box,
+    Button,
+    Container,
+    Heading,
+    HStack,
+    Input,
+    Stack,
+    StackSeparator,
+    Tag,
+    Text,
+    VStack
+} from "@chakra-ui/react";
+import { NumberInputField, NumberInputRoot } from "@open-pioneer/chakra-snippets/number-input";
+import { Radio, RadioGroup } from "@open-pioneer/chakra-snippets/radio";
+import { useIntl, useService } from "open-pioneer:react-hooks";
+import { useState } from "react";
+```
 
 In a first step we prepare our AppUI:
 
@@ -112,8 +154,13 @@ First we generate an entry in our `ExampleStack` for our `InterpolationExample`:
 // src/apps/empty/AppUI.tsx
 function ExampleStack() {
     return (
-        <Stack mb={5} mt={5} gap="24px" align="stretch">
-            <StackSeparator borderColor="gray.200" />
+        <Stack
+            mb={5}
+            mt={5}
+            separator={<StackSeparator borderColor="gray.200" />}
+            gap="24px"
+            align="stretch"
+        >
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
                 <InterpolationExample></InterpolationExample>
             </Box>
@@ -208,7 +255,6 @@ function PluralsExample() {
             <Heading as="h4" size="md">
                 {intl.formatMessage({ id: "plurals.heading" })}
             </Heading>
-            {/*import { Radio, RadioGroup } from "@open-pioneer/chakra-snippets/radio";*/}
             <RadioGroup onValueChange={(e) => setValue(e.value)} value={value}>
                 <Stack gap={4} direction="row">
                     <Radio value="0">0</Radio>
@@ -378,15 +424,17 @@ In our example we will have a number input and an output with different forms of
 function NumberFormatExample() {
     const intl = useIntl();
     const [value, setValue] = useState("424224.24");
+    const [numericValue, setNumericValue] = useState(424224.24);
     return (
         <>
             <Heading as="h4" size="md">
                 {intl.formatMessage({ id: "numberformat.heading" })}
             </Heading>
-            {/*import { NumberInputField, NumberInputRoot } from "@open-pioneer/chakra-snippets/number-input";*/}
             <NumberInputRoot
-                onValueChange={(valueChangeDetails) => {
-                    setValue(valueChangeDetails.value);
+                onValueChange={({ value, valueAsNumber }) => {
+                    // See https://chakra-ui.com/docs/components/number-input#why-use-string-values
+                    setValue(value);
+                    setNumericValue(valueAsNumber);
                 }}
                 value={value}
                 step={0.25}
@@ -400,11 +448,11 @@ function NumberFormatExample() {
             </NumberInputRoot>
             <Text mb="8px">
                 {intl.formatMessage({ id: "numberformat.example.currency1" })}
-                {intl.formatNumber(+value, { style: "currency", currency: "EUR" })}
+                {intl.formatNumber(numericValue, { style: "currency", currency: "EUR" })}
             </Text>
             <Text mb="8px">
                 {intl.formatMessage({ id: "numberformat.example.currency2" })}
-                {intl.formatNumber(+value, {
+                {intl.formatNumber(numericValue, {
                     style: "currency",
                     currency: "EUR",
                     currencyDisplay: "name"
@@ -412,11 +460,11 @@ function NumberFormatExample() {
             </Text>
             <Text mb="8px">
                 {intl.formatMessage({ id: "numberformat.example.unit1" })}
-                {intl.formatNumber(+value, { style: "unit", unit: "terabyte-per-second" })}
+                {intl.formatNumber(numericValue, { style: "unit", unit: "terabyte-per-second" })}
             </Text>
             <Text mb="8px">
                 {intl.formatMessage({ id: "numberformat.example.unit2" })}
-                {intl.formatNumber(+value, {
+                {intl.formatNumber(numericValue, {
                     style: "unit",
                     unit: "terabyte-per-second",
                     unitDisplay: "long"
@@ -445,7 +493,9 @@ messages:
 
 Add the defined keys to all yaml files.
 
-We pass the `value` with different `NumberFormatOptions` to `intl.formatNumber`. As a result, we see our formatted numbers.
+The number input reports its value both as a string and as a number.
+We pass the numeric value with different `NumberFormatOptions` to `intl.formatNumber`.
+As a result, we see our formatted numbers.
 
 ![number format example](./HowToTranslateAnApp_Numberformat.png)
 
@@ -586,6 +636,7 @@ messages:
 It is the rendering part that differs:
 
 ```tsx
+// src/apps/empty/AppUI.tsx
 function RichTextExample() {
     const intl = useIntl();
 
@@ -632,7 +683,23 @@ function RichTextExample() {
 }
 ```
 
-The code above is rendered like this:
+Add an entry for the `RichTextExample` to the `ExampleStack`, as for the previous examples:
+
+```tsx
+// src/apps/empty/AppUI.tsx
+function ExampleStack() {
+    return (
+        <Stack /* ... */>
+            {/* ... */}
+            <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
+                <RichTextExample></RichTextExample>
+            </Box>
+        </Stack>
+    );
+}
+```
+
+The example is rendered like this:
 
 ![rich text example](./HowToTranslateAnApp_RichText.png)
 
@@ -753,26 +820,53 @@ function ServiceI18nExample() {
 }
 ```
 
+The component uses the type of the service, so add the following import to `AppUI.tsx`:
+
+```tsx
+// src/apps/empty/AppUI.tsx
+import { GreetingService } from "./GreetingService";
+```
+
+Finally, add an entry for the `ServiceI18nExample` to the `ExampleStack`:
+
+```tsx
+// src/apps/empty/AppUI.tsx
+function ExampleStack() {
+    return (
+        <Stack /* ... */>
+            {/* ... */}
+            <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
+                <ServiceI18nExample></ServiceI18nExample>
+            </Box>
+        </Stack>
+    );
+}
+```
+
 ## Demo App
 
 The complete app `i18n-howto` can be found in the `samples` folder.
 
 ## Changing the application's locale
 
-It is possible to change the application's locale to a specific locale using the `setLocale` method on the `ApplicationContext`.
+The application's locale can be changed at runtime with the `LocaleService` (interface `"runtime.LocaleService"`) from the `@open-pioneer/runtime` package.
 
 Example:
 
 ```ts
-import { ApplicationContext } from "@open-pioneer/runtime";
+import { LocaleService } from "@open-pioneer/runtime";
 
-const appCtx: ApplicationContext = ...; // injected
-appCtx.setLocale("en-US");
+const localeService: LocaleService = ...; // injected
+await localeService.changeLocale(new Intl.Locale("en-US"));
 ```
 
-Limitation:
-Currently, this requires a full restart of the application.
-Please create an issue or PR if you need support for changing the locale without restart.
+The locale must match one of the locales supported by the application (see `localeService.supportedMessageLocales`).
+It does not need to be a precise match: `en-US` is valid if `en` is supported.
+Use `undefined` to switch back to the default locale.
+The returned promise rejects if the locale is not supported.
+
+> NOTE: The methods `getLocale()`, `setLocale()` and `getSupportedLocales()` of the `ApplicationContext` are deprecated.
+> Use the `LocaleService` instead.
 
 For more information refer to the API documentation of the `@open-pioneer/runtime` package.
 

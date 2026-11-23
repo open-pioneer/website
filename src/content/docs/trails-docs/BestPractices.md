@@ -106,22 +106,131 @@ To enforce that only a single version of a package is present (a builtin feature
 - `pnpm dedupe` works hard to de-duplicate packages wherever possible.
 - `pnpm update`, e.g. with the `-r` flag, is useful to update dependencies.
 
+### Reactive state
+
+State that is shared between services and UI components should be stored in signals by default.
+Signals are provided by the reactivity API [`@conterra/reactivity-core`](https://www.npmjs.com/package/@conterra/reactivity-core).
+A signal holds a value and notifies its users when the value changes.
+
+All reactive interfaces of Trails packages (for example the map model) are implemented with this API.
+Projects should implement their reactive APIs in the same way for consistency: a single state handling mechanism prevents confusion.
+However, this is not an absolute rule: certain specialized scenarios may make it necessary to implement custom state management.
+
+Use `reactive()` for state and `computed()` for values that are derived from other signals.
+For example, a basic reactive model class might look like this:
+
+```ts
+import { computed, reactive } from "@conterra/reactivity-core";
+
+class Person {
+    #firstName = reactive("John");
+    #lastName = reactive("Doe");
+    #fullName = computed(() => `${this.#firstName.value} ${this.#lastName.value}`);
+
+    get firstName() {
+        return this.#firstName.value;
+    }
+    set firstName(value: string) {
+        this.#firstName.value = value;
+    }
+
+    get fullName() {
+        return this.#fullName.value;
+    }
+}
+```
+
+Users of the class do not need to know about the signals: every getter that reads a signal is reactive.
+
+To perform a side effect when a value changes, use `watchValue()` (or `watch()` and `effect()`):
+
+```ts
+import { watchValue } from "@conterra/reactivity-core";
+
+const person = new Person();
+const handle = watchValue(
+    () => person.fullName,
+    (fullName) => {
+        console.log(`Name changed to ${fullName}`);
+    }
+);
+
+person.firstName = "Jane"; // the callback is called asynchronously
+
+handle.destroy(); // don't forget to stop watching during cleanup
+```
+
+For more details, read the [README](https://github.com/conterra/reactivity/blob/main/packages/reactivity-core/README.md) of the `reactivity-core` package.
+
+#### Reactive state in React components
+
+React components read reactive values with the hooks from the package [`@open-pioneer/reactivity`](https://www.npmjs.com/package/@open-pioneer/reactivity).
+The most important hook is `useReactiveSnapshot()`:
+
+```tsx
+import { useReactiveSnapshot } from "@open-pioneer/reactivity";
+
+interface GreetingProps {
+    person: Person;
+}
+
+function Greeting({ person }: GreetingProps) {
+    const fullName = useReactiveSnapshot(() => person.fullName, [person]);
+    return <div>Hello {fullName}</div>;
+}
+```
+
+The component is rendered again when a signal that was read in the callback changes.
+The second argument lists the non-reactive values used by the callback (props, services, React state), like the dependencies of `useMemo()` or `useEffect()`.
+
+Always read reactive values through one of these hooks.
+A reactive value that is read directly in the body of a component is not tracked, so the component shows a stale value:
+
+```tsx
+// Wrong: the component does not update when the name changes
+return <div>Hello {person.fullName}</div>;
+```
+
+For more details, see:
+
+- [README of `@conterra/reactivity-core`](https://github.com/conterra/reactivity/tree/main/packages/reactivity-core#readme)
+- [README of `@open-pioneer/reactivity`](https://github.com/open-pioneer/trails-core-packages/tree/main/src/packages/reactivity#readme)
+
 ### Event handling
 
 We currently do not have a global event bus.
-Instead, a developer can use the `EventEmitter` class from `@open-pioneer/core` to implement events that can be subscribed to.
-EventEmitter supports both inheritance and direct use.
+Instead, use the package [`@conterra/reactivity-events`](https://www.npmjs.com/package/@conterra/reactivity-events) to implement events that can be subscribed to.
+Each event is an emitter that is stored as a property of the object that emits it.
 
 For example:
 
-```js
-import { EventEmitter } from "@open-pioneer/core";
-const emitter = new EventEmitter();
-const events = [];
-const handle = emitter.on("mouseClicked", (event) => events.push(event));
-emitter.emit("mouseClicked", { x: 1, y: 2 });
+```ts
+import { emit, emitter, on } from "@conterra/reactivity-events";
+
+interface ClickEvent {
+    x: number;
+    y: number;
+}
+
+class View {
+    readonly clicked = emitter<ClickEvent>();
+}
+
+const view = new View();
+
+// Subscribe to the event
+const handle = on(view.clicked, (event) => {
+    console.log(`Click at ${event.x}, ${event.y}`);
+});
+
+// Emit the event. Subscribers are called asynchronously.
+emit(view.clicked, { x: 1, y: 2 });
+
 handle.destroy(); // don't forget to unsubscribe during cleanup
 ```
+
+> NOTE: The `EventEmitter` class from `@open-pioneer/core` is deprecated.
+> Use `@conterra/reactivity-events` instead.
 
 ## Development Setup
 
@@ -152,7 +261,7 @@ If a service does not provide any interfaces, or if the service is never referen
 
 If absolutely necessary, you can force a service to start even if it's not referenced by anyone by providing the `runtime.AutoStart` interface, see [how to create a service](./tutorials/HowToCreateAService.md#service-autostart).
 
-### Hot reloading with \[jt\]sx-Files and side effects
+### Hot reloading of `.jsx`/`.tsx` files and side effects
 
 Vite will automatically hot reload `.jsx` and `.tsx` files when they are being edited.
 Most changes to React components can then be applied without reloading the page.

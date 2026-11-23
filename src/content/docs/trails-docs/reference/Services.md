@@ -332,6 +332,27 @@ function ExampleComponent() {
 }
 ```
 
+If a service has no separate TypeScript interface, the interface name can be declared on the service class instead.
+Add a property declaration with the key `DECLARE_SERVICE_INTERFACE` to the class:
+
+```ts
+// somePackage/HelloWorldServiceImpl.ts
+import { type DECLARE_SERVICE_INTERFACE } from "@open-pioneer/runtime";
+
+export class HelloWorldServiceImpl {
+    // Declares (at compile time) that this class is used via the given interface name.
+    declare [DECLARE_SERVICE_INTERFACE]: "hello.HelloWorldService";
+
+    sayHello(): void {
+        console.log("Hello!");
+    }
+}
+```
+
+The class can then be used as the type parameter, for example `useService<HelloWorldServiceImpl>("hello.HelloWorldService")`.
+`DECLARE_SERVICE_INTERFACE` only exists for the compiler: the property is not present at runtime.
+Import the symbol with `import type` (or `import { type ... }`) and use the `declare` keyword for the property.
+
 > NOTE: The mapping from type to interface name may be used in other places in the future, too.
 > For now, you have to make sure to use the correct interface in your service classes on your own.
 

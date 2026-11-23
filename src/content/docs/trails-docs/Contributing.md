@@ -16,12 +16,12 @@ For example, the [@open-pioneer/map](https://www.npmjs.com/package/@open-pioneer
 
 Our current set of repositories is:
 
-- [Starter repo](https://github.com/open-pioneer/trails-starter/): Serves as a baseline for new Trails projects.
-  This repository also hosts the [Documentation](https://github.com/open-pioneer/trails-starter/tree/main/docs).
+- [Trails Starter Repository](https://github.com/open-pioneer/trails-starter): Serves as a baseline for new Trails projects.
 - [Core packages](https://github.com/open-pioneer/trails-core-packages): Contains the runtime package and other central packages.
 - [OpenLayers base packages](https://github.com/open-pioneer/trails-openlayers-base-packages): Contains packages using OpenLayers to render a map.
 - [Community packages](https://github.com/open-pioneer/trails-community): Contains specialized packages maintained by the community.
 - [Build tools](https://github.com/open-pioneer/trails-build-tools): Contains our build tooling such as the Vite plugin.
+- [Website](https://github.com/open-pioneer/website): Contains the sources of <https://open-pioneer.dev/>, including this documentation.
 
 ## Report an issue
 
@@ -31,7 +31,7 @@ Good examples are:
 
 - a failing test case
 - a small code snippet
-- a sample repository (e.g. a fork of the starter repository)
+- a sample repository (e.g. a fork of the Trails Starter Repository)
 
 Our repositories are configured with issue templates that can help you write a good bug report.
 

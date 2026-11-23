@@ -28,6 +28,24 @@ You should always deploy all files inside `www`, as they may be required at runt
 If you want to reduce the number of files, you should customize your `vite.config.ts`.
 For example, the configuration of the `pioneer` plugin can be adapted to include only a selected set of apps or sites in the build.
 
+To check the result of the build on your local machine, run `pnpm preview`.
+The command starts a local HTTP server that serves the content of `dist/www`.
+
+### Base path
+
+The `vite.config.ts` of the Trails Starter Repository sets Vite's [`base`](https://vite.dev/config/shared-options.html#base) option to `"./"`.
+All references between the files in `www` are therefore relative.
+You can deploy the directory at any path of your server (for example `https://example.com/` or `https://example.com/path/to/apps/`) without building the project again.
+
+If your code needs the URL of the deployed application at runtime, for example to load resources that are deployed together with the app, import `baseUrl` from the `open-pioneer:deployment` module:
+
+```ts
+import { baseUrl } from "open-pioneer:deployment";
+
+// For example "https://example.com/path/to/apps/"
+console.log(baseUrl);
+```
+
 ## Deployment of a static site
 
 Vite has [documentation](https://vitejs.dev/guide/static-deploy.html) for multiple deployment options.

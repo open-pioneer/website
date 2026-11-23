@@ -9,7 +9,7 @@ The Trails ecosystem consists of a large number of packages and a few file forma
 This document summarizes the most important versions, their history and the most relevant changes.
 For more detailed changes, consult the `CHANGELOG` files of the individual packages.
 
-While the number of packages and their versions is complex, you can usually rely on the [starter repository](https://github.com/open-pioneer/trails-starter) to provide a working composition of all required components.
+While the number of packages and their versions is complex, you can usually rely on the [Trails Starter Repository](https://github.com/open-pioneer/trails-starter) to provide a working composition of all required components.
 However, this document can be helpful when diagnosing dependency issues or when you are attempting to update parts of an application on your own.
 
 The packages or applications described in this document are:

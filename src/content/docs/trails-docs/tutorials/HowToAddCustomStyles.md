@@ -7,7 +7,7 @@ In this example, we will enhance the empty app (at `src/apps/empty`) to include 
 We intend to add a custom class to the app's container and define that class in a `.css` file.
 
 > **Note**  
-> The same technique can be applied to every other package in this repository (app or package).
+> The same technique can be applied to every other Trails package (app or package).
 
 ## Distributing styles with your package
 
@@ -180,7 +180,7 @@ export function AppUI() {
 Additionally, Chakra provides extensive theming support ([Documentation](https://chakra-ui.com/docs/theming/overview)).
 It is possible to create a custom theme for an app. For details see [How to theme an app](./HowToThemeAnApp.md).
 
-#### React classes
+#### CSS classes
 
 React supports the `className` prop to set an element's CSS classes as a string ([Documentation](https://reactjs.org/docs/faq-styling.html)).
 

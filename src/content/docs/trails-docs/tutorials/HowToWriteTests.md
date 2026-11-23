@@ -186,7 +186,7 @@ Vitest will now report success:
 Vitest can be used to write simple UI tests.
 We recommend using the [Vitest browser mode](https://vitest.dev/guide/browser/#browser-mode) which is part of the Vitest API and allows you to run tests natively in the browser.
 
-The repository is already prepared for using Vitest browser mode. It is configured to use Playwright as a provider.
+The Trails Starter Repository is already prepared for using Vitest browser mode. It is configured to use Playwright as a provider.
 Hence, you need to install Playwright dependencies before running browser tests:
 
 ```bash
@@ -232,11 +232,11 @@ Recommended resources:
 
 Besides UI tests in Vitest browser mode, it is also possible to write simple UI tests by simulating a browser environment in Node.
 
-The repository is configured to allow the usage of `happy-dom` (see [Reference](https://vitest.dev/guide/environment.html)) in your test files using the `.test.*` filename pattern (not `.browser.test.*`).
+The Trails Starter Repository is configured to allow the usage of `happy-dom` (see [Reference](https://vitest.dev/guide/environment.html)) in your test files using the `.test.*` filename pattern (not `.browser.test.*`).
 
 You can use [@testing-library/react](https://testing-library.com/) to render your UI components.
 
-> NOTE: We recommend using Vitest browser mode as the `happy-dom` support will be removed from the starter repository in the future (deprecated).
+> NOTE: We recommend using Vitest browser mode as the `happy-dom` support will be removed from the Trails Starter Repository in the future (deprecated).
 
 ## Use real i18n messages in tests
 

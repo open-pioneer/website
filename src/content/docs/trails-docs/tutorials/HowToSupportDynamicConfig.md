@@ -127,7 +127,12 @@ We edit this file to pass the layer title from the configuration to the map's OS
 ```ts
 // src/samples/map-sample/ol-app/services.ts
 
-import { MapConfig, MapConfigProvider, SimpleLayer } from "@open-pioneer/map";
+import {
+    MapConfig,
+    MapConfigProvider,
+    MapConfigProviderOptions,
+    SimpleLayer
+} from "@open-pioneer/map";
 import { ServiceOptions } from "@open-pioneer/runtime";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
@@ -142,7 +147,7 @@ export class MainMapProvider implements MapConfigProvider {
         this.layerTitle = userConfig.layerTitle as string; // (1)
     }
 
-    async getMapConfig(): Promise<MapConfig> {
+    async getMapConfig({ layerFactory }: MapConfigProviderOptions): Promise<MapConfig> {
         return {
             initialView: {
                 kind: "position",
@@ -151,7 +156,8 @@ export class MainMapProvider implements MapConfigProvider {
             },
             projection: "EPSG:3857",
             baseLayers: [
-                new SimpleLayer({
+                layerFactory.create({
+                    type: SimpleLayer,
                     title: this.layerTitle, // (2)
                     olLayer: new TileLayer({
                         source: new OSM(),

@@ -7,7 +7,7 @@ An app is a JavaScript or TypeScript package that provides a web component.
 The web component can in turn be used within an HTML file in the same project.
 It can also be distributed on its own to be embedded into different host sites.
 
-This repository comes prepared with an empty app in `src/apps/empty`, which is embedded into the site at `src/sites/empty/index.html`.
+The [Trails Starter Repository](https://github.com/open-pioneer/trails-starter) comes prepared with an empty app in `src/apps/empty`, which is embedded into the site at `src/sites/empty/index.html`.
 
 ## Required setup
 
@@ -354,7 +354,7 @@ For more details about our Vite plugin, see its [documentation](https://www.npmj
 
 ### Clean application URLs
 
-The default file layout in this repository is designed for multiple applications and sites within the same project (for example, one or more productive sites and a few test sites).
+The default file layout in the Trails Starter Repository is designed for multiple applications and sites within the same project (for example, one or more productive sites and a few test sites).
 For this reason, the default root site is an overview page mainly aimed at developers.
 It links to other sites in the project:
 

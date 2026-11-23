@@ -17,7 +17,7 @@ Other ways to install `pnpm` can be found in the [project's documentation](https
 
 ## Cloning the project
 
-Clone the repository from GitHub to get a copy of the code:
+Clone the [Trails Starter Repository](https://github.com/open-pioneer/trails-starter) from GitHub to get a copy of the code:
 
 ```bash
 $ git clone https://github.com/open-pioneer/trails-starter.git PROJECT_NAME
@@ -56,7 +56,7 @@ When you open the address that has been printed to the console (<http://localhos
 > **Note**  
 > Because [pnpm](https://pnpm.io/) is our package manager, all scripts and commands should use `pnpm` instead of `npm`.
 
-This project comes prepared with an empty application and a set of samples, all of which are linked from the test site.
+The Trails Starter Repository comes prepared with an empty application and a set of samples, all of which are linked from the test site.
 The empty app is defined in `src/apps/empty` (`apps` is the location for application packages by convention).
 Samples are grouped together in `src/samples/*`.
 Feel free to take a look at the sample applications, or to delete them if you don't want them in your repository.
@@ -93,7 +93,7 @@ To start the server, run `pnpm preview` after building the project.
 ## Customizing the Vite configuration
 
 You can customize the `vite.config.ts`.
-It comes preconfigured with defaults to run and build the samples in this repository.
+It comes preconfigured with defaults to run and build the samples in the Trails Starter Repository.
 Some parts, like the `pioneer` or `react` plugins, should not be removed.
 Most other sections, like the global log level or the settings of the `pioneer` plugin, can be changed at will.
 
@@ -114,6 +114,6 @@ If you start the development server and open the app in your browser, changes to
 
 Recommended further reading:
 
-- [Guide to the repository](./RepositoryGuide.md)
+- [Repository guide](./RepositoryGuide.md)
 - [How to create an app](./tutorials/HowToCreateAnApp.md)
 - [How to deploy an app](./tutorials/HowToDeployAnApp.md)

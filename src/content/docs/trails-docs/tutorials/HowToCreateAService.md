@@ -72,7 +72,7 @@ export default defineBuildConfig({
 ## Testing the service
 
 We will create a simple unit test that calls the `multiply` method.
-The test framework [Vitest](https://vitest.dev/) is preconfigured in this repository.
+The test framework [Vitest](https://vitest.dev/) is preconfigured in the Trails Starter Repository.
 It will automatically pick up all `*.test.*` files in all packages and execute their tests (see also [How to write tests](./HowToWriteTests.md)).
 
 Before creating the test, add `@open-pioneer/test-utils` to your package's `devDependencies`.

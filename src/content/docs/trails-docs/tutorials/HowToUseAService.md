@@ -269,7 +269,7 @@ export function AppUI() {
 
     The return value from `useService` must be cast manually to the expected type in this case, otherwise we would receive `unknown`.
     This is because we have not registered the interface type with the framework (which can be okay for internal services and simple examples).
-    The document [How to create a service](./HowToCreateAService.md) goes into more detail.
+    The section [TypeScript integration](#typescript-integration) below shows how to do that.
 
     Note that this is only needed if you're using TypeScript.
 
@@ -280,7 +280,38 @@ After following these steps, your application's external behavior will be unchan
 
 ## TypeScript integration
 
-See [TypeScript Integration](../reference/Services.md#typescript-integration) for how a package supporting TypeScript can associate service types with their interface names.
+The cast in the example above (`as AttributeService`) can be avoided by associating the service's type with its interface name.
+For a service class without a separate interface, such as our `AttributeService`, declare the interface name on the class:
+
+```ts
+// src/apps/empty/services.ts
+import {
+    type DECLARE_SERVICE_INTERFACE,
+    ServiceOptions,
+    ApplicationContext
+} from "@open-pioneer/runtime";
+
+// ...
+
+export class AttributeService {
+    declare [DECLARE_SERVICE_INTERFACE]: "empty.AttributeService";
+
+    // ...
+}
+```
+
+The UI can now pass the type to `useService`.
+TypeScript reports an error if the interface name does not match the type:
+
+```diff
+// src/apps/empty/AppUI.tsx
+- const attributeService = useService("empty.AttributeService") as AttributeService;
++ const attributeService = useService<AttributeService>("empty.AttributeService");
+```
+
+The declaration only exists at compile time and has no effect at runtime.
+
+See [TypeScript Integration](../reference/Services.md#typescript-integration) for more details, including services that have a separate TypeScript interface (`DeclaredService`).
 
 ## Further reading
 

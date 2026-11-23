@@ -229,7 +229,7 @@ The result can be observed in the `map-sample` application:
 
 ![Map sample app with upper case basemap titles](./WaysToPatchAPackage_BasemapsUppercase.png)
 
-#### How does it work?
+#### How it works
 
 pnpm computes the changes made by your edits and saves them as a patch:
 

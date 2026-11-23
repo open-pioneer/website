@@ -92,7 +92,7 @@ This will ensure that when someone imports `"hello-world"`, they will receive th
 ## Using the package
 
 The last step is to actually use the function from one of our apps.
-For that, we're going to extend this project's empty app in `src/apps/empty`.
+For that, we're going to extend the empty app of the Trails Starter Repository in `src/apps/empty`.
 
 First, start the development server:
 
