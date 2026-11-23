@@ -1,35 +1,40 @@
 ---
-title: Guide to the repository
+title: Repository guide
 slug: trails-docs/RepositoryGuide
 ---
 
 ## Overview
 
-The following figure gives a brief overview of the repository structure.
+The following figure gives a brief overview of the structure of the [Trails Starter Repository](https://github.com/open-pioneer/trails-starter) and of projects based on it.
 
 <!-- tree -L 2 --gitignore --dirsfirst -->
 
 ```
 starter
-├── docs                    -- Documentation
+├── .husky                  -- Git hooks (pre-commit checks)
+├── patches                 -- Patches for dependencies (applied by pnpm)
 ├── src                     -- Contains project code
 │   ├── apps                -- Apps go here
 │   ├── packages            -- Packages that can be used by apps
 │   ├── samples             -- Example sites, apps and packages
-│   ├── types               -- TypeScript support files
 │   ├── sites               -- Additional .html sites
+│   ├── testing             -- Global setup for automated tests
+│   ├── types               -- TypeScript support files
 │   └── index.html          -- Main HTML entry point
+├── support                 -- Configuration files for tools (license report, duplicate check) and build helpers
 ├── .editorconfig           -- Common text file settings (encoding, line length)
 ├── .gitignore              -- Lists files ignored by git
-├── oxlint.config.ts       -- Oxlint configuration file
-├── oxfmt.config.ts        -- Oxfmt configuration file
+├── .lintstagedrc           -- Configures the checks that run on staged files before a commit
+├── oxlint.config.ts        -- Oxlint configuration file
+├── oxfmt.config.ts         -- Oxfmt configuration file
 ├── package.json            -- Dependencies of the root package (mostly development tools)
 ├── pnpm-lock.yaml          -- Package manager lockfile
 ├── pnpm-workspace.yaml     -- Workspaces configuration file for pnpm, also includes the dependency catalog
-├── tsconfig.json           -- Main TypeScript configuration file for code that runs in the browser
-├── tsconfig.node.json      -- Additional TypeScript configuration file for files running in Node
+├── tsconfig.json           -- Root TypeScript configuration file, references the two files below
+├── tsconfig.browser.json   -- TypeScript configuration file for code that runs in the browser
+├── tsconfig.node.json      -- TypeScript configuration file for files running in Node
 ├── typedoc.base.json       -- TypeDoc configuration that is used as a base for the TypeDoc configuration in the packages
-├── typedoc.config.cjs      -- TypeDoc main configuration file
+├── typedoc.config.mjs      -- TypeDoc main configuration file
 └── vite.config.ts          -- Vite configuration file
 ```
 
@@ -41,7 +46,7 @@ They should be invoked via pnpm: `pnpm run <SCRIPT_NAME>` (`run` is optional if 
 ### `pnpm run dev`
 
 Launches [Vite's](https://vitejs.dev/) local development server.
-The main configuration file for vite is `vite.config.ts`.
+The main configuration file for Vite is `vite.config.ts`.
 
 ### `pnpm run check-types`
 
@@ -68,7 +73,7 @@ The script runs automatically after `pnpm install` (see `prepare` script in `pac
 Starts [Vitest](https://vitest.dev/) to run all automated tests.
 Vitest will automatically watch all source code files and will rerun tests during development whenever it detects changes.
 
-If the repository contains tests that use the Vitest browser bode, you need to install Playwright dependencies to run the tests:
+If the repository contains tests that use the Vitest browser mode, you need to install Playwright dependencies to run the tests:
 
 `pnpm exec playwright install`
 
@@ -76,23 +81,23 @@ The package.json contains additional scripts for running different test modes:
 
 - `pnpm run test:unit`: Only runs unit tests. Browser tests are not executed.
 - `pnpm run test:browser`: Only runs browser tests. Unit tests are not executed.
-- `pnpm test:headless`: Vitest runs browser test without opening the browser UI. The browsers only runs in the background without a UI.
+- `pnpm run test:headless`: Runs all tests. Browser tests run in a headless browser (without a browser window).
 
 ### `pnpm run build`
 
 Builds the project as a static site.
 Generated files are output into the `dist/www` directory.
-The main configuration file for vite is `vite.config.ts`.
+The main configuration file for Vite is `vite.config.ts`.
 
 ### `pnpm run build-docs`
 
 Builds the project's API documentation.
 Documentation is generated using [TypeDoc](https://typedoc.org/).
 
-TypeDoc is configured in the `typedoc.config.cjs` (this file contains the "global" TypeDoc configuration).
+TypeDoc is configured in the `typedoc.config.mjs` (this file contains the "global" TypeDoc configuration).
 Most importantly, it configures for which packages API documentation will be built.
-The default configuration file contained in this repository will build the documentation for all packages within `src/packages/**`.
-However, you can freely edit the `typedoc.config.cjs` to your liking.
+The default configuration file contained in the Trails Starter Repository will build the documentation for all packages within `src/packages/**`.
+However, you can freely edit the `typedoc.config.mjs` to your liking.
 
 In the individual packages, a `typedoc.json` file specifies how the input is converted.
 The `typedoc.base.json` file is used as a base for the typedoc configuration specified in the single packages.
@@ -110,21 +115,22 @@ $ pnpm serve dist/docs
 
 Create a license report for dependencies used by the project.
 The report is written to `dist/license-report.html`.
-The source code for report generation is located in `support/create-license-report.ts`.
+The report is created by the `create-license-report` CLI from the package `@open-pioneer/create-license-report`.
 Configuration happens via `support/license-config.yaml`.
 
-By default, devDependencies are not included in the report. If you need them to be included, you can change the source code in `support/create-license-report.ts`: Remove the "-P" from the following command in the source code: `pnpm licenses list --json --long -P`.
+By default, devDependencies are not included in the report.
+To include them, set `skipDevDependencies: false` in the configuration file.
 
 ### `pnpm run generate-sbom`
 
 Generate a [CycloneDX](https://github.com/CycloneDX) SBOM (Software Bill of Materials) for the project.
-The generated sbom file is written to `dist/sbom.json`.
+The generated SBOM file is written to `dist/sbom.json`.
 Currently only JSON encoding is supported. The generated SBOM lists all components excluding devDependencies.
 
-The `pnpm run generate-sbom` command is an pre-configured alias for [PNPM's SBOM CLI command](https://pnpm.io/cli/sbom).  
+The `pnpm run generate-sbom` command is a preconfigured alias for [pnpm's SBOM CLI command](https://pnpm.io/cli/sbom).  
 If the pre-configuration does not fit your requirements you can either use the `pnpm sbom` CLI command directly or adjust the `generate-sbom` script in `package.json` accordingly.
 
-Edit the output file directly if you need additional properties in the SBOM that are not generated by PNPM (e.g. add the git revision the metadata property).
+Edit the output file directly if you need additional properties in the SBOM that are not generated by pnpm (e.g. add the git revision to the metadata property).
 
 ### `pnpm run preview`
 
@@ -137,16 +143,17 @@ Removes files that were created during the build (e.g. the `dist` directory).
 ### `pnpm run lint`
 
 Runs [Oxlint](https://oxc.rs/docs/guide/usage/linter) on all source code files to detect problems.
-Simple errors can be fixed automatically by running `pnpm run lint --fix`.
-Oxlint is configured via the `oxlint.config.js` file.
+Simple errors can be fixed automatically by running `pnpm run lint:fix`.
+Oxlint is configured via the `oxlint.config.ts` file.
 
 ### `pnpm run fmt`
 
 Runs [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) on all source code files for automated (re-) formatting.
+Use `pnpm run fmt:check` to only check the formatting without changing any files.
 
 ### `pnpm audit`
 
-Checks for known security issues with the installed packages. (Will also be checked with a nightly github action job)
+Checks for known security issues with the installed packages. A weekly GitHub Actions workflow runs the same check.
 
 ### Miscellaneous tools
 
@@ -156,12 +163,12 @@ Installed node tools can be invoked by running `pnpm exec <TOOL_AND_OPTIONS>` (o
 
 ### Adding a dependency
 
-To install a shared build dependency (a vite plugin for example), run `pnpm add -D -w <PACKAGE_NAME>`.
+To install a shared build dependency (a Vite plugin for example), run `pnpm add -D -w <PACKAGE_NAME>`.
 `-D` will include the package as a devDependency, and `-w` will add it to the workspace root's `package.json`.
 
 To add a dependency to a workspace package or app, execute `pnpm add PACKAGE_NAME` from the package or app directory.
 
-You can also add the dependency manually by editing the `package.json` file directory.
+You can also add the dependency manually by editing the `package.json` file directly.
 Keep in mind to execute `pnpm install` to update the lockfile after you're done with editing.
 
 Note that we prefer to use `catalog:` as the version of the package. This way, the version can be managed centrally in the `pnpm-workspace.yaml` (see [Keeping dependency versions in sync](#keeping-dependency-versions-in-sync)).
@@ -194,42 +201,36 @@ For example, the `@types/node` package may be deliberately kept at a lower versi
 #### Using a newer version
 
 In order to update the package version, either update the `package.json` of a certain package directly (if that package uses a specific version) or update your central catalog in `pnpm-workspace.yaml` (the default).
-The catalog in this repository has been prepared to make updating a package as easy as possible.
+The catalog in the Trails Starter Repository has been prepared to make updating a package as easy as possible.
 For example, updating the openlayers-base-packages can only require changing a single version number in the `pnpm-workspace.yaml`:
 
 ```yaml
 # pnpm-workspace.yaml
-__versions:
-    # ...
-    - &ol_base_packages_version ^0.7.0
-
 # https://pnpm.io/catalogs
 catalog:
     # Trails OpenLayers base packages
     # https://github.com/open-pioneer/trails-openlayers-base-packages
-    "@open-pioneer/basemap-switcher": *ol_base_packages_version
+    "@open-pioneer/basemap-switcher": &ol_base_packages_version ^1.7.0
+    "@open-pioneer/coordinate-search": *ol_base_packages_version
     "@open-pioneer/coordinate-viewer": *ol_base_packages_version
     "@open-pioneer/geolocation": *ol_base_packages_version
-    "@open-pioneer/map-navigation": *ol_base_packages_version
-    "@open-pioneer/map-ui-components": *ol_base_packages_version
     "@open-pioneer/map": *ol_base_packages_version
-    "@open-pioneer/measurement": *ol_base_packages_version
-    "@open-pioneer/overview-map": *ol_base_packages_version
-    "@open-pioneer/scale-bar": *ol_base_packages_version
-    "@open-pioneer/scale-viewer": *ol_base_packages_version
-    "@open-pioneer/theme": *ol_base_packages_version
+    "@open-pioneer/map-navigation": *ol_base_packages_version
     # ...
 ```
 
+The first entry defines the version as a YAML anchor (`&ol_base_packages_version`).
+All other entries of the group refer to that anchor (`*ol_base_packages_version`).
+
 After changing version numbers, run `pnpm install` to apply your changes.
 
-For information about version handling and compatability of trails packages, see [Version Overview](./reference/Versions.md).
+For information about version handling and compatibility of Trails packages, see [Version Overview](./reference/Versions.md).
 
 #### Handling version conflicts and duplicate packages
 
 When installing new dependencies or updating existing ones, you may run into version conflicts related to transitive dependencies.
 Oftentimes pnpm will be able to select a common version that satisfies all requirements (sometimes it needs a little help by running `pnpm dedupe`).
-For example, if package `a` requires `"react": "^18.0.0` and package `b` needs `"react": "^18.1.0"`, it will be able to install a shared version somewhere within the range `>= 18.1.0 < 19.0.0`.
+For example, if package `a` requires `"react": "^19.0.0"` and package `b` needs `"react": "^19.1.0"`, it will be able to install a shared version somewhere within the range `>= 19.1.0 < 20.0.0`.
 
 However, if the version ranges are incompatible, pnpm will resort to installing _both_ versions of the package (or generating an error for peer dependencies).
 Sometimes duplicate packages are not a problem, but for certain "central" packages (like `react`), there may only be a single version present in your application.
@@ -247,12 +248,12 @@ When encountering a duplicate package, consider taking the following steps:
   This is only an option if those updates actually exist.
 - Alternative 2:
   Override the version for some packages (using pnpm overrides).
-  This is an option if the newer version is actually compatible to the older one.
+  This is an option if the newer version is actually compatible with the older one.
 - Alternative 3:
   Allow the duplicates by adding the package name to the `support/duplicate-packages.yaml` file.
   Some packages do not cause any problems when duplicated and can be safely listed there.
   They will only increase your application's bundle size slightly.
-  _Central packages like `react`, `react-dom`, chakra packages or any trails packages **must not** be allowed as duplicates._
+  _Central packages like `react`, `react-dom`, Chakra packages or any Trails packages **must not** be allowed as duplicates._
 
 Example: tslib is present twice
 
@@ -263,9 +264,12 @@ $ pnpm install
 │ Found unexpected duplicate packages:
 │   - "tslib" # (versions 2.4.0, 2.7.0)
 │ # ...
-└─ Failed in 940ms at /home/mbeckemeyer/projects/trails/trails-starter
+└─ Failed in 940ms at /path/to/trails-starter
  ELIFECYCLE  Command failed with exit code 1.
 ```
+
+> NOTE: The output in this example was created with older package versions.
+> Package names and versions in your project will differ.
 
 The command tells us that `tslib` is present in versions `2.4.0` and `2.7.0`.
 We use `pnpm why` to investigate:
@@ -293,13 +297,13 @@ $ pnpm why -r tslib
 ```
 
 This tells us that `tslib@2.7.0` is used by `@formatjs/intl-localematcher` and `tslib@2.4.0` is used by `framesync`. Inspecting the `package.json` of `framesync` reveals that it uses a fixed version of `"tslib": "2.4.0"`, so it cannot be unified with the newer version used by `@formatjs/intl-localematcher`.
-In this case, we can either update the version used by `framesync` (likely ok since `2.7.0` should be compatible to `2.4.0`), or we can just list the package as an allowed duplicate:
+In this case, we can either update the version used by `framesync` (likely ok since `2.7.0` should be compatible with `2.4.0`), or we can just list the package as an allowed duplicate:
 
 ```diff
 # support/duplicate-packages.yaml
 # ...
 allowed:
-   - "stylis"
+   - "source-map"
 +  - "tslib"
 ```
 
@@ -323,8 +327,8 @@ For example:
 
 ```bash
 # Updates all dependencies in all packages interactively with a simple CLI wizard.
-# By default, updates will respect the sematic versioning restrictions in your package.json (e.g. update ^14.0.0 to ^14.1.0 is allowed).
-# Use --latest to go the latest versions instead.
+# By default, updates will respect the semantic versioning restrictions in your package.json (e.g. update ^14.0.0 to ^14.1.0 is allowed).
+# Use --latest to update to the latest versions instead.
 $ pnpm update -r -i
 ```
 
@@ -353,29 +357,23 @@ Use [`pnpm why`](https://pnpm.io/cli/why) to display why a certain package is a 
 For example:
 
 ```bash
-# Explains why the runtime package depedends on @formatjs/fast-memoize
-$ pnpm why -r --filter runtime @formatjs/fast-memoize
-# @open-pioneer/runtime@0.1.0 /home/<PROJECT_PATH>/src/packages/framework/runtime
-#
-# dependencies:
-# @formatjs/intl 2.6.7
-# ├── @formatjs/fast-memoize 1.2.8
-# └─┬ intl-messageformat 10.3.1
-#   └── @formatjs/fast-memoize 1.2.8
-#
-# devDependencies:
-# @open-pioneer/test-utils link:../test-utils
-# └─┬ @formatjs/intl 2.6.7
-#   ├── @formatjs/fast-memoize 1.2.8
-#   └─┬ intl-messageformat 10.3.1
-#     └── @formatjs/fast-memoize 1.2.8
+# Explains why @formatjs/fast-memoize is installed
+$ pnpm why -r @formatjs/fast-memoize
+# @formatjs/fast-memoize@3.1.7
+# ├─┬ @formatjs/intl@6.1.5
+# │ ├─┬ @open-pioneer/runtime@4.10.0
+# │ │ ├─┬ @open-pioneer/basemap-switcher@1.7.0
+# │ │ │ └── ol-app (dependencies)
+# ...
 ```
+
+The output lists the packages that depend on `@formatjs/fast-memoize`: it is used by `@formatjs/intl`, which is used by `@open-pioneer/runtime`, and so on.
 
 ## Concepts
 
-### Package manager: PNPM
+### Package manager: pnpm
 
-Please use [`pnpm`](https://pnpm.io) instead of `npm` to manage dependencies in this repository.
+Please use [`pnpm`](https://pnpm.io) instead of `npm` to manage dependencies in your project.
 
 Here is a list of some common commands you are likely to need:
 
@@ -385,11 +383,11 @@ Here is a list of some common commands you are likely to need:
   `pnpm remove` removes a dependency again.
 - `pnpm -w <COMMAND>`: run the command in the workspace root instead of the local package.
 - `pnpm run <SCRIPT>`: runs the script from the `package.json`.
-- `pnpm exec <COMMAND>`: runs the CLI command (should be installed in node_modules), e.g. `pnpm exec -w tsc --noEmit`.
+- `pnpm exec <COMMAND>`: runs the CLI command (should be installed in node_modules), e.g. `pnpm exec -w tsc --build --noEmit`.
 
 ### Monorepo
 
-We use [PNPM's workspace support](https://pnpm.io/workspaces) to manage packages in our repository.
+We use [pnpm's workspace support](https://pnpm.io/workspaces) to manage the packages of a project.
 All node packages matching the patterns configured in the `pnpm-workspace.yaml` file are included in the workspace.
 Workspace packages may reference each other.
 
@@ -411,7 +409,7 @@ For example, `package-a/node_modules/package-b` will be a link to `package-b`'s 
 ### TypeScript
 
 As a general rule, most code should be written in TypeScript.
-The usage of typescript has many advantages.
+The usage of TypeScript has many advantages.
 It protects against bugs, improves the developer experience (autocompletion, early detection of problems, etc.) and
 also ensures that type definitions and documentation for reusable libraries or bundles can be generated with little effort.
 
@@ -420,19 +418,19 @@ However, usage of JavaScript _is_ supported.
 ### UI Component Framework
 
 We are using [Chakra UI](https://chakra-ui.com/) as our base framework to develop user interfaces.
-In general, chakra components can be directly imported from `@chakra-ui/react`.
+In general, Chakra components can be directly imported from `@chakra-ui/react`.
 
-Up from Chakra UI version 3, the Chakra components are more fine-grained and thus chakra provides `snippets` from some components to allow simpler usage.
+Starting with Chakra UI version 3, the Chakra components are more fine-grained. Chakra therefore provides _snippets_ for some components to allow simpler usage.
 These snippets cannot be imported from `@chakra-ui/react` directly, but need to be added to the project by using a CLI.
-However, these snippets are not versioned and thus may be incompatible with the chakra version used in the project.
-Thus, trails provides a package `@open-pioneer/chakra-snippets` that contains the most important Chakra snippets for the Chakra UI Version used in the respective trails version.
-It is recommended to use the snippets from `@open-pioneer/chakra-snippets` instead of the ones from `@chakra-ui/react`.
-For a list of exported snippets, see the packages README.md.
+However, these snippets are not versioned and may be incompatible with the Chakra version used in the project.
+Trails therefore provides the package `@open-pioneer/chakra-snippets`, which contains the most important Chakra snippets for the Chakra UI version used in the respective Trails version.
+It is recommended to use the snippets from `@open-pioneer/chakra-snippets` instead of adding snippets with the Chakra CLI.
+For a list of exported snippets, see the package's README.
 
 Example:
 
 ```jsx
-import { Button } from "@chakra-ui/react";
+import { Button, Container } from "@chakra-ui/react";
 import { Tooltip } from "@open-pioneer/chakra-snippets/tooltip";
 
 function MyComponent() {
@@ -462,21 +460,32 @@ However, the pioneer and react plugin should not be removed from the configurati
 
 #### Supported Browsers
 
-The vite config is preconfigured to support a set of common browsers ("targets", see [docs](https://vitejs.dev/config/build-options.html#build-target)).
+The Vite config is preconfigured to support a set of common browsers ("targets", see [docs](https://vitejs.dev/config/build-options.html#build-target)).
 This option influences the features used by the compiled JavaScript and CSS code.
 Note that this only changes the set of _language features_ used by the output (e.g. `async`, `class`)
 and not the set of Browser APIs used (that would require additional polyfills).
 
-By default, vite assumes modern browsers with support for modules.
-It is possible to support even older browsers using vite's [legacy plugin](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy).
+By default, Vite assumes modern browsers with support for modules.
+It is possible to support even older browsers using Vite's [legacy plugin](https://github.com/vitejs/vite/tree/main/packages/plugin-legacy).
 
 ### Testing
 
 [Vitest](https://vitest.dev/) is used to write automated tests.
 To create new tests for a source code file, simply add a `*.test.ts` (or `.tsx`, `.js`, etc.) file next to it.
-It will then be automatically picked up by vitest.
+It will then be automatically picked up by Vitest.
 
 Use `pnpm run test` to run the test suite.
+The command starts Vitest in watch mode: it keeps running and executes tests again when files change.
+Use `pnpm test run` to run all tests once.
+
+There are two kinds of tests:
+
+- Files named `*.test.*` are unit tests.
+  They run in Node with a simulated DOM (`happy-dom`).
+- Files named `*.browser.test.*` are browser tests.
+  They run in a real browser using Vitest browser mode and require Playwright (see [`pnpm run test`](#pnpm-run-test)).
+
+See [How to write tests](./tutorials/HowToWriteTests.md) for an introduction.
 
 Please refer to the [official documentation](https://vitest.dev/guide/) for more information.
 
@@ -485,10 +494,10 @@ Please refer to the [official documentation](https://vitest.dev/guide/) for more
 We use [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) to handle automatic source code formatting.
 This keeps code readable with reasonable defaults and also ensures that we don't waste time with unproductive style discussions.
 Oxfmt is configured by the `oxfmt.config.ts` file and it also respects parts of the `.editorconfig` file.
-It can be integrated into most modern IDEs to keep automatically keep edited files formatted properly.
+It can be integrated into most modern IDEs to automatically keep edited files formatted properly.
 
-[Oxlint](https://oxc.rs/docs/guide/usage/linter) helps to detect minor style issues (e.g. missing semicolons) and outright programming errors (e.g. wrong usage of React hooks).
-It checks the code against the rules configured in `.oxlint.config.ts` and
+[Oxlint](https://oxc.rs/docs/guide/usage/linter) helps to detect minor issues (e.g. unused variables) and outright programming errors (e.g. wrong usage of React hooks).
+It checks the code against the rules configured in `oxlint.config.ts`.
 Oxlint is integrated into the pre-commit hooks, so it will automatically check your code before committing.
 Additionally, it is executed when pushing to the GitHub repository (within the GitHub actions workflow).
 It is also recommended to integrate it into your IDE to get immediate feedback while coding.

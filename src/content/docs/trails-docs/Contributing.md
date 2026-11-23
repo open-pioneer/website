@@ -4,24 +4,24 @@ slug: trails-docs/Contributing
 ---
 
 Thank you for your interest in contributing to our projects!
-Read our [Code of Conduct](https://github.com/open-pioneer/.github/blob/main/CODE_OF_CONDUCT.md) to keep our community approachable and respectable.
+Read our [Code of Conduct](https://github.com/open-pioneer/.github/blob/main/CODE_OF_CONDUCT.md) to keep our community approachable and respectful.
 
 This document contains a few notes to get you started with your contribution.
 
 ## Identify the correct repository
 
 We develop our packages in multiple repositories.
-If you already know which package you want to work on, simply follow the `repository` link of its `package.json`, which is also displayed on [npmjs.com](https://npmjs.com).
-For example, the [@open-pioneer/map](https://www.npmjs.com/package/@open-pioneer/map) package links back to its repository [trails-openlayers-base-packages](https://github.com/open-pioneer/openlayers-base-packages).
+If you already know which package you want to work on, follow the `repository` link of its `package.json`, which is also displayed on [npmjs.com](https://npmjs.com).
+For example, the [@open-pioneer/map](https://www.npmjs.com/package/@open-pioneer/map) package links back to its repository [trails-openlayers-base-packages](https://github.com/open-pioneer/trails-openlayers-base-packages).
 
 Our current set of repositories is:
 
-- [Starter repo](https://github.com/open-pioneer/trails-starter/): Serves as a baseline for new trails projects.
-  This repository also hosts the [Documentation](https://github.com/open-pioneer/trails-starter/tree/main/docs).
+- [Trails Starter Repository](https://github.com/open-pioneer/trails-starter): Serves as a baseline for new Trails projects.
 - [Core packages](https://github.com/open-pioneer/trails-core-packages): Contains the runtime package and other central packages.
 - [OpenLayers base packages](https://github.com/open-pioneer/trails-openlayers-base-packages): Contains packages using OpenLayers to render a map.
 - [Community packages](https://github.com/open-pioneer/trails-community): Contains specialized packages maintained by the community.
 - [Build tools](https://github.com/open-pioneer/trails-build-tools): Contains our build tooling such as the Vite plugin.
+- [Website](https://github.com/open-pioneer/website): Contains the sources of <https://open-pioneer.dev/>, including this documentation.
 
 ## Report an issue
 
@@ -31,7 +31,7 @@ Good examples are:
 
 - a failing test case
 - a small code snippet
-- a sample repository (e.g. a fork of the starter repository)
+- a sample repository (e.g. a fork of the Trails Starter Repository)
 
 Our repositories are configured with issue templates that can help you write a good bug report.
 
@@ -46,7 +46,8 @@ Then, follow the instructions in [Creating a pull request](#creating-a-pull-requ
 Contributing to the Open Pioneer project requires signing a Contributor License Agreement (CLA) before source code can be merged.
 This can be done by your employer or by yourself.
 
-To obtain a copy of the CLA, please email to [contact@openpioneer.dev](mailto:contact@openpioneer.dev) (We do not have an automated process in place at this time).
+To obtain a copy of the CLA, please send an email to [contact@openpioneer.dev](mailto:contact@openpioneer.dev).
+We do not have an automated process in place at this time.
 
 ## Set up the project
 
@@ -71,11 +72,11 @@ The browser will keep reloading while you edit source code files, immediately re
 ```bash
 $ pnpm dev
 
-> starter@ dev /home/michael/projects/pioneer/starter
+> starter@ dev /path/to/starter
 > vite
 
 
-  VITE v4.5.3  ready in 606 ms
+  VITE vX.Y.Z  ready in 606 ms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
@@ -87,7 +88,7 @@ $ pnpm dev
 
 - All text files must use UTF-8 encoding. This is usually the default.
 - All text files must use Unix line endings (`\n`).
-  On windows, either configure your IDE to use Unix line endings or use git's [`autocrlf`](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration) feature:
+  On Windows, either configure your IDE to use Unix line endings or use git's [`autocrlf`](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration) feature:
 
     ```bash
     $ git config --global core.autocrlf input
@@ -101,18 +102,18 @@ $ pnpm dev
     $ git config --global pull.rebase true
     ```
 
-- Paths to JavaScript modules can get rather long on windows in combination with PNPM. If you see weird errors (I/O errors, file not found, etc.) when you're trying to install dependencies or run the development server, try moving the git repository to a shorter path on disk (less nesting, shorter name).
+- Paths to JavaScript modules can get rather long on Windows in combination with pnpm. If you see weird errors (I/O errors, file not found, etc.) when you're trying to install dependencies or run the development server, try moving the git repository to a shorter path on disk (less nesting, shorter name).
 
 - Either use Oxlint's autofix feature or your IDE to ensure that your files contain license headers.
 
-    The following snippet can be used in VSCode.
+    The following snippet can be used in VS Code.
     Create a snippet via "Ctrl+Shift+P --> Configure User Snippets" (either globally or in this project).
     The following example snippet appears in autocomplete when you start typing "license" in a JavaScript/TypeScript file:
 
     ```jsonc
     {
         "License header": {
-            "scope": "javascript,typescript",
+            "scope": "javascript,typescript,javascriptreact,typescriptreact",
             "prefix": "license",
             "body": [
                 "// SPDX-FileCopyrightText: 2023-2025 Open Pioneer project (https://github.com/open-pioneer)",
@@ -127,7 +128,7 @@ $ pnpm dev
 We are always happy to receive pull requests from the community.
 Small fixes or improvements to the documentation will usually be accepted right away.
 If you plan to make a larger contribution (new packages, new features, refactoring, etc.) consider reaching out to the maintainers first.
-This can be done, for example, by commenting on an existing issue or by creating a new one. The [contributions board](https://github.com/orgs/open-pioneer/projects/7/views/1) contains a list of new, desired features for Open Pioneer - Trails. Contributions are very welcome here!
+This can be done, for example, by commenting on an existing issue or by creating a new one. The [contributions board](https://github.com/orgs/open-pioneer/projects/7/views/1) contains a list of new, desired features for Open Pioneer Trails. Contributions are very welcome here!
 
 This way, you can avoid unnecessary work and ensure that your contribution is in line with the project's goals.
 This will also reduce the risk of your PR being rejected. If you want to share your own ideas and more specialized functionalities with the community, you can also consider creating a pull request in the [community repository](#identify-the-correct-repository).
@@ -151,7 +152,7 @@ To create a pull request:
 
     When fixing bugs or implementing new features, make sure to include appropriate tests alongside your implementation.
 
-    In general, make sure that automated tests (Typescript checks, unit tests, ...) are successful, otherwise your changes will not be merged.
+    In general, make sure that automated tests (TypeScript checks, unit tests, ...) are successful, otherwise your changes will not be merged.
     Tests are executed automatically when creating a commit and also when creating a pull request.
     For more details, see [Running tests](#running-tests).
 
@@ -166,7 +167,7 @@ To create a pull request:
     > Some changes (e.g. in configuration files) don't need a real changeset file.
     > You can generate an empty one by running `pnpm changeset add --empty` instead.
 
-- Push your changes into your fork (or branch) and create a pull request via GitHubs UI.
+- Push your changes into your fork (or branch) and create a pull request via GitHub's UI.
   Please give your pull request a good title and a good description.
   If your pull request addresses an issue, you should link to it from your PR's description.
 
@@ -191,13 +192,13 @@ We use [Vitest](https://vitest.dev/) to write our tests.
 Files that are named `*.test.ts[x]` (or `js[x]`) are automatically discovered and executed:
 
 ```bash
-~/projects/pioneer/core-packages$ pnpm test
+$ pnpm test
 
-> core-packages@0.0.1 test /home/michael/projects/pioneer/core-packages
+> core-packages@0.0.1 test /path/to/core-packages
 > vitest
 
 
- DEV  v0.34.6 /home/michael/projects/pioneer/core-packages/src
+ DEV  vX.Y.Z /path/to/core-packages/src
 
  ✓ packages/local-storage/LocalStorageServiceImpl.test.ts (22)
 

@@ -9,7 +9,7 @@ The Trails ecosystem consists of a large number of packages and a few file forma
 This document summarizes the most important versions, their history and the most relevant changes.
 For more detailed changes, consult the `CHANGELOG` files of the individual packages.
 
-While the number of packages and their versions is complex, you can usually rely on the [starter repository](https://github.com/open-pioneer/trails-starter) to provide a working composition of all required components.
+While the number of packages and their versions is complex, you can usually rely on the [Trails Starter Repository](https://github.com/open-pioneer/trails-starter) to provide a working composition of all required components.
 However, this document can be helpful when diagnosing dependency issues or when you are attempting to update parts of an application on your own.
 
 The packages or applications described in this document are:
@@ -22,12 +22,12 @@ The packages or applications described in this document are:
 
 - **OpenLayers Base Packages.**
 
-    The [openlayers base packages](https://github.com/open-pioneer/trails-openlayers-base-packages) are based on OpenLayers and depend on the Trails Core Packages.
+    The [OpenLayers base packages](https://github.com/open-pioneer/trails-openlayers-base-packages) are based on OpenLayers and depend on the Trails Core Packages.
     Public packages from this repository share a common version number.
 
 - **Vite Plugin.**
 
-    The [vite plugin](https://www.npmjs.com/package/@open-pioneer/vite-plugin-pioneer) must be used in Trails projects to use Trails packages.
+    The [Vite plugin](https://www.npmjs.com/package/@open-pioneer/vite-plugin-pioneer) must be used in Trails projects to use Trails packages.
     It _reads_ package metadata (in the supported package metadata versions) and _generates_ runtime metadata for the `@open-pioneer/runtime` package.
 
 - **Build Package CLI.**
@@ -50,7 +50,7 @@ The relevant file formats are:
     This information is passed from the Vite plugin to the runtime package.
     It contains all i18n messages needed by the application, references to all required services, etc.
 
-> NOTE: You will most likely not be running into these versions in practice.
+> NOTE: You rarely need these versions in practice.
 > The formats are rather stable: changes are rarely made.
 > Their versions are listed here for the sake of completeness, and because their versions are not obvious (unlike `dependencies` in a `package.json` file).
 > If you run into errors related to format versions, updating the Trails Vite plugin will often be the easy fix.
@@ -59,9 +59,9 @@ The relevant file formats are:
 
 Packages and file formats follow [semantic versioning](https://semver.org/):
 
-- Incrementing the major version indicates a breaking change to some documented behavior
-- Incrementing the minor version indicates a (backward compatible) new feature
-- Incrementing the patch version indicates a (backward compatible) bugfix
+- Incrementing the major version indicates a breaking change to some documented behavior.
+- Incrementing the minor version indicates a (backward compatible) new feature.
+- Incrementing the patch version indicates a (backward compatible) bugfix.
 
 Major version updates happen rarely -- we aim to preserve backward compatibility.
 Because some repositories (Core Packages, OpenLayers Base Packages) publish their packages with a common version, a package's major version might be incremented even if there was no breaking change for _that_ package.
@@ -73,7 +73,7 @@ Note that fixing **security issues** may force us to make breaking changes even 
 The following tables may not list every released version.
 Instead, a new entry is added when a significant change is made (any row field changes).
 
-To locate the matching data for a specific version, simply find the entry that includes it ("Since Version X.Y.Z").
+To locate the matching data for a specific version, find the entry that includes it ("Since Version X.Y.Z").
 
 Semver expressions like `^4.6.0` have their usual meaning (">= 4.6.0 < 5.0.0" in this case).
 
@@ -94,6 +94,7 @@ Notes:
 
 | Since Version | Core Packages Version(s) | Package Metadata Version |
 | ------------- | ------------------------ | ------------------------ |
+| 1.7.0         | ^4.10.0                  | 1.0.1                    |
 | 1.6.0         | ^4.9.0                   | 1.0.1                    |
 | 1.5.0         | ^4.8.0                   | 1.0.1                    |
 | 1.4.0         | ^4.7.0                   | 1.0.1                    |
@@ -113,7 +114,8 @@ Notes:
 
 Notes:
 
-- Multiple metadata format versions are supported (both for input and output) in order to preserve backwards compatibility but to enable new features as well.
+- Multiple metadata format versions are supported (both for input and output).
+  This keeps older packages working and allows new features.
 - The runtime metadata version supported by the runtime package is detected automatically.
 
 ### Build Package CLI

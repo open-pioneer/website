@@ -8,7 +8,8 @@ slug: trails-docs/reference/I18nFormat
 I18N files use [YAML](https://yaml.org/) syntax and must conform to the schema defined in this document.
 
 I18N files are typically located in a package (or app) within the `i18n` directory.
-The file name contains the supported language, for example `en.yaml`.
+The file name is the message locale followed by `.yaml`, for example `i18n/en.yaml`.
+The locale must be listed in `i18n` in the `build.config.mjs`.
 
 ### Messages
 
@@ -19,7 +20,7 @@ Message ids in nested objects are automatically concatenated with `"."`.
 Example:
 
 ```yaml
-# lang.yaml
+# i18n/en.yaml
 messages:
     content.header: "A header"
     greeting: "Hello {name}"
@@ -31,7 +32,7 @@ The messages defined above can be referenced by their ids `content.header` and `
 
 ### Overrides
 
-This property allows an application to override i18n messages defined in other packages, or to define entirely new languages without modifying its dependencies.
+This property allows an application to override i18n messages defined in other packages, or to define entirely new locales without modifying its dependencies.
 `overrides` is only allowed in the application's package.
 
 Example:
@@ -40,7 +41,7 @@ The following `overrides` block overrides the message `message.id` in the packag
 Like in the `messages` block, nested objects can be used where the format expects messages.
 
 ```yaml
-# lang.yaml
+# i18n/en.yaml
 overrides:
     some-package-name:
         message.id: "Replacement message"
@@ -60,7 +61,7 @@ const greeting = intl.formatMessage({ id: "greeting" }, { name: "User" }); // "H
 
 As an extension, it is also possible to format React nodes using the `formatRichMessage` method:
 
-```js
+```jsx
 const message = intl.formatRichMessage({ id: "greeting" }, { name: <UserName /> });
 ```
 

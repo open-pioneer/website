@@ -48,35 +48,25 @@ export default defineConfig({
             },
             sidebar: [
                 {
-                    label: "Technical documentation",
+                    label: "Documentation",
                     items: [
-                        { label: "Table of contents", link: "/trails-docs/" },
-                        { label: "Introduction", link: "/trails-docs/Introduction" },
-                        { label: "Getting started", link: "/trails-docs/GettingStarted" },
-                        { label: "Repository guide", link: "/trails-docs/RepositoryGuide" },
-                        { label: "Contribution guide", link: "/trails-docs/Contributing" },
+                        // Slugs instead of { label, link }: the label is taken from the page title.
+                        "trails-docs",
+                        "trails-docs/GettingStarted",
+                        "trails-docs/RepositoryGuide",
+                        "trails-docs/Contributing",
+                        "trails-docs/BestPractices",
+                        "trails-docs/WaysToPatchAPackage",
+                        "trails-docs/Glossary",
                         {
                             label: "Tutorials",
                             collapsed: true,
                             items: [{ autogenerate: { directory: "trails-docs/tutorials" } }]
                         },
-                        { label: "Best practices", link: "/trails-docs/BestPractices" },
-                        {
-                            label: "Ways to patch a package",
-                            link: "/trails-docs/WaysToPatchAPackage"
-                        },
                         {
                             label: "Reference",
                             collapsed: true,
                             items: [{ autogenerate: { directory: "trails-docs/reference" } }]
-                        },
-                        {
-                            label: "Internal documentation",
-                            collapsed: true,
-                            items: [
-                                { autogenerate: { directory: "trails-docs/internals" } },
-                                { autogenerate: { directory: "trails-docs/research" } }
-                            ]
                         }
                     ]
                 }
@@ -105,7 +95,7 @@ export default defineConfig({
                         ]
                     },
                     // Note: only removes from llms-small.txt
-                    exclude: ["trails-docs/internals/**", "trails-docs/research/**"]
+                    exclude: []
                 })
             ],
             expressiveCode: {

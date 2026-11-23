@@ -10,7 +10,7 @@ This document specifies the structural requirements for a Trails package in the 
 > This specification applies to both apps and "normal" packages.
 > Apps are simply packages that expose a web component: they may use all package features such as services etc.
 
-## Application Packages
+## Application packages
 
 An application package is a package that provides an app.
 Application packages can use all features documented below (like any other package).
@@ -28,9 +28,6 @@ src/packages/<PACKAGE_NAME>
 
 A valid [`package.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-json) file.
 It must contain _at least_ a valid package `name`.
-
-If the package defines services, then it must also have a services module (typically called `services.js` or `services.ts`) from which those services are exported.
-The build system will automatically import the required service classes from the specified file.
 
 ```jsonc
 // package.json
@@ -54,10 +51,16 @@ import { defineBuildConfig } from "@open-pioneer/build-support";
 export default defineBuildConfig({});
 ```
 
+### Services module
+
+If the package defines services, then it must also have a services module (typically called `services.js` or `services.ts`) from which those services are exported.
+The build system will automatically import the required service classes from that file.
+The location of the file can be changed with the [`servicesModule`](#servicesmodule) option.
+
 ### Reference
 
 ```ts
-interface BuildConfig {
+export interface BuildConfig {
     entryPoints?: string | string[];
     styles?: string;
     publicAssets?: string | PublicAssetDir[];
@@ -66,9 +69,10 @@ interface BuildConfig {
     servicesModule?: string;
     ui?: UiConfig;
     properties?: Record<string, unknown>;
-    propertiesMeta?: Record<string, PropertiesMeta>;
+    propertiesMeta?: Record<string, PropertyMetaConfig>;
     overrides?: Record<string, PackageOverridesConfig>;
     publishConfig?: PublishConfig;
+    runtimeMeta?: { metadataVersion?: string }; // internal
 }
 ```
 
@@ -91,15 +95,15 @@ export default defineBuildConfig({
 
 The array can also be left empty if your package does not provide any importable entities.
 
-> NOTE: There is no need to list the [servicesModule](#servicesmodule) in here, that module automatically becomes an entry point if the package defines any services.
+> NOTE: There is no need to list the [`servicesModule`](#servicesmodule) in here. That module automatically becomes an entry point if the package defines any services.
 
 > NOTE: Entry point modules are currently not enforced during development,
-> meaning that you can import arbitrary modules from other packages when using the vite dev server.
+> meaning that you can import arbitrary modules from other packages when using the Vite dev server.
 > This is however considered a bad practice and may be enforced in a later version.
 
 #### `styles`
 
-A path to a `.css` file within the package.
+A path to a `.css` or `.scss` file within the package.
 The file will automatically be linked into the application, and the styles will be loaded when the application runs.
 
 Note that the `.css` file may include `@import`s to other `.css` files.
@@ -119,7 +123,7 @@ One or more directories that contain the _public assets_ of the package.
 Public assets are copied to the output directory of an application that uses the package: the files are not modified and they keep their original file names.
 
 ```ts
-interface PublicAssetDir {
+export interface PublicAssetDir {
     src: string;
     dest: string;
 }
@@ -163,7 +167,7 @@ See also:
 
 An array of locales supported by the package or application.
 When a package declares support for a given locale `<LOC>`, then a file named `./i18n/<LOC>.yaml` must exist.
-See [I18N-Format](./I18nFormat.md) for more details about the format of i18n files.
+See [I18N Format](./I18nFormat.md) for more details about the format of i18n files.
 
 Example:
 
@@ -207,13 +211,13 @@ Services and UI components will automatically receive appropriate `intl` objects
 
     - If your project uses `options.intl`, consider switching to `options.currentIntl` instead, as the former is deprecated and will be removed in a future version.
 
-- The react hook `useIntl()` (see below) provides the same `intl` object.
+- The React hook `useIntl()` (see below) provides the same `intl` object.
 
 See [I18N Format](./I18nFormat.md) for more details.
 
 > NOTE: The `i18n` value has an additional meaning in application packages:
 > The defined languages will be the languages supported by the application, and they must either be defined
-> in all packages or must be added manually in the application (via `overrides` in a `lang.yaml` file).
+> in all packages or must be added manually in the application (via `overrides` in the app's `i18n/<LOC>.yaml` file).
 >
 > The first language in `i18n` becomes the application's fallback language when no other language can be applied for a given user.
 
@@ -222,7 +226,7 @@ See [I18N Format](./I18nFormat.md) for more details.
 Declares services that are provided by the package.
 Services will be included in the application and will automatically start when they are needed.
 
-The name of a service must match the exported class name from the package's service module.
+The name of a service must match the name of an export of the package's services module.
 
 ```ts
 export interface ServiceConfig {
@@ -237,8 +241,8 @@ Example:
 // build.config.mjs
 export default defineBuildConfig({
     services: {
-        // The framework will `import { LogService } from "packageName/services";`,
-        // by default, so a matching export must exist (see .js file below).
+        // By default, the framework imports `LogService` from "packageName/services",
+        // so a matching export must exist (see .js file below).
         LogService: {
             provides: "logging.LogService"
         }
@@ -262,7 +266,19 @@ export { LogService } from "./LogService";
 
 Interfaces provided by the service.
 They can be configured as a single string (a single interface name), or an array of entries.
-Every array entry can specify a string (the interface name) or an object with advanced properties.
+Every array entry can specify a string (the interface name) or a `ProvidesConfig` object with advanced properties:
+
+```ts
+export interface ProvidesConfig {
+    name: string;
+    qualifier?: string;
+}
+```
+
+- `name` is the name of the interface provided by the service.
+- `qualifier` is an optional value that distinguishes multiple implementations of the same interface.
+  Set it to a unique value if the interface is designed to have multiple implementations.
+  References can then select a specific implementation by its qualifier (see [Advanced service references](#advanced-service-references)).
 
 Example:
 
@@ -277,7 +293,8 @@ export default defineBuildConfig({
             provides: [
                 "example.InterfaceB",
                 {
-                    name: "example.InterfaceC"
+                    name: "example.InterfaceC",
+                    qualifier: "service-b"
                 }
             ]
         }
@@ -337,7 +354,7 @@ export class Foo {
 
 #### `ui`
 
-Contains metadata about UI Components provided by the package.
+Contains metadata about UI components provided by the package.
 
 ```ts
 export interface UiConfig {
@@ -389,7 +406,7 @@ export default defineBuildConfig({
 Contains additional metadata about properties for advanced use cases.
 
 ```ts
-interface PropertyMetaConfig {
+export interface PropertyMetaConfig {
     required?: boolean;
 }
 ```
@@ -416,7 +433,7 @@ export default defineBuildConfig({
 });
 ```
 
-> Note: You cannot configure `required: true` for nested object properties at the moment.
+> NOTE: You cannot configure `required: true` for nested object properties at the moment.
 
 #### `overrides`
 
@@ -432,7 +449,7 @@ export interface ServiceOverridesConfig {
 }
 ```
 
-Currently, it only provides the power to completely remove the implementation of a service, for example:
+Currently, an override can only disable a service, for example:
 
 ```js
 // build.config.mjs
@@ -456,11 +473,11 @@ export default defineBuildConfig({
 
 - **(1)** The key in the `overrides` object is a package name.
 - **(2)** The key in the `services` object is a service name within that package.
-- **(3)** Disables the service (the default is always `true`).
+- **(3)** Disables the service (the default is `true`).
 
-The snippet above completely _removes_ to service called `GreeterImpl` from the package `sample-package`.
-If that service provided any interfaces required by the rest of the application, the app would now be responsible
-to provide alternative implementations, making this an expert feature that should not be overused.
+The snippet above completely _removes_ the service `GreeterImpl` from the package `sample-package`.
+If that service provided any interfaces required by the rest of the application, the app must then provide alternative implementations.
+This is an expert feature that should not be overused.
 
 > NOTE: It is forbidden to use `overrides` from a normal (i.e. not "application") package.
 
@@ -474,7 +491,7 @@ export interface PublishConfig {
     types?: boolean;
     sourceMaps?: boolean;
     strict?: boolean;
-    validation?: ValidationOptions;
+    validation?: ValidationOptions | false;
     packageFormatTarget?: "1.0" | "1.1" | "1.2";
 }
 ```
@@ -529,7 +546,9 @@ all errors will be shown as warnings instead of aborting at the first error.
 #### `publishConfig.validation`
 
 Fine-tuning options for package validation.
-For example, this option can be used to make `CHANGELOG` and `LICENSE` optional (they are required by default).
+For example, this option can be used to make `CHANGELOG`, `LICENSE` and `README` optional (they are required by default).
+All three options default to `true`.
+Set `validation: false` to disable all of them.
 
 ```ts
 export interface ValidationOptions {
@@ -550,13 +569,19 @@ Some features require a newer version of the format:
 
 An application that uses the published package needs a version of the Vite plugin that supports the chosen format, see [Versions](./Versions.md#vite-plugin).
 
+#### `runtimeMeta`
+
+Internal.
+This option is only used by the `@open-pioneer/runtime` package to declare the runtime metadata version it supports (see [Versions](./Versions.md)).
+Do not set it in your own packages.
+
 ## Service definition
 
 Read [Services](./Services.md) to see how services can be defined.
 
-## React Integration
+## React integration
 
-### `useService` Hook
+### `useService` hook
 
 Retrieves a service providing the given interface.
 The dependency on that interface must have been declared in the `build.config.mjs` (see `ui.references`).
@@ -571,7 +596,7 @@ function ExampleComponent() {
 }
 ```
 
-### `useServices` Hook
+### `useServices` hook
 
 Retrieves all services providing the given interface as an array.
 The dependency must have been declared in the `build.config.mjs` (see `ui.references`).
@@ -587,7 +612,7 @@ function ExampleComponent() {
 }
 ```
 
-### `useProperties` Hook
+### `useProperties` hook
 
 Returns the properties of the calling component's package.
 Note that properties can be customized by the application, so values
@@ -612,7 +637,7 @@ export default defineBuildConfig({
 });
 ```
 
-### `useIntl` Hook
+### `useIntl` hook
 
 Returns the `intl` object for the calling component's package.
 The intl object is configured for the current application locale (messages, date and number formatting, etc.).
@@ -630,9 +655,24 @@ function ExampleComponent() {
 
 See [I18N Format](./I18nFormat.md) for more details.
 
+## Virtual modules
+
+The build tools provide a set of virtual modules that can be imported from the source code of a Trails package.
+The content of these modules is generated for the package (or app) that imports them.
+TypeScript declarations for all modules are available in `@open-pioneer/vite-plugin-pioneer/client`.
+
+| Module                      | Exports                                                 | Description                                                                                                                                                            |
+| --------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `open-pioneer:app`          | The app's metadata                                      | Imported in an app's `app.ts` and passed to `createCustomElement()` as `appMetadata`.                                                                                  |
+| `open-pioneer:react-hooks`  | `useService`, `useServices`, `useProperties`, `useIntl` | React hooks for the importing package, see [React integration](#react-integration).                                                                                    |
+| `open-pioneer:source-info`  | `sourceId`                                              | A unique id of the importing module, for example to create a logger.                                                                                                   |
+| `open-pioneer:deployment`   | `baseUrl`                                               | The base URL of the deployed application. Published packages need `publishConfig.packageFormatTarget` `"1.1"` or later.                                                |
+| `open-pioneer:assets`       | `publicAssetsUrl`, `getPublicAssetUrl()`                | URLs of the public assets of the importing package, see [`publicAssets`](#publicassets). Published packages need `publishConfig.packageFormatTarget` `"1.2"` or later. |
+| `open-pioneer:test-support` | `messages`, `messageLocale`                             | The i18n messages of the importing package. Can only be imported in tests, see [How to write tests](../tutorials/HowToWriteTests.md#use-real-i18n-messages-in-tests).  |
+
 ## Advanced service references
 
-The `references` object in a service configuration block and the `references` array in the ui configuration block both accept a `ReferenceConfig` object for advanced use cases:
+The `references` object in a service configuration block and the `references` array in the UI configuration block both accept a `ReferenceConfig` object for advanced use cases:
 
 ```ts
 export interface ReferenceConfig {
@@ -826,4 +866,4 @@ function ExampleComponent() {
 
 ## See also
 
-The [type declaration file](https://github.com/open-pioneer/trails-build-tools/blob/main/packages/build-support/index.d.ts) of the `@open-pioneer/build-support` package contains additional documentation for the `defineBuildConfig(...)` function.
+The [type declaration file](https://github.com/open-pioneer/trails-build-tools/blob/main/packages/build-support/src/index.ts) of the `@open-pioneer/build-support` package contains additional documentation for the `defineBuildConfig(...)` function.

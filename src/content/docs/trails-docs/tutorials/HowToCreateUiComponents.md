@@ -79,18 +79,18 @@ export function AppUI() {
 
 - **(2)**
   Defines a React component called `AppUI`.
-  (Almost) all React components should be defined as functions (either `function ComponentName ...` or `const ComponentName = ...`);
+  (Almost) all React components should be defined as functions (either `function ComponentName ...` or `const ComponentName = ...`).
 
 - **(3)**
   This defines the content of the component.
   In this case, Chakra components (e.g. `Container`, `Text`) are used.
-  You can also use plain html elements, like `div` or `p`.
+  You can also use plain HTML elements, like `div` or `p`.
 
-    The `intl` object here is used to translate messages into multiple languages (see [How to translate an App](./HowToTranslateAnApp.md)). We will not dive into internationalization (i18n) in this tutorial and use static strings instead.
+    The `intl` object here is used to translate messages into multiple languages (see [How to translate an app](./HowToTranslateAnApp.md)). We will not dive into internationalization (i18n) in this tutorial and use static strings instead.
 
 ## Defining new UI components
 
-Defining a new React component is as simple as creating a new function.
+A React component is a function.
 For this example, we will create a button that has a `label` and tracks the number of times it has been clicked:
 
 ```tsx
@@ -132,7 +132,7 @@ function ClickableButton({ label }: ClickableButtonProps) {
     > If you have many properties, or intend to share your components across modules or packages, using a separate type is strongly recommended.
 
 - **(2)**
-  Uses the [`useState`](https://beta.reactjs.org/reference/react/useState) hook to remember the number of types the button has been clicked.
+  Uses the [`useState`](https://beta.reactjs.org/reference/react/useState) hook to remember the number of times the button has been clicked.
 
 - **(3)**
   Renders the button with the appropriate text and wires up the `onClick` handler.
@@ -159,7 +159,7 @@ export function AppUI() {
 // interface ClickableButtonProps ...
 ```
 
-The final result looks like this (after a clicking a few times):
+The final result looks like this (after a few clicks):
 
 ![Buttons with click count](./HowToCreateUiComponents_Buttons.png)
 
@@ -177,24 +177,24 @@ import myImageUrl from "./my-image.png";
 <Image src={myImageUrl} />;
 ```
 
-This approach works well if you only care about the assets data, and not its file name or location.
+This approach works well if you only care about the asset's data, and not its file name or location.
 It relies on Vite's [support for static assets](https://vite.dev/guide/assets), which will automatically bundle the referenced files as assets of your application.
 
 For different approaches and more details, see [Including static assets](./HowToCreateAnApp.md#including-static-assets).
 
 ## Defining a UI Component in a different module
 
-Since react components are simple functions (or sometimes classes), they can be simply be moved into another file in combination with the usual `import` and `export` keywords.
+Since React components are simple functions (or sometimes classes), you can move them into another file and use `import` and `export` as usual.
 
-Moving a component into a shared package is just as simple: just export the component (and its `props` type, if using TypeScript) from the package, for example from the `index.ts[x]`.
+To move a component into a shared package, export the component (and its `props` type, if using TypeScript) from the package, for example from the `index.ts` or `index.tsx`.
 
 ## Interacting with the rest of the system
 
-React `props` are a powerful system that can handle arbitrary values such as strings (like in the example above), but also functions (e.g. event handlers or [_render props_](https://beta.reactjs.org/reference/react/cloneElement#passing-data-with-a-render-prop)).
+React `props` can carry arbitrary values such as strings (like in the example above), but also functions (e.g. event handlers or [_render props_](https://beta.reactjs.org/reference/react/cloneElement#passing-data-with-a-render-prop)).
 However, props work only from parent to child, which can be tedious with deeply nested component trees.
 
 React has a second system (the [`Context API`](https://beta.reactjs.org/reference/react/useContext)) that can be used to inherit values into all children (and their children etc.) of a certain component.
-This can be extremely powerful but also makes components harder to understand.
+This is flexible but also makes components harder to understand.
 
 We have implemented hooks such as `useService` and `useIntl` (built on top of the context API) to allow React components to interact with the rest of the framework (see [How to use a service](./HowToUseAService.md) and [How to translate an app](./HowToTranslateAnApp.md)).
 
@@ -204,7 +204,7 @@ More powerful mechanisms should only be used when those simple approaches are no
 
 ## Keeping shared state
 
-Like mentioned above, simple state can often be managed through props and component-local state.
+As mentioned above, simple state can often be managed through props and component-local state.
 
 Plain services (together with events) can be used to keep state that is used in multiple places (components, services) of the application.
 
@@ -213,7 +213,7 @@ We have implemented a custom state management solution based on signals (see [Re
 This API is used for reactive interfaces provided by Trails packages and will probably fit your needs as well.
 A relatively complete example is available [here](https://github.com/open-pioneer/trails-openlayers-base-packages/blob/main/src/samples/map-sample/ol-app/README.md#state-management).
 
-Other third party libraries that work well, too:
+Other third-party libraries also work well:
 
 - [Zustand](https://github.com/pmndrs/zustand)
 - [Jotai](https://jotai.org/)

@@ -4,10 +4,10 @@ slug: trails-docs/tutorials/HowToCreateAnApp
 ---
 
 An app is a JavaScript or TypeScript package that provides a web component.
-The web component can in turn be used within a html file in the same project.
+The web component can in turn be used within an HTML file in the same project.
 It can also be distributed on its own to be embedded into different host sites.
 
-This repository comes prepared with an empty app in `src/apps/empty`, which is embedded into the site at `src/sites/empty/index.html`.
+The [Trails Starter Repository](https://github.com/open-pioneer/trails-starter) comes prepared with an empty app in `src/apps/empty`, which is embedded into the site at `src/sites/empty/index.html`.
 
 ## Required setup
 
@@ -55,7 +55,7 @@ export default defineBuildConfig({});
 
 We're going to create an app with a very simple UI.
 
-Create an `app.ts` file (or`.js`) which is by convention located at `<APP_NAME>/app.ts`.
+Create an `app.ts` file (or `.js`) which is by convention located at `src/apps/<APP_NAME>/app.ts`.
 This file defines the web component (i.e. `<my-app-element>`):
 
 ```ts
@@ -85,7 +85,7 @@ This is the setup required for a minimal Open Pioneer Trails application:
   This module is implemented in the build system: it automatically scans your app and its dependencies.
 
 - **(3)**
-  The application's UI is a simple react component.
+  The application's UI is a simple React component.
   We will define it in the next step.
 
 - **(4)**
@@ -95,11 +95,11 @@ This is the setup required for a minimal Open Pioneer Trails application:
 - **(5)**
   `customElements.define()` registers our element class as a custom element.
   It can now be used, for example, from HTML: `<my-app-element></my-app-element>`.
-  NOTE: custom element names must always contain a `-` so they don't collide with builtin HTML tags.
+  NOTE: custom element names must always contain a `-` so they don't collide with built-in HTML tags.
 
 Finally, we define the application's UI as a [React](https://reactjs.org) component.
 This example uses [JSX Syntax](https://reactjs.org/docs/introducing-jsx.html) in a `.tsx` file.
-It allows you to embed html-like constructs directly into your code:
+It allows you to embed HTML-like constructs directly into your code:
 
 ```tsx
 // src/apps/my-app/AppUI.tsx
@@ -140,7 +140,7 @@ You can now launch the development server and inspect the result:
 ```bash
 $ pnpm install
 $ pnpm run dev
-# VITE v4.0.4  ready in 518 ms
+# VITE vX.Y.Z  ready in 518 ms
 #
 #   ➜  Local:   http://localhost:5173/
 #   ➜  Network: use --host to expose
@@ -164,15 +164,15 @@ The first two are supported by Vite out of the box, the third one is provided by
     // src/apps/my-app/someFile.ts
 
     import myImage from "./my-image.png"; // (1)
-    import jsonContent from "./my-json-data.json"; // (3)
-    import someFile from "./some-asset.pdf?url"; // (2)
+    import jsonContent from "./my-json-data.json"; // (2)
+    import someFile from "./some-asset.pdf?url"; // (3)
     ```
 
-    - **(1)** Imports an image file as a URL (`myImage` will be string URL that points to the image).
+    - **(1)** Imports an image file as a URL (`myImage` will be a string URL that points to the image).
       Vite has direct support for image file extensions.
-    - **(2)** Explicitly imports a file as a URL.
-      Very similar to the previous example, but useful for cases where the file extension is not immediately supported by Vite.
-    - **(3)** Imports the data in the referenced JSON file directly as a JavaScript object.
+    - **(2)** Imports the data in the referenced JSON file directly as a JavaScript object.
+    - **(3)** Explicitly imports a file as a URL.
+      Very similar to the first example, but useful for cases where the file extension is not immediately supported by Vite.
 
     Vite will automatically bundle the file with your application.
     The mechanism depends on the file's type and the way it has been imported, for example:
@@ -183,8 +183,9 @@ The first two are supported by Vite out of the box, the third one is provided by
     For more details, see [Vite's documentation on assets](https://vite.dev/guide/assets).
 
 - **Referencing public assets**: You can place files into Vite's public directory (at `src/public` by default).
+  The Trails Starter Repository does not contain this directory, so create it first.
   These files will be copied to the output directory without any modification.
-  This is useful for files that must be present at a specific location (instead of `assert-12345.ext`).
+  This is useful for files that must be present at a specific location (instead of `asset-12345.ext`).
   Use cases are well known file names like `favicon.ico` or `robots.txt`, or files that are designed to be edited by an administrator (e.g. `my-config-file.json`).
 
     Public files can be imported, too:
@@ -214,7 +215,7 @@ The first two are supported by Vite out of the box, the third one is provided by
 
     For more details, see [Vite's documentation on public assets](https://vite.dev/guide/assets.html#the-public-directory).
 
-- **Referencing public assets of a package**: Trails packages can also defined public assets of their own.
+- **Referencing public assets of a package**: Trails packages can also define public assets of their own.
   These files are copied to the output directory without any modification, just like the files in Vite's public directory, but they stay with their package:
   an application that uses the package automatically receives the package's public assets, even if the package was installed from a registry.
 
@@ -274,7 +275,7 @@ The first two are supported by Vite out of the box, the third one is provided by
 - Use public assets of a package if the files belong to a reusable package instead of the project, or if you want to keep your public assets organized into packages.
 
 > NOTE: Static assets work everywhere, even as part of a published package.
-> Note that you may have to configure `assets` in your package's `build.config.mjs`, see [`publishConfig.assets`](../reference/Package.md#publishconfigassets).
+> A published package may have to list them in the `assets` option of its `build.config.mjs`, see [`publishConfig.assets`](../reference/Package.md#publishconfigassets).
 
 ## Building the site
 
@@ -300,7 +301,7 @@ plugins: [
 ];
 ```
 
-We have added reference to the new site in the `sites` array.
+We have added a reference to the new site in the `sites` array.
 This tells the plugin to make the site's `index.html` (and all resources referenced by it)
 available in the built output.
 
@@ -347,34 +348,34 @@ plugins: [
 ```
 
 We have added `my-app` to the `apps` array.
-This will tell the vite plugin to create a `my-app.js` in the `dist/www` directory.
-That file can be directly imported (e.g. via `<script>` like in our test site above) by users of your application, once your host the `www` directory somewhere.
+This will tell the Vite plugin to create a `my-app.js` in the `dist/www` directory.
+That file can be directly imported (e.g. via `<script>` like in our test site above) by users of your application, once you host the `www` directory somewhere.
 
-For more details about our vite plugin, head over to its [Documentation](https://www.npmjs.com/package/@open-pioneer/vite-plugin-pioneer).
+For more details about our Vite plugin, see its [documentation](https://www.npmjs.com/package/@open-pioneer/vite-plugin-pioneer).
 
 ### Clean application URLs
 
-The default file layout in this repository is designed for multiple applications and sites within the same project (for example, one or more productive sites and a few test sites).
+The default file layout in the Trails Starter Repository is designed for multiple applications and sites within the same project (for example, one or more productive sites and a few test sites).
 For this reason, the default root site is an overview page mainly aimed at developers.
 It links to other sites in the project:
 
-- Overview site: <code>http[](<>)://example.com<b>**/**</b></code>
-- Other sites: <code>http[](<>)://example.com<b>/sites/my-app/</b></code>
+- Overview site: `http://example.com/`
+- Other sites: `http://example.com/sites/my-app-test/`
 
 If your project focuses on a single, central site, you may wish to invert this layout:
 
-- Main site: <code>http[](<>)://example.com<b>/</b></code>
-- (optional) Overview site: <code>http[](<>)://example.com<b>/app-overview/</b></code>
-- (optional) Other apps: <code>http[](<>)://example.com<b>/test-app/</b></code>
+- Main site: `http://example.com/`
+- (optional) Overview site: `http://example.com/app-overview/`
+- (optional) Other sites: `http://example.com/test-app/`
 
-To achieve this, simply swap the corresponding `.html` files:
+To achieve this, swap the corresponding `.html` files:
 
 - Move `.html` files:
     - Move `src/index.html` to `src/app-overview/index.html` (or any other location in the source directory).
-    - Move `src/sites/my-app/index.html` to `src/index.html`.
+    - Move `src/sites/my-app-test/index.html` to `src/index.html`.
     - Relative links in your `.html` files may need adjusting!
 - Update `vite.config.ts`:
-    - Remove the reference to `my-app` and (optionally) include the new app overview site, if you want it built:
+    - Remove the reference to `sites/my-app-test` and (optionally) include the new app overview site, if you want it built:
 
         ```diff
         // vite.config.ts
@@ -383,7 +384,7 @@ To achieve this, simply swap the corresponding `.html` files:
             rootSite: true,
 
             sites: [
-        -       "my-app",
+        -       "sites/my-app-test",
         +       "app-overview",
                 // ...
             ],

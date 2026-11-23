@@ -9,17 +9,17 @@ By default, the empty app is prepared to support I18n with locale `en`.
 We will add support for another language (locale `de`) and demonstrate advanced features of [FormatJS](https://formatjs.io/) Intl.
 
 > **Note**  
-> For more details to I18n file format please check [I18nFormat](../reference/I18nFormat.md).
+> For details about the i18n file format, see [I18nFormat](../reference/I18nFormat.md).
 
 ## Preparing i18n support for our app
 
-To begin, start the development server
+To begin, start the development server:
 
 ```bash
 pnpm run dev
 ```
 
-and open the [empty app](http://localhost:5173/sites/empty/)
+Then open the [empty app](http://localhost:5173/sites/empty/).
 
 Open the `build.config.mjs` and add locale `de` to the `i18n` property:
 
@@ -32,7 +32,7 @@ export default defineBuildConfig({
 });
 ```
 
-We will see an error message in browser, because of the missing yaml file for our new locale.
+We will see an error message in the browser, because of the missing YAML file for our new locale.
 We need to create the file in the `i18n` folder. The naming schema of the file is `{locale}.yaml`.
 
 ```yaml
@@ -45,7 +45,7 @@ messages:
 By default, the app uses the browser settings or system default for determining the locale.
 If your browser locale is set to `de` you should see the values from `de.yaml` (maybe you will need to restart the dev server).
 
-<img src="./HowToTranslateAnApp_App.png" alt="i18n howto app" style="border: 1px solid black;" />
+![i18n howto app](./HowToTranslateAnApp_App.png)
 
 To demonstrate the multi-language support and force a language of our choice, we need to modify the `app.ts`:
 
@@ -66,7 +66,7 @@ const Element = createCustomElement({
     appMetadata,
     config: {
         // Forces the locale if set to a string.
-        // 'undefined' choses an automatic locale based on the app and
+        // 'undefined' chooses an automatic locale based on the app and
         // the user's preferred languages.
         locale: FORCED_LANG
     }
@@ -77,11 +77,53 @@ customElements.define("empty-app", Element);
 Now we are able to force the locale with `lang` parameter:
 [http://localhost:5173/sites/empty/?lang=de](http://localhost:5173/sites/empty/?lang=de) or [http://localhost:5173/sites/empty/?lang=en](http://localhost:5173/sites/empty/?lang=en)
 
+The value must match one of the locales listed in `i18n`.
+Otherwise, the app shows an error screen instead of its UI.
+
 > **Note**
 > The integration of I18n works the same way for Trails packages. We have to add the `i18n` configuration in `build.config.mjs` and matching yaml files for each language in the `i18n` folder. For each app/language combination, the build tool collects the YAML files of the app and the used packages and merges them into a flattened JSON structure.
 > As mentioned in [I18nFormat](../reference/I18nFormat.md) we can override yaml entries from packages in our app yaml. Please check the [`i18n-sample`](https://github.com/open-pioneer/trails-core-packages/tree/main/src/samples/i18n-sample) app as a practical example for this topic.
 
 ## Using advanced features of FormatJS Intl
+
+The examples in this section use components from `@open-pioneer/chakra-snippets` and types from `@conterra/reactivity-core`.
+Add both packages to the dependencies of the empty app and run `pnpm install`:
+
+```jsonc
+// src/apps/empty/package.json
+{
+    // ...
+    "dependencies": {
+        // ...
+        "@conterra/reactivity-core": "catalog:",
+        "@open-pioneer/chakra-snippets": "catalog:"
+    }
+}
+```
+
+The code snippets below only show the components.
+They require the following imports at the top of the file:
+
+```tsx
+// src/apps/empty/AppUI.tsx
+import {
+    Box,
+    Button,
+    Container,
+    Heading,
+    HStack,
+    Input,
+    Stack,
+    StackSeparator,
+    Tag,
+    Text,
+    VStack
+} from "@chakra-ui/react";
+import { NumberInputField, NumberInputRoot } from "@open-pioneer/chakra-snippets/number-input";
+import { Radio, RadioGroup } from "@open-pioneer/chakra-snippets/radio";
+import { useIntl, useService } from "open-pioneer:react-hooks";
+import { useState } from "react";
+```
 
 In a first step we prepare our AppUI:
 
@@ -112,8 +154,13 @@ First we generate an entry in our `ExampleStack` for our `InterpolationExample`:
 // src/apps/empty/AppUI.tsx
 function ExampleStack() {
     return (
-        <Stack mb={5} mt={5} gap="24px" align="stretch">
-            <StackSeparator borderColor="gray.200" />
+        <Stack
+            mb={5}
+            mt={5}
+            separator={<StackSeparator borderColor="gray.200" />}
+            gap="24px"
+            align="stretch"
+        >
             <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
                 <InterpolationExample></InterpolationExample>
             </Box>
@@ -167,7 +214,7 @@ Add the defined keys to all yaml files.
 The `interpolation.value` key uses a placeholder for `name`.
 In the rendered text the passed value of `name` will replace the placeholder.
 
-![interplation example](./HowToTranslateAnApp_Interpolation.png)
+![interpolation example](./HowToTranslateAnApp_Interpolation.png)
 
 ### Plurals
 
@@ -195,7 +242,7 @@ function ExampleStack() {
 }
 ```
 
-With plural support we can output different text depending on a count value (see [Link](https://formatjs.github.io/docs/core-concepts/icu-syntax/#plural-format)).
+With plural support we can output different text depending on a count value (see [plural format](https://formatjs.github.io/docs/core-concepts/icu-syntax/#plural-format)).
 We will use a RadioGroup to change the count value in our example:
 
 ```tsx
@@ -208,7 +255,6 @@ function PluralsExample() {
             <Heading as="h4" size="md">
                 {intl.formatMessage({ id: "plurals.heading" })}
             </Heading>
-            {/*import { Radio, RadioGroup } from "@open-pioneer/chakra-snippets/radio";*/}
             <RadioGroup onValueChange={(e) => setValue(e.value)} value={value}>
                 <Stack gap={4} direction="row">
                     <Radio value="0">0</Radio>
@@ -237,7 +283,7 @@ messages:
 
 Add the defined keys to all yaml files.
 
-The `plurals.value` key defines a count parameter `n`. In result the passed value of `n` will be used to generate the matching output.
+The `plurals.value` key defines a count parameter `n`. As a result, the passed value of `n` will be used to generate the matching output.
 
 ![plurals example](./HowToTranslateAnApp_Plurals.png)
 
@@ -270,7 +316,7 @@ function ExampleStack() {
 }
 ```
 
-With selection support we can output different text depending on a set of given values (see [Link](https://formatjs.github.io/docs/core-concepts/icu-syntax/#select-format)).
+With selection support we can output different text depending on a set of given values (see [select format](https://formatjs.github.io/docs/core-concepts/icu-syntax/#select-format)).
 In our example we will change the title depending on a gender selection.
 We will use a text input for name and a RadioGroup for gender selection:
 
@@ -332,15 +378,15 @@ messages:
 Add the defined keys to all `yaml` files.
 
 The `selection.value` key defines a parameter `gender` for selection and uses the dynamic parameter `name`.
-In a selection we always have to define the `other` parameter.
+In a selection we always have to define the `other` case.
 It is used if the given parameter value does not match one of the other values (e.g. `male` or `female`).
-In result the passed value of `gender` and `name` will be used to generate the matching output.
+As a result, the passed value of `gender` and `name` will be used to generate the matching output.
 
 ![selection example](./HowToTranslateAnApp_Selection.png)
 
 ### Number Format
 
-Now we add an entry for `NumberFormatExample` to our `ExampleStack` :
+Now we add an entry for `NumberFormatExample` to our `ExampleStack`:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
@@ -370,7 +416,7 @@ function ExampleStack() {
 }
 ```
 
-With `formatNumber` we can not only format numbers locale specific, but also use units and currencies (see [Link](https://formatjs.github.io/docs/react-intl/api/#formatnumber)).
+With `formatNumber` we can not only format numbers for the current locale, but also use units and currencies (see [`formatNumber`](https://formatjs.github.io/docs/react-intl/api/#formatnumber)).
 In our example we will have a number input and an output with different forms of unit and currency:
 
 ```tsx
@@ -378,15 +424,17 @@ In our example we will have a number input and an output with different forms of
 function NumberFormatExample() {
     const intl = useIntl();
     const [value, setValue] = useState("424224.24");
+    const [numericValue, setNumericValue] = useState(424224.24);
     return (
         <>
             <Heading as="h4" size="md">
                 {intl.formatMessage({ id: "numberformat.heading" })}
             </Heading>
-            {/*import { NumberInputField, NumberInputRoot } from "@open-pioneer/chakra-snippets/number-input";*/}
             <NumberInputRoot
-                onValueChange={(valueChangeDetails) => {
-                    setValue(valueChangeDetails.value);
+                onValueChange={({ value, valueAsNumber }) => {
+                    // See https://chakra-ui.com/docs/components/number-input#why-use-string-values
+                    setValue(value);
+                    setNumericValue(valueAsNumber);
                 }}
                 value={value}
                 step={0.25}
@@ -400,11 +448,11 @@ function NumberFormatExample() {
             </NumberInputRoot>
             <Text mb="8px">
                 {intl.formatMessage({ id: "numberformat.example.currency1" })}
-                {intl.formatNumber(+value, { style: "currency", currency: "EUR" })}
+                {intl.formatNumber(numericValue, { style: "currency", currency: "EUR" })}
             </Text>
             <Text mb="8px">
                 {intl.formatMessage({ id: "numberformat.example.currency2" })}
-                {intl.formatNumber(+value, {
+                {intl.formatNumber(numericValue, {
                     style: "currency",
                     currency: "EUR",
                     currencyDisplay: "name"
@@ -412,11 +460,11 @@ function NumberFormatExample() {
             </Text>
             <Text mb="8px">
                 {intl.formatMessage({ id: "numberformat.example.unit1" })}
-                {intl.formatNumber(+value, { style: "unit", unit: "terabyte-per-second" })}
+                {intl.formatNumber(numericValue, { style: "unit", unit: "terabyte-per-second" })}
             </Text>
             <Text mb="8px">
                 {intl.formatMessage({ id: "numberformat.example.unit2" })}
-                {intl.formatNumber(+value, {
+                {intl.formatNumber(numericValue, {
                     style: "unit",
                     unit: "terabyte-per-second",
                     unitDisplay: "long"
@@ -445,13 +493,15 @@ messages:
 
 Add the defined keys to all yaml files.
 
-We pass the `value` with different `NumberFormatOptions` to `intl.formatNumber`. In result, we see our formatted numbers.
+The number input reports its value both as a string and as a number.
+We pass the numeric value with different `NumberFormatOptions` to `intl.formatNumber`.
+As a result, we see our formatted numbers.
 
 ![number format example](./HowToTranslateAnApp_Numberformat.png)
 
 ### Date/Time Format and Relative Time Format
 
-Finally, we add an entry for the `DateTimeFormatExample` to our `ExampleStack` :
+Finally, we add an entry for the `DateTimeFormatExample` to our `ExampleStack`:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
@@ -520,7 +570,7 @@ function DateTimeFormatExample() {
 
 To calculate the delta for our relative time output we define the function `getDeltaTime`:
 
-```javascript
+```ts
 function getDeltaTime(datetime: string): number {
     const delta = new Date(datetime).getTime() - new Date().getTime();
     return Math.round(delta / 60000);
@@ -542,17 +592,17 @@ messages:
 
 Add the defined keys to all yaml files.
 
-We pass the `value` with `DateTimeFormatOptions` to `intl.formatDate` (see [Link](https://formatjs.github.io/docs/react-intl/api/#formatdate))
-and with `RelativeTimeFormatOptions` to `intl.formatRelativeTime` (see [Link](https://formatjs.github.io/docs/react-intl/api/#formatrelativetime))
+We pass the `value` with `DateTimeFormatOptions` to `intl.formatDate` (see [`formatDate`](https://formatjs.github.io/docs/react-intl/api/#formatdate))
+and with `RelativeTimeFormatOptions` to `intl.formatRelativeTime` (see [`formatRelativeTime`](https://formatjs.github.io/docs/react-intl/api/#formatrelativetime))
 
-In result, we see our selected formatted datetime and the relative time between now and the selected datetime.
+As a result, we see our selected formatted datetime and the relative time between now and the selected datetime.
 
 ![datetime format example](./HowToTranslateAnApp_DateTimeFormat.png)
 
 > **Note**  
 > The used datetime input does not support a forced locale.
 > It always uses the defined browser locale or the system default. In our example, if your browser uses locale `de`
-> but your app uses url parameter `lang=en` the input will show values matching to locale `de`.
+> but your app uses URL parameter `lang=en` the input will show values for locale `de`.
 
 ### Formatting rich text
 
@@ -561,9 +611,9 @@ Using this function, _primitive values_ (such as strings, numbers, etc.) can be 
 For rich user interfaces, this way of rendering messages can be limiting in practice.
 
 To render _rich_ text with _React_ components for your user interface, use `intl.formatRichMessage()` instead.
-This functions follows the same principles as `intl.formatMessage()`, but is different in a few key ways:
+This function follows the same principles as `intl.formatMessage()`, but is different in a few key ways:
 
-- It always returns a React node. This makes it very powerful, but this also means that it can only be used in combination with React components.
+- It always returns a React node. It can therefore only be used in combination with React components.
 - It supports React nodes as _values_. You can still use placeholders in your messages (like `{name}`) but you can substitute arbitrary React nodes instead of only primitive values.
 - It supports defining custom tags in terms of React nodes, using functions as _values_.
 - It provides a few basic formatting tags out of the box.
@@ -586,6 +636,7 @@ messages:
 It is the rendering part that differs:
 
 ```tsx
+// src/apps/empty/AppUI.tsx
 function RichTextExample() {
     const intl = useIntl();
 
@@ -632,7 +683,23 @@ function RichTextExample() {
 }
 ```
 
-The code above is rendered like this:
+Add an entry for the `RichTextExample` to the `ExampleStack`, as for the previous examples:
+
+```tsx
+// src/apps/empty/AppUI.tsx
+function ExampleStack() {
+    return (
+        <Stack /* ... */>
+            {/* ... */}
+            <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
+                <RichTextExample></RichTextExample>
+            </Box>
+        </Stack>
+    );
+}
+```
+
+The example is rendered like this:
 
 ![rich text example](./HowToTranslateAnApp_RichText.png)
 
@@ -644,10 +711,11 @@ This object can be used in the same way as the `intl` object returned by `useInt
 
 ```ts
 // src/apps/empty/GreetingService.ts
+import { ReadonlyReactive } from "@conterra/reactivity-core";
 import { type DECLARE_SERVICE_INTERFACE, ServiceOptions, PackageIntl } from "@open-pioneer/runtime";
 
 export class GreetingService {
-    declare [DECLARE_SERVICE_INTERFACE]: "i18n-howto-app.GreetingService";
+    declare [DECLARE_SERVICE_INTERFACE]: "empty.GreetingService";
 
     private readonly _intl: ReadonlyReactive<PackageIntl>;
 
@@ -678,11 +746,11 @@ export default defineBuildConfig({
     i18n: ["de", "en"],
     services: {
         GreetingService: {
-            provides: ["i18n-howto-app.GreetingService"]
+            provides: ["empty.GreetingService"]
         }
     },
     ui: {
-        references: ["i18n-howto-app.GreetingService"]
+        references: ["empty.GreetingService"]
     }
 });
 ```
@@ -703,15 +771,15 @@ messages:
 #....
 ```
 
-The `ServiceI18nExample` component displays a plain and simple react form using the `intl` API you have already seen.
+The `ServiceI18nExample` component displays a simple React form using the `intl` API you have already seen.
 In addition to using i18n from within the React component, it also interacts with a service (`GreetingService`, **(1)** in the example below) to show a translated message.
-The form simply asks the user for a name and then calls the `greetingService.greet(name)` method (see **(2)** below) to show a greeting:
+The form asks the user for a name and then calls the `greetingService.greet(name)` method (see **(2)** below) to show a greeting:
 
 ```tsx
 // src/apps/empty/AppUI.tsx
 function ServiceI18nExample() {
     const intl = useIntl();
-    const greetingService = useService<GreetingService>("i18n-howto-app.GreetingService");
+    const greetingService = useService<GreetingService>("empty.GreetingService"); // (1)
     const [inputValue, setInputValue] = useState("");
     const [greeting, setGreeting] = useState("");
     return (
@@ -726,7 +794,7 @@ function ServiceI18nExample() {
 
                     const name = inputValue.trim();
                     if (name) {
-                        setGreeting(greetingService.greet(name));
+                        setGreeting(greetingService.greet(name)); // (2)
                     } else {
                         setGreeting("");
                     }
@@ -752,28 +820,55 @@ function ServiceI18nExample() {
 }
 ```
 
+The component uses the type of the service, so add the following import to `AppUI.tsx`:
+
+```tsx
+// src/apps/empty/AppUI.tsx
+import { GreetingService } from "./GreetingService";
+```
+
+Finally, add an entry for the `ServiceI18nExample` to the `ExampleStack`:
+
+```tsx
+// src/apps/empty/AppUI.tsx
+function ExampleStack() {
+    return (
+        <Stack /* ... */>
+            {/* ... */}
+            <Box bg="white" w="100%" p={4} color="black" borderWidth="1px" borderColor="black">
+                <ServiceI18nExample></ServiceI18nExample>
+            </Box>
+        </Stack>
+    );
+}
+```
+
 ## Demo App
 
 The complete app `i18n-howto` can be found in the `samples` folder.
 
 ## Changing the application's locale
 
-It is possible to change the application's locale to a specific locale using the `setLocale` method on the `ApplicationContext`.
+The application's locale can be changed at runtime with the `LocaleService` (interface `"runtime.LocaleService"`) from the `@open-pioneer/runtime` package.
 
 Example:
 
 ```ts
-import { ApplicationContext } from "@open-pioneer/runtime";
+import { LocaleService } from "@open-pioneer/runtime";
 
-const appCtx: ApplicationContext = ...; // injected
-appCtx.setLocale("en-US");
+const localeService: LocaleService = ...; // injected
+await localeService.changeLocale(new Intl.Locale("en-US"));
 ```
 
-Limitation:
-Currently, this requires a full restart of the application.
-Please create an issue or PR if you need support for changing the locale without restart.
+The locale must match one of the locales supported by the application (see `localeService.supportedMessageLocales`).
+It does not need to be a precise match: `en-US` is valid if `en` is supported.
+Use `undefined` to switch back to the default locale.
+The returned promise rejects if the locale is not supported.
 
-For more information refer to the API of the `core-packages` `runtime` package.
+> NOTE: The methods `getLocale()`, `setLocale()` and `getSupportedLocales()` of the `ApplicationContext` are deprecated.
+> Use the `LocaleService` instead.
+
+For more information refer to the API documentation of the `@open-pioneer/runtime` package.
 
 ## Further reading
 

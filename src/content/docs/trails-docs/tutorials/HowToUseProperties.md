@@ -95,9 +95,10 @@ export default defineBuildConfig({
 
 Execute `pnpm install` again so the application can find the package.
 
-The user interface our of application access the service, but doesn't do anything with it yet:
+The user interface of our application accesses the service, but doesn't do anything with it yet:
 
 ```tsx
+// src/apps/empty/AppUI.tsx
 import { Button, Container } from "@chakra-ui/react";
 import { useService } from "open-pioneer:react-hooks";
 
@@ -137,7 +138,7 @@ export default defineBuildConfig({
     properties: {
         // Defines the property 'backendUrl' with the given default value.
         // Use `null` if you don't want to define a default value (`propertiesMeta` can be used
-        // make those properties required).
+        // to make those properties required).
         backendUrl: "http://search-backend.example.com"
     }
 });
@@ -169,11 +170,12 @@ export class SearchService {
 - **(2)**
   `serviceOptions.properties.backendUrl` contains the value of the property.
 - **(3)**
-  Triggers a "search" and prints the current value of the backend url, for inspection.
+  Triggers a "search" and prints the current value of the backend URL, for inspection.
 
 We will quickly update the application's UI to try the new method:
 
 ```diff
+// src/apps/empty/AppUI.tsx
 import { Button, Container } from "@chakra-ui/react";
 import { useService } from "open-pioneer:react-hooks";
 
@@ -195,7 +197,7 @@ export function AppUI() {
 }
 ```
 
-Clicking on the button unsurprisingly prints:
+Clicking on the button prints:
 
 ![Console contains the property's default value.](./HowToUseProperties_DefaultBackendUrl.png)
 
@@ -207,7 +209,7 @@ Clicking on the button unsurprisingly prints:
 Let's imagine that the `search-service` package is used across many apps with different deployment environments.
 For one of those apps, we want to use a different `backendUrl` without altering the package's source code.
 
-To do so, simply update your `app.ts` to override the property:
+To do so, update your `app.ts` to override the property:
 
 ```ts
 // src/apps/empty/app.ts
@@ -234,13 +236,13 @@ const Element = createCustomElement({
   The key must be the exact name of the package.
   The properties defined here should be supported by the package.
 
-That's it. After reloading the application, pressing the button now prints:
+After reloading the application, pressing the button now prints:
 
 ![Console contains the property's custom value.](./HowToUseProperties_CustomBackendUrl.png)
 
 ## Providing TypeScript support
 
-Writing raw JSON objects as in **(2)** above can be error-prone.
+Writing untyped objects as in **(2)** above can be error-prone.
 
 Consider exporting a TypeScript interface that matches the properties defined by your package:
 
@@ -329,7 +331,7 @@ Now you can define the `backend-url` attribute on your web component:
 ```
 
 `resolveConfig` is the most powerful way to define properties or other configuration options.
-Since it supports promises you can also use it to load properties from other data sources, such as a rest service (possibly even dependent on the current user session via cookies).
+Since it supports promises you can also use it to load properties from other data sources, such as a REST service (possibly even dependent on the current user session via cookies).
 It should not be overused: a long-running `resolveConfig` call will block the start of your application.
 
 ## Further reading
@@ -337,4 +339,4 @@ It should not be overused: a long-running `resolveConfig` call will block the st
 - [How to create a service](./HowToCreateAService.md)
 - [How to support dynamic configuration](./HowToSupportDynamicConfig.md)
 - [Package reference](../reference/Package.md)
-- [Services Reference](../reference/Services.md)
+- [Services reference](../reference/Services.md)

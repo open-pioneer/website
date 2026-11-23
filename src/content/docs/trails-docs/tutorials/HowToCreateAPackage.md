@@ -14,9 +14,9 @@ At their core, they are simply [Node packages](https://nodejs.org/api/packages.h
 ## Background information
 
 Every locally developed package must contain a `package.json` and a `build.config.mjs`.
-The `package.json` file is required by Node and PNPM, while the `build.config.mjs` is used to implement our framework specific extensions (services etc.).
+The `package.json` file is required by Node and pnpm, while the `build.config.mjs` is used to implement our framework specific extensions (services etc.).
 
-By convention, packages are placed into `src/packages/../<PACKAGE_NAME>`.
+By convention, packages are placed into `src/packages/<PACKAGE_NAME>`.
 However, they can be placed anywhere within the `src` directory: every `package.json` in the source directory is detected by pnpm as part of the workspace (see `pnpm-workspace.yaml`),
 and all packages in the workspace may reference each other ([more details](https://pnpm.io/workspaces)).
 
@@ -42,8 +42,8 @@ export default defineBuildConfig({});
 ```
 
 Run `pnpm install` to ensure that `pnpm` knows about our new package.
-pnpm provides powerful tools to work with the local workspace, we can use this to verify our setup:
-you can run `pnpm ls -r --depth -1` (optionally with `--json`) to print all local packages.
+To verify the setup, run `pnpm ls -r --depth -1` (optionally with `--json`).
+It prints all packages in the workspace.
 
 ```bash
 $ pnpm ls -r --depth -1 --json
@@ -92,7 +92,7 @@ This will ensure that when someone imports `"hello-world"`, they will receive th
 ## Using the package
 
 The last step is to actually use the function from one of our apps.
-For that, we're going to extend this project's empty app in `src/apps/empty`.
+For that, we're going to extend the empty app of the Trails Starter Repository in `src/apps/empty`.
 
 First, start the development server:
 
@@ -124,9 +124,9 @@ In order to use the new package, it must be declared as a dependency in your app
 > _Installation_ in this case means simply linking the packages together: `node_modules` will contain links to the dependencies in the source directory ([read more](https://pnpm.io/workspaces#workspace-protocol-workspace)).
 
 At this point, your browser will likely display an error because the dependency cannot be found.
-We have to run `pnpm install` after editing the dependencies, then reload your browser: the error will be gone.
+Run `pnpm install` after editing the dependencies, then reload the page: the error will be gone.
 
-Finally, we can use `greet` function from the `hello-world` package.
+Finally, we can use the `greet` function from the `hello-world` package.
 We'll simply edit the `app.ts`:
 
 ```ts
