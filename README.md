@@ -27,16 +27,12 @@ The website and technical documentation for
 Starlight renders every `.md` and `.mdx` file under `src/content/docs/` as a page,
 using the file path as the route. The sidebar is configured in `astro.config.ts`.
 
-`src/content/docs/trails-docs/` mirrors the technical documentation maintained in the
-Trails repositories. Do not edit those files here; change them upstream instead.
+`src/content/docs/trails-docs/` contains the user manual of the framework.
 
 TODO:
 
-- Move docs from trails-starter to this website.
-- Fix generation of llms.txt: line numbers from code block cause weird formatting.
 - Create a global footer for the security policy, imprint, etc.
 - Should we use `template: splash` for legal sites etc, or should they get a normal sidebar entry instead (and show the sidebar, too)?
-- Use stable link for busradar sample -- not the pr preview.
 
 ## Commands
 

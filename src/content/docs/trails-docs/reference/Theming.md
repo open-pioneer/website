@@ -16,13 +16,15 @@ can be defined which complement or override each other.
 It is also possible to make attribute-based definitions directly on the components in a `.jsx`/`.tsx` file.
 These attributes have (like inline CSS) precedence over previously defined themes.
 
-A multi-level theming approach is used for Open Pioneer Trails apps.
-There are two internal levels of theming and a third level for an app-specific custom theme.
+Open Pioneer Trails apps use three levels of theming:
 
-The first level is Chakra UI's default theme which defines the _default look_ of Chakra UI
-components and is part of Chakra UI.
+1. Chakra UI's default theme (part of Chakra UI)
+2. The Trails base theme (part of the Trails core packages)
+3. An optional custom theme of the app
 
-The second internal level is the Trails base theme which is part of the Trails core packages.
+The first level is Chakra UI's default theme which defines the _default look_ of Chakra UI components.
+
+The second level is the Trails base theme.
 It defines common variables ([semantic tokens](https://chakra-ui.com/docs/theming/semantic-tokens)), the `trails` color palette (the default color palette for all Chakra UI components) and some theme specific component adjustments.
 This theme is active by default in Trails applications, but it is also designed to be extended.
 Most custom themes are expected to extend this theme (via Chakra's `mergeConfigs()` function) while making only minor adjustments.

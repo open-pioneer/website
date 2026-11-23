@@ -1,22 +1,94 @@
-## Development
+# AI Agent Guide: website
 
-When starting the dev server, use background mode:
+This repository holds the website of the **Open Pioneer Trails** framework, published at https://open-pioneer.dev/.
+It is an [Astro](https://astro.build) site that uses the [Starlight](https://starlight.astro.build) documentation theme.
+A push to `main` deploys the site to GitHub Pages.
 
-```
-astro dev --background
-```
+This file is the single source of truth for agents.
+`CLAUDE.md` is a symbolic link to it.
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+## Content
 
-## Documentation
+Every `.md` and `.mdx` file under `src/content/docs/` is a page, and the file path is the route.
 
-Full documentation: https://docs.astro.build
+- **`src/content/docs/trails-docs/`** is the user manual of the framework.
+- **The other pages** (`index.mdx`, `about.md`, `legal.md`, `security/`) are the public website.
 
-Consult these guides before working on related tasks:
+The manual documents code from other repositories.
+Check every technical statement and every code sample against that code before you write it:
 
-- [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
-- [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
-- [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
-- [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+| Repository                                                      | Contains                                                               |
+| --------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| https://github.com/open-pioneer/trails-starter                  | The project template that the manual and its tutorials describe        |
+| https://github.com/open-pioneer/trails-core-packages            | Runtime and core packages, internal documentation in `docs/internals/` |
+| https://github.com/open-pioneer/trails-openlayers-base-packages | Map packages                                                           |
+| https://github.com/open-pioneer/trails-build-tools              | Vite plugin and `build-pioneer-package`                                |
+
+## Commands
+
+- **Dev server**: `pnpm exec astro dev --background`.
+  Manage it with `astro dev stop`, `astro dev status` and `astro dev logs`.
+- **Build**: `pnpm build`.
+  The build validates all internal links and fails on a broken one.
+- **Format**: `pnpm fmt`, or `pnpm fmt:check`.
+- **Lint**: `pnpm lint`.
+- **Typecheck**: `pnpm check-types`.
+  It needs the generated files in `.astro`, so run a build or `pnpm exec astro sync` first.
+
+A change is done when `pnpm fmt:check`, `pnpm lint` and `pnpm build` pass.
+
+## Page conventions
+
+- **Frontmatter.**
+  A manual page sets `title` and `slug` (`index.md` only sets `title`).
+  The slug is the file path below `src/content/docs/` without the extension, in the same letter case,
+  for example `slug: trails-docs/tutorials/HowToWriteTests`.
+  Without it, Starlight lowercases the URL and links to the page break.
+  The title is the page heading, so the body starts with `##` headings.
+- **Links between pages are relative file links**, for example `[Package reference](../reference/Package.md#services)`.
+  `support/astro/relative-links.ts` rewrites them to page URLs.
+  Only Markdown links are validated, so use Markdown links and images instead of raw HTML.
+- **A renamed heading changes its anchor.**
+  Search the content for links to the old anchor.
+- **Sidebar.**
+  `astro.config.ts` lists the top-level manual pages by slug.
+  A new top-level page needs an entry there.
+  Pages under `tutorials/` and `reference/` appear automatically.
+- **Oxfmt formats the code blocks in Markdown and sorts their imports.**
+  Never make an explanation depend on the order of imports in a sample.
+- **Source files** (`.ts`, `.astro`) start with the SPDX license header that the existing files use.
+
+## Writing
+
+The manual is read by developers who use the framework.
+Write simple, technical English.
+
+- **One sentence per line** in Markdown sources.
+- **One idea per sentence, about 20 words.**
+- **American spelling.**
+- **Concrete over abstract.**
+  Name the file, the option, the command.
+- **Established words only.**
+  Use the terms from `src/content/docs/trails-docs/Glossary.md`, and the same word for the same thing throughout a page.
+  The full name of the template is "Trails Starter Repository", the short name is `trails-starter`.
+- **Plain statements.**
+  Describe what the software does today.
+  Leave out marketing language, filler ("simply", "just", "easily") and announcements of future features.
+- **Code samples match the current code.**
+  A tutorial step names the file it changes in a leading comment, for example `// src/apps/empty/AppUI.tsx`.
+  A sample imports everything it uses and declares the dependencies it needs.
+- **Sample output is real output.**
+  Copy it from a run of the command and never write it from memory.
+
+## Astro and Starlight
+
+The documentation is at https://docs.astro.build and https://starlight.astro.build.
+Read the matching guide before you change routing, components, content collections or styles.
+
+- **Component overrides** are in `src/components/overrides/` and are registered in `astro.config.ts`.
+- **`llms.txt`** is generated by `starlight-llms-txt`, configured in `astro.config.ts`.
+
+## Keeping this guide current
+
+If this guide states something false, fix it as part of the task and mention the change to the user.
+Propose any other change, such as a new rule, to the user instead of making it.

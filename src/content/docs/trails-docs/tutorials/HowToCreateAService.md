@@ -104,8 +104,8 @@ import { createService } from "@open-pioneer/test-utils/services";
 import { it, expect } from "vitest";
 import { MathServiceImpl } from "./MathServiceImpl";
 
-it("multiplies two numbers", async () => {
-    const service = await createService(MathServiceImpl);
+it("multiplies two numbers", () => {
+    const service = createService(MathServiceImpl);
     expect(service.multiply(3, 4)).toEqual(12);
 });
 ```
@@ -161,6 +161,7 @@ In the `build.config.mjs`, add a reference from the UI to the interface `"math.M
 import { defineBuildConfig } from "@open-pioneer/build-support";
 
 export default defineBuildConfig({
+    i18n: ["en"],
     ui: {
         references: ["math.MathService"]
     }
@@ -232,7 +233,8 @@ If you plan to have your service used by others, providing good TypeScript integ
 Back in the `math` package, we will define the public interface for `"math.MathService"`.
 Pure interface descriptions are conventionally placed into a file called `api.ts`, but they should also be exported from the package's `main` entry point (usually `index.ts`) for convenience.
 
-Because we do not intend to export any classes, functions or constants, we'll just make `api.ts` our `main` for now:
+Because we do not intend to export any classes, functions or constants, we'll just make `api.ts` our `main` for now.
+The interface uses a type from `@open-pioneer/runtime`, so add that package as a dependency as well:
 
 ```jsonc
 // src/packages/math/package.json
@@ -240,6 +242,9 @@ Because we do not intend to export any classes, functions or constants, we'll ju
     "name": "math",
     "private": true,
     "main": "api.ts",
+    "dependencies": {
+        "@open-pioneer/runtime": "catalog:"
+    },
     "devDependencies": {
         "@open-pioneer/test-utils": "catalog:"
     }
@@ -393,8 +398,8 @@ import { createService } from "@open-pioneer/test-utils/services";
 import { it, expect } from "vitest";
 import { MathServiceImpl } from "./MathServiceImpl";
 
-it("multiplies two numbers", async () => {
-    const service = await createService(MathServiceImpl, {
+it("multiplies two numbers", () => {
+    const service = createService(MathServiceImpl, {
         references: {
             // (1)
             extensions: []
@@ -403,7 +408,7 @@ it("multiplies two numbers", async () => {
     expect(service.multiply(3, 4)).toEqual(12);
 });
 
-it("invokes the extensions when a multiplication is triggered", async () => {
+it("invokes the extensions when a multiplication is triggered", () => {
     interface Event {
         from: string;
         a: number;
@@ -412,7 +417,7 @@ it("invokes the extensions when a multiplication is triggered", async () => {
     }
 
     const events: Event[] = [];
-    const service = await createService(MathServiceImpl, {
+    const service = createService(MathServiceImpl, {
         references: {
             // (2)
             extensions: [

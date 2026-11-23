@@ -17,6 +17,8 @@ This project is built on these open source projects:
 - [Vitest](https://vitest.dev/) runs our tests.
 - [React](https://reactjs.org/) provides the foundation of our UI.
 - We use accessible UI components from [Chakra UI](https://chakra-ui.com/).
+- [OpenLayers](https://openlayers.org/) is used for mapping applications.
+- Shared state is managed with signals from our [Reactivity API](https://www.npmjs.com/package/@conterra/reactivity-core).
 - Applications can support multiple languages by using [FormatJS](https://formatjs.io/).
 - Framework code is written in [TypeScript](https://www.typescriptlang.org/).
   We recommend, but do not require, TypeScript for application code as well.

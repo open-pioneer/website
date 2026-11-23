@@ -98,6 +98,7 @@ Execute `pnpm install` again so the application can find the package.
 The user interface of our application accesses the service, but doesn't do anything with it yet:
 
 ```tsx
+// src/apps/empty/AppUI.tsx
 import { Button, Container } from "@chakra-ui/react";
 import { useService } from "open-pioneer:react-hooks";
 
@@ -174,6 +175,7 @@ export class SearchService {
 We will quickly update the application's UI to try the new method:
 
 ```diff
+// src/apps/empty/AppUI.tsx
 import { Button, Container } from "@chakra-ui/react";
 import { useService } from "open-pioneer:react-hooks";
 

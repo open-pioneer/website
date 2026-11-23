@@ -41,9 +41,10 @@ In Firefox this only seems to work for error messages.
 Use the central `http.HttpService` (see [@open-pioneer/http](https://www.npmjs.com/package/@open-pioneer/http)) to perform HTTP requests.
 The service exposes the method `fetch()` which is compatible with (and implemented in terms of) the browser's modern [`fetch()` function](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
 
-Using a central method is important for future proofing our development.
-We might add new features such as automatic authentication (e.g. tokens) or automatic proxy support which users of the `HttpService`
-can then automatically take advantage of.
+Using a central method makes it possible to change all requests of an application in one place.
+For example, a service that provides `http.Interceptor` can add authentication tokens or query parameters to requests before they are sent.
+All users of the `HttpService` take advantage of such interceptors automatically.
+See the package's documentation for details.
 
 ### Dependency management
 
@@ -98,8 +99,8 @@ To enforce that only a single version of a package is present (a builtin feature
     For example:
 
     ```bash
-    # Show why ol@^9 is present in the dependency tree (-r inspects all packages in the workspace)
-    $ pnpm why -r ol@^9
+    # Show why ol@^10 is present in the dependency tree (-r inspects all packages in the workspace)
+    $ pnpm why -r ol@^10
     ```
 
 - `pnpm ls` can show the dependency tree of a package or app (see also the `--depth` option).
@@ -232,7 +233,7 @@ handle.destroy(); // don't forget to unsubscribe during cleanup
 > NOTE: The `EventEmitter` class from `@open-pioneer/core` is deprecated.
 > Use `@conterra/reactivity-events` instead.
 
-## Development Setup
+## Development setup
 
 ### Debugging Vitest
 
@@ -247,7 +248,7 @@ However, it is possible to define a custom run configuration to enable debugging
 - Choose a name (e.g. "Vitest") and ensure that the node interpreter (node.exe) and working directory
   (Trails project root path) are set correctly.
 - In the field "JavaScript file" add the path to vitest.mjs (e.g. `./node_modules/vitest/vitest.mjs`)
-- In the field "Application parameters" add the following: `run --threads false --testTimeout 30000 <Relative path to your test file>`. The `testTimeout` is optional, however useful for long-running tests. Example: `run --threads false --testTimeout 30000 src/packages/legend/Legend.test.tsx`
+- In the field "Application parameters" add the following: `run --no-file-parallelism --testTimeout 30000 <Relative path to your test file>`. The `testTimeout` is optional, however useful for long-running tests. Example: `run --no-file-parallelism --testTimeout 30000 src/packages/legend/Legend.test.tsx`
 - Click "save". Run the new configuration in debug mode to start debugging.
 
 Official information for debugging Vitest in IntelliJ IDEA can be found in the [Vitest documentation](https://vitest.dev/guide/debugging#intellij-idea).

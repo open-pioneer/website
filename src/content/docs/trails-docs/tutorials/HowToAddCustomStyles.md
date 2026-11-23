@@ -51,7 +51,10 @@ However, since the class isn't being used, your UI still looks the same.
 Setting the CSS class of a React element is done via the `className` prop:
 
 ```tsx
-import { Container, Heading, Text } from "@chakra-ui/react";
+// src/apps/empty/AppUI.tsx
+import { Container, Heading, Text, chakra } from "@chakra-ui/react";
+import { useIntl, useService } from "open-pioneer:react-hooks";
+import { Greeter, SimpleUiComponent } from "sample-package";
 
 export function AppUI() {
     const intl = useIntl();
@@ -184,7 +187,9 @@ It is possible to create a custom theme for an app. For details see [How to them
 
 React supports the `className` prop to set an element's CSS classes as a string ([Documentation](https://reactjs.org/docs/faq-styling.html)).
 
-Using our `classNames` utility, you can easily compose a className string from multiple, potentially dynamic inputs:
+Using our `classNames` utility, you can easily compose a className string from multiple, potentially dynamic inputs.
+The utility is part of the package `@open-pioneer/react-utils`.
+Add that package to the `dependencies` in your `package.json` (version `catalog:`) and run `pnpm install` before you use it:
 
 ```tsx
 import { classNames } from "@open-pioneer/react-utils";

@@ -80,6 +80,7 @@ export const config = mergeConfigs(
                     primary_font_primary: { value: "{colors.black}" },
                     primary_font_secondary: { value: "{colors.gray.500}" },
                     primary_font_inverse: { value: "{colors.white}" },
+                    primary_font_link: { value: "{colors.primary.700}" },
                     primary_border: { value: "{colors.black}" },
 
                     // override chakra internal semantic tokens

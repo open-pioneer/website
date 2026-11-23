@@ -14,7 +14,7 @@ Services can be used from other services or from UI components.
 ## Using a service from a React component
 
 In this section, we will customize the `empty` app's UI (in `src/apps/empty`).
-At the time of this writing, the framework does not contain a lot of builtin services we could use for our example, so the following use case is somewhat constructed.
+The example uses the `ApplicationContext`, a service built into the framework.
 
 Consider an app embedded as a custom element into some site.
 It can be useful to change the element's attributes from inside the application, for example to allow the surrounding site to apply different styles to the element (e.g. by using [attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)).

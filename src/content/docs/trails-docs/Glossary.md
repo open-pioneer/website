@@ -68,7 +68,8 @@ References to services are handled by the system, which will inject appropriate 
 ## Site
 
 A site is an `index.html` file with associated resources (global styling, JavaScript code, favicons, etc.).
-Sites rely on the builtin Vite features without any custom extensions.
+Vite handles sites like any other `.html` entry point.
+The `sites` option of the `pioneer` Vite plugin lists the sites that are included in the build.
 They are typically used to test apps with different configurations, but they may also be shipped as a web app.
 
 ## Trails package

@@ -90,6 +90,25 @@ You can choose which `.html` sites to deploy, or which `apps` to include, depend
 Vite comes with a built-in HTTP server to serve the content of `dist/www` on your local machine.
 To start the server, run `pnpm preview` after building the project.
 
+## Running the tests
+
+Some tests run in a real browser (Vitest browser mode).
+These tests need a browser that is managed by [Playwright](https://playwright.dev/).
+Install it once after you have installed the project's dependencies:
+
+```bash
+$ pnpm exec playwright install
+```
+
+Then start the tests:
+
+```bash
+$ pnpm test
+```
+
+Vitest keeps running and executes the tests again when a file changes.
+See the [Repository guide](./RepositoryGuide.md#pnpm-run-test) for other test modes and [How to write tests](./tutorials/HowToWriteTests.md) for an introduction to testing.
+
 ## Customizing the Vite configuration
 
 You can customize the `vite.config.ts`.
@@ -117,3 +136,4 @@ Recommended further reading:
 - [Repository guide](./RepositoryGuide.md)
 - [How to create an app](./tutorials/HowToCreateAnApp.md)
 - [How to deploy an app](./tutorials/HowToDeployAnApp.md)
+- [How to write tests](./tutorials/HowToWriteTests.md)

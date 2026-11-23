@@ -65,7 +65,8 @@ export class LogApiExtension implements ApiExtension {
 }
 ```
 
-We must export it from the `services.ts` (or `.js`) module so it can be found by the framework later:
+We must export it from the `services.ts` (or `.js`) module so it can be found by the framework later.
+The `empty` app does not have this file yet, so create it:
 
 ```ts
 // src/apps/empty/services.ts

@@ -183,6 +183,7 @@ The first two are supported by Vite out of the box, the third one is provided by
     For more details, see [Vite's documentation on assets](https://vite.dev/guide/assets).
 
 - **Referencing public assets**: You can place files into Vite's public directory (at `src/public` by default).
+  The Trails Starter Repository does not contain this directory, so create it first.
   These files will be copied to the output directory without any modification.
   This is useful for files that must be present at a specific location (instead of `asset-12345.ext`).
   Use cases are well known file names like `favicon.ico` or `robots.txt`, or files that are designed to be edited by an administrator (e.g. `my-config-file.json`).
@@ -274,7 +275,7 @@ The first two are supported by Vite out of the box, the third one is provided by
 - Use public assets of a package if the files belong to a reusable package instead of the project, or if you want to keep your public assets organized into packages.
 
 > NOTE: Static assets work everywhere, even as part of a published package.
-> Note that you may have to configure `assets` in your package's `build.config.mjs`, see [`publishConfig.assets`](../reference/Package.md#publishconfigassets).
+> A published package may have to list them in the `assets` option of its `build.config.mjs`, see [`publishConfig.assets`](../reference/Package.md#publishconfigassets).
 
 ## Building the site
 
@@ -358,23 +359,23 @@ The default file layout in the Trails Starter Repository is designed for multipl
 For this reason, the default root site is an overview page mainly aimed at developers.
 It links to other sites in the project:
 
-- Overview site: <code>http[](<>)://example.com<b>**/**</b></code>
-- Other sites: <code>http[](<>)://example.com<b>/sites/my-app/</b></code>
+- Overview site: `http://example.com/`
+- Other sites: `http://example.com/sites/my-app-test/`
 
 If your project focuses on a single, central site, you may wish to invert this layout:
 
-- Main site: <code>http[](<>)://example.com<b>/</b></code>
-- (optional) Overview site: <code>http[](<>)://example.com<b>/app-overview/</b></code>
-- (optional) Other sites: <code>http[](<>)://example.com<b>/test-app/</b></code>
+- Main site: `http://example.com/`
+- (optional) Overview site: `http://example.com/app-overview/`
+- (optional) Other sites: `http://example.com/test-app/`
 
 To achieve this, swap the corresponding `.html` files:
 
 - Move `.html` files:
     - Move `src/index.html` to `src/app-overview/index.html` (or any other location in the source directory).
-    - Move `src/sites/my-app/index.html` to `src/index.html`.
+    - Move `src/sites/my-app-test/index.html` to `src/index.html`.
     - Relative links in your `.html` files may need adjusting!
 - Update `vite.config.ts`:
-    - Remove the reference to `sites/my-app` and (optionally) include the new app overview site, if you want it built:
+    - Remove the reference to `sites/my-app-test` and (optionally) include the new app overview site, if you want it built:
 
         ```diff
         // vite.config.ts
@@ -383,7 +384,7 @@ To achieve this, swap the corresponding `.html` files:
             rootSite: true,
 
             sites: [
-        -       "sites/my-app",
+        -       "sites/my-app-test",
         +       "app-overview",
                 // ...
             ],

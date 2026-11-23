@@ -10,7 +10,7 @@ This document specifies the structural requirements for a Trails package in the 
 > This specification applies to both apps and "normal" packages.
 > Apps are simply packages that expose a web component: they may use all package features such as services etc.
 
-## Application Packages
+## Application packages
 
 An application package is a package that provides an app.
 Application packages can use all features documented below (like any other package).
@@ -28,9 +28,6 @@ src/packages/<PACKAGE_NAME>
 
 A valid [`package.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-json) file.
 It must contain _at least_ a valid package `name`.
-
-If the package defines services, then it must also have a services module (typically called `services.js` or `services.ts`) from which those services are exported.
-The build system will automatically import the required service classes from the specified file.
 
 ```jsonc
 // package.json
@@ -54,10 +51,16 @@ import { defineBuildConfig } from "@open-pioneer/build-support";
 export default defineBuildConfig({});
 ```
 
+### Services module
+
+If the package defines services, then it must also have a services module (typically called `services.js` or `services.ts`) from which those services are exported.
+The build system will automatically import the required service classes from that file.
+The location of the file can be changed with the [`servicesModule`](#servicesmodule) option.
+
 ### Reference
 
 ```ts
-interface BuildConfig {
+export interface BuildConfig {
     entryPoints?: string | string[];
     styles?: string;
     publicAssets?: string | PublicAssetDir[];
@@ -120,7 +123,7 @@ One or more directories that contain the _public assets_ of the package.
 Public assets are copied to the output directory of an application that uses the package: the files are not modified and they keep their original file names.
 
 ```ts
-interface PublicAssetDir {
+export interface PublicAssetDir {
     src: string;
     dest: string;
 }
@@ -266,7 +269,7 @@ They can be configured as a single string (a single interface name), or an array
 Every array entry can specify a string (the interface name) or a `ProvidesConfig` object with advanced properties:
 
 ```ts
-interface ProvidesConfig {
+export interface ProvidesConfig {
     name: string;
     qualifier?: string;
 }
@@ -403,7 +406,7 @@ export default defineBuildConfig({
 Contains additional metadata about properties for advanced use cases.
 
 ```ts
-interface PropertyMetaConfig {
+export interface PropertyMetaConfig {
     required?: boolean;
 }
 ```
@@ -576,9 +579,9 @@ Do not set it in your own packages.
 
 Read [Services](./Services.md) to see how services can be defined.
 
-## React Integration
+## React integration
 
-### `useService` Hook
+### `useService` hook
 
 Retrieves a service providing the given interface.
 The dependency on that interface must have been declared in the `build.config.mjs` (see `ui.references`).
@@ -593,7 +596,7 @@ function ExampleComponent() {
 }
 ```
 
-### `useServices` Hook
+### `useServices` hook
 
 Retrieves all services providing the given interface as an array.
 The dependency must have been declared in the `build.config.mjs` (see `ui.references`).
@@ -609,7 +612,7 @@ function ExampleComponent() {
 }
 ```
 
-### `useProperties` Hook
+### `useProperties` hook
 
 Returns the properties of the calling component's package.
 Note that properties can be customized by the application, so values
@@ -634,7 +637,7 @@ export default defineBuildConfig({
 });
 ```
 
-### `useIntl` Hook
+### `useIntl` hook
 
 Returns the `intl` object for the calling component's package.
 The intl object is configured for the current application locale (messages, date and number formatting, etc.).
@@ -661,7 +664,7 @@ TypeScript declarations for all modules are available in `@open-pioneer/vite-plu
 | Module                      | Exports                                                 | Description                                                                                                                                                            |
 | --------------------------- | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `open-pioneer:app`          | The app's metadata                                      | Imported in an app's `app.ts` and passed to `createCustomElement()` as `appMetadata`.                                                                                  |
-| `open-pioneer:react-hooks`  | `useService`, `useServices`, `useProperties`, `useIntl` | React hooks for the importing package, see [React Integration](#react-integration).                                                                                    |
+| `open-pioneer:react-hooks`  | `useService`, `useServices`, `useProperties`, `useIntl` | React hooks for the importing package, see [React integration](#react-integration).                                                                                    |
 | `open-pioneer:source-info`  | `sourceId`                                              | A unique id of the importing module, for example to create a logger.                                                                                                   |
 | `open-pioneer:deployment`   | `baseUrl`                                               | The base URL of the deployed application. Published packages need `publishConfig.packageFormatTarget` `"1.1"` or later.                                                |
 | `open-pioneer:assets`       | `publicAssetsUrl`, `getPublicAssetUrl()`                | URLs of the public assets of the importing package, see [`publicAssets`](#publicassets). Published packages need `publishConfig.packageFormatTarget` `"1.2"` or later. |

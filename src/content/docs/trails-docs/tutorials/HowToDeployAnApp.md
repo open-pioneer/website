@@ -116,11 +116,14 @@ $ pnpm run build
 ```
 
 Your `dist` directory will now look like the example below.
-There might be additional files that must also be deployed, but the `empty.js` file is guaranteed to be there:
+The `empty.js` file is the entry point of your app.
+The `assets` directory (and any other files co-located in the www-directory) must be deployed as well.
 
 ```text
 dist/
 └── www
+    ├── assets
+    │   └── 09f766b9e467.js
     └── empty.js
 ```
 

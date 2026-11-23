@@ -66,14 +66,19 @@ interface HelloWorldService extends DeclaredService<"hello.HelloWorldService"> {
     sayHello(): void;
 }
 
+class HelloWorldServiceImpl implements HelloWorldService {
+    sayHello(): void {
+        console.log("Hello!");
+    }
+}
+
 class HelloWorldServiceFactoryImpl implements ServiceFactory<HelloWorldService> {
     constructor(options: ServiceOptions) {
         // ...
     }
 
     createService() {
-        const myServ = new MyHelloWorldService({/* ... */});
-        return myServ;
+        return new HelloWorldServiceImpl();
     }
 
     // optional
@@ -207,9 +212,7 @@ The following values are available as properties of `serviceOptions`:
   The object changes when the locale changes, so watch the signal for changes.
 - `intl`: Deprecated, use `currentIntl` instead.
 
-<!-- TODO: Link to hosted api documentation ?? -->
-
-Detailed documentation of `serviceOptions` is available in the API documentation of `@open-pioneer/runtime` (type `ServiceOptions`).
+Detailed documentation of `serviceOptions` is available in the [API documentation](https://open-pioneer.github.io/trails-demo/core-packages/latest/docs) of `@open-pioneer/runtime` (type `ServiceOptions`).
 
 ## Service start and stop behavior
 
@@ -361,10 +364,10 @@ Import the symbol with `import type` (or `import { type ... }`) and use the `dec
 Package properties are essentially untyped JSON data.
 However, you can provide helper types and functions in your package to make configuration of your package in an app less error prone.
 
-In your package:
+In your package's entry point (the `main` module in its `package.json`):
 
 ```ts
-// some-logger-package/api.ts
+// some-logger-package/index.ts
 
 /** Properties accepted by this package */
 export interface LoggingProperties {
