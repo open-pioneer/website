@@ -22,3 +22,9 @@ This project is built on these open source projects:
   We recommend, but do not require, TypeScript for application code as well.
 - [pnpm](https://pnpm.io/) is our package manager.
 - Applications are shipped as [Web Components](https://developer.mozilla.org/en-US/docs/Web/Web_Components).
+
+## Further Reading
+
+More information about the underlying design decisions, build process, and repository guidelines
+is available in the [Core Packages repository](https://github.com/open-pioneer/trails-core-packages).
+It also includes guidance for migrating older Open Pioneer Trails applications from Chakra UI v2 to v3.
