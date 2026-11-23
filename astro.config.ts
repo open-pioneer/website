@@ -67,14 +67,6 @@ export default defineConfig({
                             label: "Reference",
                             collapsed: true,
                             items: [{ autogenerate: { directory: "trails-docs/reference" } }]
-                        },
-                        {
-                            label: "Internal documentation",
-                            collapsed: true,
-                            items: [
-                                { autogenerate: { directory: "trails-docs/internals" } },
-                                { autogenerate: { directory: "trails-docs/research" } }
-                            ]
                         }
                     ]
                 }
