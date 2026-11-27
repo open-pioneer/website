@@ -4,21 +4,21 @@ catalog:
   "@astrojs/check": "^0.9.12"
   "@astrojs/markdown-satteri": "^0.4.10"
   "@astrojs/starlight": "^0.42.7"
-  "astro": "^7.4.12"
+  "astro": "^7.4.13"
   #starlight
   "starlight-links-validator": "^0.27.0"
   "starlight-llms-txt": "^0.12.0"
   "starlight-scroll-to-top": "^2.0.0"
   "starlight-theme-rapide": "^0.6.0"
 
-  "@expressive-code/plugin-line-numbers": "^0.44.3"
+  "@expressive-code/plugin-line-numbers": "^0.44.4"
   "satteri": "^0.11.7"
   "sharp": "^0.35.5"
 
   #devDependencies
   "@tony.ganchev/eslint-plugin-header": "^3.4.4"
   "oxfmt": "^0.78.0"
-  "oxlint": "^1.93.0"
+  "oxlint": "^1.95.0"
   "typescript": "^7.0.2"
 
 allowBuilds:
